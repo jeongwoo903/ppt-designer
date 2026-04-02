@@ -75,10 +75,15 @@ HTML은 다음과 같은 기능을 지닙니다.
 
 ## 설치
 
-### .skill 파일로 설치
-[Releases](https://github.com/jeongwoo903/ppt-designer/releases)에서 `ppt-designer-skill.skill` 파일을 다운로드한 뒤 Claude Code에서 `/install-skill` 명령으로 설치하세요.
+### npx (권장)
+```bash
+npx skills add jeongwoo903/ppt-designer
+```
 
-### Git clone으로 설치
+### .skill 파일
+[Releases](https://github.com/jeongwoo903/ppt-designer/releases)에서 `ppt-designer-skill.skill` 다운로드 후 `/install-skill`로 설치.
+
+### Git clone
 ```bash
 git clone https://github.com/jeongwoo903/ppt-designer.git ~/.claude/skills/ppt-designer
 ```
