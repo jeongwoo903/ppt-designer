@@ -1,56 +1,11 @@
 <div align="center">
-  <a href="https://suspensive.org" title="Suspensive - All in one for React Suspense">
     <img src="https://static.kid-o.cloud/ppt-designer/readme/main.png" alt="PPT Designer — HTML 기반의 프레젠테이션을 제작하는 Claude Code Skill" height="400" />
-  </a>
 </div>
 
 # PPT Designer가 뭔가요?
-디자인 토큰을 기반으로 HTML + PDF 프레젠테이션을 제작하는 Claude Code Skill 입니다.
 
-가볍게 고퀄리티의 
-
-## 어떤 기능을 제공하나요?
-
-기본적으로 디자인 토큰을 기반으로 한, 프레젠테이션용 HTML과 PDF를 생성합니다.  
-
-HTML은 다음과 같은 기능을 지닙니다.  
-
-| ![수정 가능](https://static.kid-o.cloud/ppt-designer/readme/edit.png) | ![프레젠테이션 모드](https://static.kid-o.cloud/ppt-designer/readme/presentation.png) |
-|:-----------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
-|                                수정                                 |                                   프레젠테이션 모드                                   |
-
-### 참고사항
-- Skill로 순수 슬라이드 콘텐츠만 생성하고, 프레젠테이션/편집 기능은 외부 스크립트로 처리됩니다.
-- pptx도 지원하나 개인적으로는 HTML 생성 후 수정하시는 것을 권장 드립니다.
-  - HTML 기반 만족도 95%, PPT 기반 만족도 75%
-
-## 단축키 & 기능
-
-### 수정
-| 기능 | 단축키 | 설명 |
-|:----:|:------:|:-----|
-| 열기/닫기 | `E` 또는 버튼 클릭 | 스타일 편집 패널 토글 |
-| 글로벌 탭 | — | CSS 커스텀 프로퍼티 컬러 편집 |
-| 요소 탭 | 슬라이드 요소 클릭 | font-size, line-height, color, padding, margin 편집 |
-| 텍스트 편집 | 요소 선택 후 textarea | 텍스트 내용 직접 수정 (줄바꿈 지원) |
-| 이미지 크기 | 이미지 클릭 | width, height 슬라이더 조절 |
-| 되돌리기 | `Ctrl+Z` / `⌘+Z` | 최대 100단계 |
-| 임시 저장 | `Ctrl+S` / `⌘+S` | localStorage에 저장 (새로고침 유지) |
-| HTML 다운로드 | 다운로드 버튼 | 수정 반영된 HTML 파일 저장 (에디터 UI 제거) |
-| 도움말 | `ⓘ` 버튼 hover | 기능 안내 툴팁 |
-
-### 프레젠테이션
-| 기능 | 단축키 | 설명 |
-|:----:|:------:|:-----|
-| 시작 | `P` 또는 버튼 클릭 | 풀스크린 슬라이드쇼 시작 |
-| 슬라이드 클릭 | 썸네일 클릭 | 해당 슬라이드부터 시작 |
-| 다음 | `→` `↓` `Space` `Enter` | 다음 슬라이드 |
-| 이전 | `←` `↑` | 이전 슬라이드 |
-| 처음/끝 | `Home` / `End` | 첫/마지막 슬라이드 |
-| 전체화면 | `F` | 브라우저 전체화면 토글 |
-| 종료 | `ESC` 또는 닫기 버튼 | 프레젠테이션 종료 |
-| 터치 | 좌우 스와이프 | 이전/다음 슬라이드 |
-| 휠 | 마우스 휠 | 이전/다음 슬라이드 |
+디자인 토큰을 기반으로 HTML + PDF 프레젠테이션을 제작하는 Claude Code Skill입니다.
+가볍게 고퀄리티의 제안서를 만들어보세요!
 
 ## 스킬 적용 전 vs 후
 
@@ -72,26 +27,49 @@ HTML은 다음과 같은 기능을 지닙니다.
 
 > 직접 다운받아서 비교해보세요.
 
-## 파일 구조
+## 어떤 기능을 제공하나요?
 
-```
-ppt-designer/
-├── SKILL.md                          # 메인 스킬 정의
-├── references/
-│   ├── korean-typography.md          # 한국어 타이포 규칙
-│   ├── slide-layouts.md              # 레이아웃 좌표 패턴
-│   ├── adr.md                        # Architecture Decision Records (18개)
-│   ├── template-map.md              # 마스터 템플릿 매핑
-│   ├── emoji-cdn.md                  # 3D 이모지 CDN 레퍼런스
-│   └── emoji-index.json              # 3,054개 이모지 전체 인덱스
-├── scripts/
-│   ├── presenter.js                  # 프레젠테이션 모드 (자동 주입)
-│   ├── editor.js                     # 스타일 편집기 (자동 주입)
-│   └── export-pdf.py                 # HTML → 300 DPI PDF
-└── examples/
-    └── startup-pitch/                # AI SaaS 피치덱 예시 (8장)
-        └── startup-pitch.html
-```
+디자인 토큰을 기반으로 한 프레젠테이션용 HTML과 PDF를 생성합니다.
+HTML은 다음과 같은 기능을 지닙니다.
+
+| ![수정 가능](https://static.kid-o.cloud/ppt-designer/readme/edit.png) | ![프레젠테이션 모드](https://static.kid-o.cloud/ppt-designer/readme/presentation.png) |
+|:-----------------------------------------------------------------:|:-----------------------------------------------------------------------------:|
+| 수정 | 프레젠테이션 모드 |
+
+### 참고사항
+- Skill로 순수 슬라이드 콘텐츠만 생성하고, 프레젠테이션/편집 기능은 외부 스크립트로 처리됩니다.
+- PPTX도 지원하나 HTML 생성 후 수정하시는 것을 권장합니다.
+  - HTML 기반 만족도 95%, PPTX 기반 만족도 75%
+
+## 단축키 & 기능
+
+### 수정
+
+| 기능 | 단축키 | 설명 |
+|:----:|:------:|:-----|
+| 열기/닫기 | `E` 또는 버튼 클릭 | 스타일 편집 패널 토글 |
+| 글로벌 탭 | — | CSS 커스텀 프로퍼티 컬러 편집 |
+| 요소 탭 | 슬라이드 요소 클릭 | font-size, line-height, color, padding, margin 편집 |
+| 텍스트 편집 | 요소 선택 후 textarea | 텍스트 내용 직접 수정 (줄바꿈 지원) |
+| 이미지 크기 | 이미지 클릭 | width, height 슬라이더 조절 |
+| 되돌리기 | `Ctrl+Z` / `⌘+Z` | 최대 100단계 |
+| 임시 저장 | `Ctrl+S` / `⌘+S` | localStorage에 저장 (새로고침 유지) |
+| HTML 다운로드 | 다운로드 버튼 | 수정 반영된 HTML 파일 저장 (에디터 UI 제거) |
+| 도움말 | `ⓘ` 버튼 hover | 기능 안내 툴팁 |
+
+### 프레젠테이션
+
+| 기능 | 단축키 | 설명 |
+|:----:|:------:|:-----|
+| 시작 | `P` 또는 버튼 클릭 | 풀스크린 슬라이드쇼 시작 |
+| 슬라이드 클릭 | 썸네일 클릭 | 해당 슬라이드부터 시작 |
+| 다음 | `→` `↓` `Space` `Enter` | 다음 슬라이드 |
+| 이전 | `←` `↑` | 이전 슬라이드 |
+| 처음/끝 | `Home` / `End` | 첫/마지막 슬라이드 |
+| 전체화면 | `F` | 브라우저 전체화면 토글 |
+| 종료 | `ESC` 또는 닫기 버튼 | 프레젠테이션 종료 |
+| 터치 | 좌우 스와이프 | 이전/다음 슬라이드 |
+| 휠 | 마우스 휠 | 이전/다음 슬라이드 |
 
 ## 설치
 
@@ -117,6 +95,27 @@ Claude Code에서:
 1. 무드보드/레퍼런스 요청
 2. 디자인 토큰 추출 + 확인
 3. HTML 슬라이드 생성 + PDF 추출
+
+## 파일 구조
+
+```
+ppt-designer/
+├── SKILL.md                          # 메인 스킬 정의
+├── references/
+│   ├── korean-typography.md          # 한국어 타이포 규칙
+│   ├── slide-layouts.md              # 레이아웃 좌표 패턴
+│   ├── adr.md                        # Architecture Decision Records (18개)
+│   ├── template-map.md              # 마스터 템플릿 매핑
+│   ├── emoji-cdn.md                  # 3D 이모지 CDN 레퍼런스
+│   └── emoji-index.json              # 3,054개 이모지 전체 인덱스
+├── scripts/
+│   ├── presenter.js                  # 프레젠테이션 모드 (자동 주입)
+│   ├── editor.js                     # 스타일 편집기 (자동 주입)
+│   └── export-pdf.py                 # HTML → 300 DPI PDF
+└── examples/
+    ├── startup-pitch/                # AI SaaS 피치덱 예시 (8장)
+    └── comparison/                   # 스킬 적용 전/후 비교
+```
 
 ## 아키텍처
 
@@ -153,12 +152,12 @@ Claude Code에서:
 - **Unsplash 사진**: URL 직접 사용 (핫링크 허용)
 - 로컬 다운로드 없음 → HTML 하나로 자립
 
-## PDF 추출
+### PDF 추출
 
 ```bash
 python3 scripts/export-pdf.py input.html output.pdf
 ```
-- Playwright 기반 2x 해상도 캡처 → 300 DPI PDF
+Playwright 기반 2x 해상도 캡처 → 300 DPI PDF
 
 ## 디자인 규칙 (ADR 18개)
 
