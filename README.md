@@ -56,11 +56,11 @@ HTML은 다음과 같은 기능을 지닙니다.
 
 같은 프롬프트 ("카페 신제품 말차라떼 제안서 만들어줘")로 생성한 결과 비교.
 
-### PDF (HTML 기반)
+### HTML
 
 | 스킬 없음 (Baseline) | 스킬 적용 (With Skill) |
 |:--------------------:|:---------------------:|
-| [baseline.pdf](examples/comparison/baseline/baseline.pdf) | [with-skill-html.pdf](examples/comparison/with-skill/with-skill-html.pdf) |
+| [baseline.html](examples/comparison/baseline/baseline.html) | [with-skill.html](examples/comparison/with-skill/with-skill.html) |
 | 기본 디자인 | 무드보드 기반 토큰 + ADR 18개 + 3D 이모지 |
 
 ### PPTX
