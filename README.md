@@ -75,18 +75,15 @@ HTML은 다음과 같은 기능을 지닙니다.
 
 ## 설치
 
-### npx (권장)
-```bash
-npx skills add jeongwoo903/ppt-designer
-```
+| 에이전트 | 명령어 |
+|:-------:|:------|
+| Claude Code | `git clone https://github.com/jeongwoo903/ppt-designer.git ~/.claude/skills/ppt-designer` |
+| Cursor | `git clone https://github.com/jeongwoo903/ppt-designer.git .cursor/skills/ppt-designer` |
+| Codex | `git clone https://github.com/jeongwoo903/ppt-designer.git .codex/skills/ppt-designer` |
+| GitHub Copilot | `git clone https://github.com/jeongwoo903/ppt-designer.git .github/skills/ppt-designer` |
+| 기타 에이전트 | `npx skills add jeongwoo903/ppt-designer` |
 
-### .skill 파일
-[Releases](https://github.com/jeongwoo903/ppt-designer/releases)에서 `ppt-designer-skill.skill` 다운로드 후 `/install-skill`로 설치.
-
-### Git clone
-```bash
-git clone https://github.com/jeongwoo903/ppt-designer.git ~/.claude/skills/ppt-designer
-```
+또는 [Releases](https://github.com/jeongwoo903/ppt-designer/releases)에서 `.skill` 파일 다운로드 후 설치.
 
 ### PDF 추출 의존성 (선택)
 ```bash
