@@ -75,13 +75,11 @@ HTML은 다음과 같은 기능을 지닙니다.
 
 ## 설치
 
-| 에이전트 | 명령어 |
-|:-------:|:------|
-| Claude Code | `git clone https://github.com/jeongwoo903/ppt-designer.git ~/.claude/skills/ppt-designer` |
-| Cursor | `git clone https://github.com/jeongwoo903/ppt-designer.git .cursor/skills/ppt-designer` |
-| Codex | `git clone https://github.com/jeongwoo903/ppt-designer.git .codex/skills/ppt-designer` |
-| GitHub Copilot | `git clone https://github.com/jeongwoo903/ppt-designer.git .github/skills/ppt-designer` |
-| 기타 에이전트 | `npx skills add jeongwoo903/ppt-designer` |
+```bash
+npx skills add jeongwoo903/ppt-designer -y
+```
+
+모든 에이전트(Claude Code, Cursor, Codex, Copilot 등)에 자동 설치됩니다.
 
 또는 [Releases](https://github.com/jeongwoo903/ppt-designer/releases)에서 `.skill` 파일 다운로드 후 설치.
 
