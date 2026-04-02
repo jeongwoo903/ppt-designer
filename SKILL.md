@@ -84,6 +84,16 @@ Apply the "sandwich" structure for deck-level rhythm:
 - Dark or bold slides for: cover, section dividers, conclusion
 - Light slides for: content, data, details
 
+### Phase 3.5: User Review (Required)
+
+슬라이드 구조를 유저에게 **반드시** 보여주고 확인을 받는다. 테이블 형태로 슬라이드 번호, 레이아웃, 내용을 정리해서 제시하고 다음을 물어본다:
+
+- 수정할 슬라이드가 있는지
+- 추가하고 싶은 내용이 있는지
+- 빼고 싶은 슬라이드가 있는지
+
+유저가 "좋아", "진행해" 등 확인을 주면 Phase 4로 넘어간다. 확인 없이 생성에 들어가지 않는다.
+
 ### Phase 4: Slide Generation (HTML)
 
 Primary output is a single HTML file containing only slide content. Interactivity (프레젠테이션, 스타일 편집기) is handled by external scripts — **do NOT inline presenter or editor code into the HTML.**
