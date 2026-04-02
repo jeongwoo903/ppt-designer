@@ -2,8 +2,7 @@
 HTML 슬라이드 → 16:9 고해상도 PDF 변환 (Playwright Python)
 Usage: python export-pdf.py [input.html] [output.pdf]
 
-Requires: playwright, Pillow
-Python: /Users/a./.pyenv/versions/3.12.1/bin/python3
+Requires: playwright, Pillow (Python 3.12+)
 """
 import sys
 import asyncio
@@ -33,9 +32,12 @@ async def capture_slides(html_path: Path, pdf_path: Path):
         await page.goto(html_uri, wait_until="networkidle")
         await page.wait_for_timeout(3000)
 
-        # UI 요소 + present overlay 숨기기
+        # UI 요소 숨기기
         await page.evaluate("""
-            document.querySelectorAll('.export-btn, .nav, .page-header, .present-btn, .present-overlay, .slide-editor-ui').forEach(el => el.style.display = 'none');
+            document.querySelectorAll(
+                '.export-btn, .nav, .page-header, .present-btn, .present-overlay, '
+              + '.slide-editor-ui, .slide-presenter-ui, .sp-overlay, .sp-btn'
+            ).forEach(el => el.style.display = 'none');
         """)
         await page.wait_for_timeout(500)
 
@@ -43,6 +45,12 @@ async def capture_slides(html_path: Path, pdf_path: Path):
         slides = await page.query_selector_all(".frames .viewport")
         if not slides:
             slides = await page.query_selector_all(".slide")
+
+        if not slides:
+            print("No slides found. Check the HTML structure.")
+            await browser.close()
+            return
+
         print(f"Found {len(slides)} slides — capturing at {CAPTURE_W}x{CAPTURE_H} ({SCALE}x)")
 
         tmp_dir = Path(tempfile.mkdtemp(prefix="slides-"))
@@ -55,6 +63,10 @@ async def capture_slides(html_path: Path, pdf_path: Path):
             print(f"  Captured slide {i + 1}/{len(slides)}")
 
         await browser.close()
+
+    if not png_files:
+        print("No slides captured.")
+        return
 
     # PNG → PDF (Pillow, 고해상도)
     from PIL import Image
@@ -76,7 +88,10 @@ async def capture_slides(html_path: Path, pdf_path: Path):
 
 
 def main():
-    html_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).parent / "slide-preview.html"
+    if len(sys.argv) < 2:
+        print("Usage: python export-pdf.py <input.html> [output.pdf]")
+        sys.exit(1)
+    html_path = Path(sys.argv[1])
     pdf_path = Path(sys.argv[2]) if len(sys.argv) > 2 else html_path.with_suffix(".pdf")
     asyncio.run(capture_slides(html_path, pdf_path))
 

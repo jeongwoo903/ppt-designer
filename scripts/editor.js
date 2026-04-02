@@ -1317,11 +1317,10 @@ body.slide-editing .frames .slide img:hover {
       return;
     }
 
-    // Escape: close panel
+    // Escape: close panel (not during presentation)
     if (e.key === 'Escape' && editorOpen) {
-      // Only close if we're not inside a fullscreen present overlay
-      const overlay = document.getElementById('presentOverlay');
-      if (!overlay || !overlay.classList.contains('active')) {
+      const presenting = window.__slidePresenter && window.__slidePresenter.isPresenting();
+      if (!presenting) {
         closeEditor();
       }
       return;
@@ -1378,51 +1377,10 @@ body.slide-editing .frames .slide img:hover {
   /* ─────────────────────────────────────────────────────────────────
    * 14. Presentation sync — re-clone slides before presenting
    *
-   * The presentation IIFE clones slides once at page load.
-   * After the editor applies inline styles to the scroll-view slides,
-   * those styles are NOT reflected in the old clones.
-   * Fix: observe `present-overlay` for the `.active` class being added,
-   * then rebuild the clone set from the current (edited) slide DOM.
+   * Presentation sync is handled by presenter.js — it re-clones slides
+   * on every startPresent() call, picking up inline style edits automatically.
+   * No MutationObserver needed here.
    * ───────────────────────────────────────────────────────────────── */
-
-  function recloneForPresent() {
-    const presentVP = document.getElementById('presentViewport');
-    if (!presentVP) return;
-
-    // Source slides from scroll view
-    const sourceSlides = [...document.querySelectorAll('.frames .slide')];
-    if (!sourceSlides.length) return;
-
-    // Wipe existing clones
-    presentVP.innerHTML = '';
-
-    // Re-clone with all current inline styles
-    sourceSlides.forEach((src) => {
-      const clone = src.cloneNode(true);
-      clone.removeAttribute('id');
-      // Start hidden — the presentation JS will call goTo() to activate the correct one
-      clone.classList.remove('state-active', 'state-prev', 'state-next');
-      presentVP.appendChild(clone);
-    });
-  }
-
-  // Watch for present-overlay activation
-  const presentOverlay = document.getElementById('presentOverlay');
-  if (presentOverlay) {
-    const syncObserver = new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        if (m.attributeName === 'class') {
-          if (presentOverlay.classList.contains('active')) {
-            // Re-clone BEFORE the presentation JS activates a slide.
-            // Using microtask ensures we run after classList.add('active')
-            // but before any rAF from the presenting code.
-            recloneForPresent();
-          }
-        }
-      }
-    });
-    syncObserver.observe(presentOverlay, { attributes: true, attributeFilter: ['class'] });
-  }
 
   /* ─────────────────────────────────────────────────────────────────
    * 15. Download modified HTML

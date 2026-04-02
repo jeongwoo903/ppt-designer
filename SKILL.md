@@ -5,8 +5,8 @@ description: >-
   design, or remake a slide deck, presentation, pitch deck, or proposal — in any language.
   Trigger on: PPT 만들어줘, 발표자료 구성해줘, 다시 만들어줘 (for presentations),
   슬라이드 만들어줘, 제안서 제작, pitch deck, converting PDF/text/notes into slides,
-  or redesigning an existing deck from scratch. Produces complete multi-slide PPTX files
-  with professional moodboard-driven design. Do NOT use for editing one slide in an
+  or redesigning an existing deck from scratch. Produces HTML slides + PDF as primary output,
+  with optional PPTX. Professional moodboard-driven design. Do NOT use for editing one slide in an
   existing file, text extraction from PPT, font swaps, standalone charts/infographics, or OCR.
 ---
 
