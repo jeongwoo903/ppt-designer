@@ -73,11 +73,16 @@ HTML은 다음과 같은 기능을 지닙니다.
 
 ## 설치
 
-```bash
-# Claude Code 스킬 디렉토리에 복사
-cp -r . ~/.claude/skills/ppt-designer/
+### .skill 파일로 설치
+[Releases](https://github.com/jeongwoo903/ppt-designer/releases)에서 `ppt-designer-skill.skill` 파일을 다운로드한 뒤 Claude Code에서 `/install-skill` 명령으로 설치하세요.
 
-# PDF 추출 의존성
+### Git clone으로 설치
+```bash
+git clone https://github.com/jeongwoo903/ppt-designer.git ~/.claude/skills/ppt-designer
+```
+
+### PDF 추출 의존성 (선택)
+```bash
 pip install playwright Pillow
 playwright install chromium
 ```
@@ -105,7 +110,7 @@ ppt-designer/
 │   ├── korean-typography.md          # 한국어 타이포 규칙
 │   ├── slide-layouts.md              # 레이아웃 좌표 패턴
 │   ├── adr.md                        # Architecture Decision Records (18개)
-│   ├── template-map.md              # 마스터 템플릿 매핑
+│   ├── template-map.md               # 마스터 템플릿 매핑
 │   ├── emoji-cdn.md                  # 3D 이모지 CDN 레퍼런스
 │   └── emoji-index.json              # 3,054개 이모지 전체 인덱스
 ├── scripts/
