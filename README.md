@@ -54,19 +54,20 @@ HTML은 다음과 같은 기능을 지닙니다.
 
 ## 스킬 적용 전 vs 후
 
-같은 프롬프트 ("카페 신제품 말차라떼 제안서 만들어줘")로 생성한 결과 비교.
+같은 프롬프트 `"카페 신제품 말차라떼 제안서 만들어줘"`로 생성한 결과 비교.
 
 ### HTML
 
 | 스킬 없음 (Baseline) | 스킬 적용 (With Skill) |
 |:--------------------:|:---------------------:|
+| ![baseline html](examples/comparison/baseline/preview/html-slide-1.jpg) | ![with-skill html](examples/comparison/with-skill/preview/html-slide-1.jpg) |
 | [baseline.html](examples/comparison/baseline/baseline.html) | [with-skill.html](examples/comparison/with-skill/with-skill.html) |
-| 기본 디자인 | 무드보드 기반 토큰 + ADR 18개 + 3D 이모지 |
 
 ### PPTX
 
 | 스킬 없음 (Baseline) | 스킬 적용 (With Skill) |
 |:--------------------:|:---------------------:|
+| ![baseline pptx](examples/comparison/baseline/preview/pptx-slide-1.jpg) | ![with-skill pptx](examples/comparison/with-skill/preview/pptx-slide-1.jpg) |
 | [baseline.pptx](examples/comparison/baseline/baseline.pptx) | [with-skill.pptx](examples/comparison/with-skill/with-skill.pptx) |
 
 > 직접 다운받아서 비교해보세요.
