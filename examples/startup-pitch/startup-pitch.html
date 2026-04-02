@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Orbiter AI — Series A Pitch Deck · 2026</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"
+/>
+<style>
+/* ── Reset ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary:        #53acf9;
+  --secondary:      #9b7ff4;
+  --accent:         #ff8a80;
+  --amber:          #f6bb29;
+  --bg-main:        #f9f9fb;
+  --surface:        #ffffff;
+  --text-primary:   #24222d;
+  --text-secondary: #3d3a4a;
+  --text-subtle:    #6b6878;
+  --text-muted:     #9592a0;
+  --divider:        #e2e1e8;
+  --dark-bg:        #18171f;
+  --dark-surface:   #24222d;
+  --success:        #059669;
+  --shadow-sm:      0 2px 10px rgba(45,38,64,.06);
+  --shadow-md:      0 4px 20px rgba(45,38,64,.09);
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+}
+
+/* ── Scroll / thumbnail mode (default) ───────────────────────── */
+html {
+  background: #e8e8ee;
+}
+
+body {
+  background: #e8e8ee;
+  padding: 40px 20px 80px;
+  min-height: 100vh;
+}
+
+/* ── Page header between slides ──────────────────────────────── */
+.page-header {
+  width: 960px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.page-header__title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9592a0;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.page-header__count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #b5b3be;
+  letter-spacing: .02em;
+}
+
+/* ── Frame wrapper ────────────────────────────────────────────── */
+.frame {
+  margin: 0 auto 32px;
+  width: 960px;
+}
+
+/* ── Viewport — the container-query root ─────────────────────── */
+.viewport {
+  width: 960px;
+  height: 540px;
+  position: relative;
+  overflow: hidden;
+  container-type: inline-size;
+  border-radius: 6px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.06);
+}
+
+/* ── Slide base ───────────────────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+/* ── 3D Emoji helper ──────────────────────────────────────────── */
+.emoji3d {
+  display: inline-block;
+  filter: drop-shadow(0 0.21cqw 0.42cqw rgba(0,0,0,0.15));
+  flex-shrink: 0;
+}
+.emoji3d--xxl { width: 12.5cqw;  height: 12.5cqw;  }
+.emoji3d--xl  { width: 10.42cqw; height: 10.42cqw; }
+.emoji3d--lg  { width: 8.33cqw;  height: 8.33cqw;  }
+.emoji3d--md  { width: 5cqw;     height: 5cqw;     }
+.emoji3d--sm  { width: 3.75cqw;  height: 3.75cqw;  }
+.emoji3d--xs  { width: 2.5cqw;   height: 2.5cqw;   }
+
+/* ── Slide number badge ───────────────────────────────────────── */
+.slide-num {
+  position: absolute;
+  bottom: 1.87cqw;
+  right: 2.7cqw;
+  font-size: 1.0cqw;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  z-index: 10;
+}
+.slide--dark .slide-num { color: rgba(255,255,255,.25); }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 1 — Cover (Dark)                                          */
+/* ═══════════════════════════════════════════════════════════════ */
+.s1 {
+  background: var(--dark-bg);
+  display: grid;
+  grid-template-columns: 1fr 33.33cqw;
+}
+
+.s1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 90% at 80% 50%, rgba(83,172,249,.11) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(155,127,244,.08) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.s1__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5.4cqw 4.17cqw 4.58cqw 5.4cqw;
+  position: relative;
+  z-index: 2;
+}
+
+.s1__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.s1__title {
+  font-size: 5.6cqw;
+  font-weight: 800;
+  line-height: 1.05;
+  color: #ffffff;
+  letter-spacing: -.03em;
+  margin-top: 2.08cqw;
+}
+
+.s1__subtitle {
+  margin-top: 1.46cqw;
+  font-size: 1.73cqw;
+  font-weight: 500;
+  color: rgba(255,255,255,.6);
+  letter-spacing: -.01em;
+}
+
+.s1__desc {
+  margin-top: 0.83cqw;
+  font-size: 1.19cqw;
+  color: rgba(255,255,255,.32);
+  font-weight: 400;
+  letter-spacing: .02em;
+}
+
+.s1__right {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s1__emoji-collage {
+  position: relative;
+  width: 25cqw;
+  height: 31.25cqw;
+}
+
+.s1__emoji-collage .emoji3d--xxl:nth-child(1) {
+  position: absolute;
+  top: 2.08cqw;
+  left: 50%;
+  transform: translateX(-50%) rotate(-8deg);
+  filter: drop-shadow(0 0.83cqw 2.08cqw rgba(0,0,0,.35));
+  z-index: 3;
+}
+
+.s1__emoji-collage .emoji3d--xl:nth-child(2) {
+  position: absolute;
+  bottom: 3.13cqw;
+  right: 1.04cqw;
+  transform: rotate(10deg);
+  filter: drop-shadow(0 0.63cqw 1.67cqw rgba(83,172,249,.3)) drop-shadow(0 0.21cqw 0.63cqw rgba(0,0,0,.25));
+  z-index: 2;
+}
+
+.s1__emoji-collage .emoji3d--xl:nth-child(3) {
+  position: absolute;
+  bottom: 1.04cqw;
+  left: 1.04cqw;
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 0.63cqw 1.67cqw rgba(155,127,244,.28)) drop-shadow(0 0.21cqw 0.63cqw rgba(0,0,0,.2));
+  z-index: 1;
+}
+
+.s1__stat-label {
+  font-size: 1.02cqw;
+  font-weight: 500;
+  color: rgba(255,255,255,.32);
+  letter-spacing: .04em;
+  margin-bottom: 0.42cqw;
+}
+.s1__stat-value {
+  font-size: 2.4cqw;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+.s1__stat-unit {
+  font-size: 1.19cqw;
+  font-weight: 500;
+  color: rgba(255,255,255,.42);
+  margin-left: 0.21cqw;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 2 — Problem (Light)                                       */
+/* ═══════════════════════════════════════════════════════════════ */
+.s2 {
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 1fr 39.58cqw;
+}
+
+.s2__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5.4cqw 4.17cqw 5.4cqw 5.4cqw;
+}
+
+.s2__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.46cqw;
+}
+
+.s2__title {
+  font-size: 2.39cqw;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s2__body {
+  margin-top: 1.87cqw;
+  font-size: 1.35cqw;
+  line-height: 1.72;
+  color: var(--text-subtle);
+  font-weight: 400;
+}
+
+.s2__body strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.s2__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.46cqw;
+  padding: 4.58cqw 4.58cqw 4.58cqw 2.5cqw;
+}
+
+.s2__card {
+  background: var(--bg-main);
+  border-radius: 1.04cqw;
+  padding: 1.67cqw 1.87cqw;
+  display: flex;
+  align-items: center;
+  gap: 1.46cqw;
+  border: 1px solid var(--divider);
+}
+
+.s2__card-emoji {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.58cqw;
+  height: 4.58cqw;
+}
+
+.s2__card-text { flex: 1; }
+
+.s2__card-title {
+  font-size: 1.4cqw;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.s2__card-sub {
+  font-size: 1.15cqw;
+  color: var(--text-muted);
+  margin-top: 0.21cqw;
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 3 — Solution (Light)                                      */
+/* ═══════════════════════════════════════════════════════════════ */
+.s3 {
+  background: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+  padding: 4.58cqw 5.4cqw 4.17cqw;
+}
+
+.s3__header { margin-bottom: 3.33cqw; }
+
+.s3__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.83cqw;
+}
+
+.s3__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.s3__cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.67cqw;
+  flex: 1;
+}
+
+.s3__col {
+  background: var(--surface);
+  border-radius: 1.25cqw;
+  padding: 2.92cqw 2.5cqw 2.5cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--divider);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.s3__col:nth-child(1)::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0.31cqw;
+  background: var(--amber);
+  border-radius: 1.25cqw 1.25cqw 0 0;
+}
+.s3__col:nth-child(2)::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0.31cqw;
+  background: var(--primary);
+  border-radius: 1.25cqw 1.25cqw 0 0;
+}
+.s3__col:nth-child(3)::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0.31cqw;
+  background: var(--secondary);
+  border-radius: 1.25cqw 1.25cqw 0 0;
+}
+
+.s3__col-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.67cqw;
+}
+
+.s3__col-name {
+  font-size: 1.56cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.63cqw;
+  letter-spacing: -.01em;
+}
+
+.s3__col-desc {
+  font-size: 1.24cqw;
+  color: var(--text-subtle);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 4 — How It Works (Light)                                  */
+/* ═══════════════════════════════════════════════════════════════ */
+.s4 {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  padding: 4.58cqw 5.4cqw 4.17cqw;
+}
+
+.s4__header { margin-bottom: 3.75cqw; }
+
+.s4__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s4__subtitle {
+  font-size: 1.29cqw;
+  color: var(--text-muted);
+  margin-top: 0.42cqw;
+}
+
+.s4__flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  flex: 1;
+}
+
+.s4__step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s4__step-box {
+  background: var(--bg-main);
+  border-radius: 1.25cqw;
+  padding: 2.29cqw 1.87cqw 2.08cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.04cqw;
+  flex: 1;
+  border: 1px solid var(--divider);
+  position: relative;
+}
+
+.s4__step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.83cqw;
+  width: 100%;
+  justify-content: center;
+}
+
+.s4__step-num {
+  width: 2.29cqw;
+  height: 2.29cqw;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.99cqw;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.s4__step-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s4__step-title {
+  font-size: 1.45cqw;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.s4__step-desc {
+  font-size: 1.15cqw;
+  color: var(--text-subtle);
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+.s4__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.63cqw;
+  align-self: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: 1.67cqw;
+  opacity: .5;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 5 — Traction / KPI (Light)                               */
+/* ═══════════════════════════════════════════════════════════════ */
+.s5 {
+  background: var(--bg-main);
+  padding: 4.58cqw 5.4cqw;
+  display: flex;
+  flex-direction: column;
+}
+
+.s5__header { margin-bottom: 2.92cqw; }
+
+.s5__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s5__subtitle {
+  font-size: 1.29cqw;
+  color: var(--text-muted);
+  margin-top: 0.42cqw;
+}
+
+.s5__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: 1.04cqw;
+  overflow: hidden;
+}
+
+.s5__cell {
+  padding: 2.08cqw 2.5cqw;
+  border-right: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.s5__cell:nth-child(3), .s5__cell:nth-child(6) { border-right: none; }
+.s5__cell:nth-child(4), .s5__cell:nth-child(5), .s5__cell:nth-child(6) { border-bottom: none; }
+
+.s5__cell-label-row {
+  display: flex;
+  align-items: center;
+  gap: 0.73cqw;
+  margin-bottom: 0.83cqw;
+}
+
+.s5__cell-label {
+  font-size: 1.12cqw;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: .02em;
+}
+
+.s5__cell-value {
+  font-size: 3.13cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.s5__cell-unit {
+  font-size: 1.4cqw;
+  font-weight: 600;
+  color: var(--text-subtle);
+  margin-left: 0.21cqw;
+}
+
+.s5__cell-change {
+  font-size: 1.07cqw;
+  font-weight: 600;
+  margin-top: 0.42cqw;
+  display: flex;
+  align-items: center;
+  gap: 0.31cqw;
+}
+.s5__cell-change--up     { color: #2dba78; }
+.s5__cell-change--sky    { color: var(--primary); }
+.s5__cell-change--violet { color: var(--secondary); }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 6 — Business Model (Light)                                */
+/* ═══════════════════════════════════════════════════════════════ */
+.s6 {
+  background: var(--surface);
+  padding: 4.58cqw 5.4cqw;
+  display: flex;
+  flex-direction: column;
+}
+
+.s6__header { margin-bottom: 2.92cqw; }
+
+.s6__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s6__subtitle {
+  font-size: 1.29cqw;
+  color: var(--text-muted);
+  margin-top: 0.42cqw;
+}
+
+.s6__tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.87cqw;
+  flex: 1;
+}
+
+.s6__tier {
+  border-radius: 1.25cqw;
+  padding: 2.5cqw 2.08cqw 2.08cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--divider);
+  background: var(--bg-main);
+  position: relative;
+}
+
+.s6__tier--featured {
+  background: var(--dark-bg);
+  border-color: transparent;
+  box-shadow: 0 0.42cqw 2.5cqw rgba(83,172,249,.18);
+}
+
+.s6__tier-badge {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.91cqw;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 0.42cqw 1.04cqw;
+  border-radius: 0 0 0.63cqw 0.63cqw;
+  white-space: nowrap;
+}
+
+.s6__tier-emoji {
+  margin-bottom: 1.25cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s6__tier-name {
+  font-size: 1.4cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.s6__tier--featured .s6__tier-name { color: #fff; }
+
+.s6__tier-price {
+  font-size: 2.48cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.03em;
+  margin-top: 0.63cqw;
+  line-height: 1;
+}
+.s6__tier--featured .s6__tier-price { color: var(--primary); }
+
+.s6__tier-period {
+  font-size: 1.07cqw;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 0.21cqw;
+}
+.s6__tier--featured .s6__tier-period { color: rgba(255,255,255,.35); }
+
+.s6__tier-divider {
+  width: 3.33cqw;
+  height: 1px;
+  background: var(--divider);
+  margin: 1.46cqw auto;
+}
+.s6__tier--featured .s6__tier-divider { background: rgba(255,255,255,.12); }
+
+.s6__tier-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.63cqw;
+  text-align: left;
+  width: 100%;
+}
+
+.s6__tier-feature {
+  font-size: 1.19cqw;
+  color: var(--text-subtle);
+  padding-left: 1.46cqw;
+  position: relative;
+  line-height: 1.45;
+  font-weight: 400;
+}
+.s6__tier--featured .s6__tier-feature { color: rgba(255,255,255,.5); }
+
+.s6__tier-feature::before {
+  content: '';
+  position: absolute;
+  left: 0.31cqw;
+  top: 0.63cqw;
+  width: 0.42cqw;
+  height: 0.42cqw;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+.s6__tier--featured .s6__tier-feature::before { background: var(--primary); }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 7 — Team (Light with gradient)                            */
+/* ═══════════════════════════════════════════════════════════════ */
+.s7 {
+  background: var(--surface);
+  padding: 4.58cqw 5.4cqw 4.17cqw;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.s7::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 100%, rgba(83,172,249,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 0%, rgba(155,127,244,.05) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.s7__header {
+  margin-bottom: 2cqw;
+  position: relative;
+  z-index: 1;
+}
+
+.s7__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 0.83cqw;
+}
+
+.s7__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s7__members {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.87cqw;
+  position: relative;
+  z-index: 1;
+}
+
+.s7__member {
+  background: var(--bg-main);
+  border-radius: 1.25cqw;
+  padding: 1.8cqw 1.5cqw 1.5cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--divider);
+}
+
+.s7__member-avatar {
+  width: 4.5cqw;
+  height: 4.5cqw;
+  border-radius: 50%;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25cqw;
+  box-shadow: 0 0.21cqw 1.25cqw rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.s7__member-name {
+  font-size: 1.25cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 0.21cqw;
+}
+
+.s7__member-role {
+  font-size: 0.85cqw;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 0.5cqw;
+}
+
+.s7__member-bg {
+  font-size: 0.95cqw;
+  color: var(--text-muted);
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* SLIDE 8 — Closing / Ask (Dark)                                  */
+/* ═══════════════════════════════════════════════════════════════ */
+.s8 {
+  background: var(--dark-bg);
+  display: grid;
+  grid-template-columns: 1fr 32%;
+  position: relative;
+  overflow: hidden;
+}
+
+.s8::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 10% 80%, rgba(83,172,249,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 65% at 90% 20%, rgba(155,127,244,.08) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.s8__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4.5cqw 4cqw 4cqw 5cqw;
+  position: relative;
+  z-index: 1;
+}
+
+.s8__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.s8__title {
+  font-size: 2.56cqw;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+  line-height: 1.18;
+  margin-top: 0.83cqw;
+}
+
+.s8__big-num {
+  font-size: 6.27cqw;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.05em;
+  line-height: 1;
+}
+
+.s8__subtitle {
+  font-size: 1.35cqw;
+  color: rgba(255,255,255,.42);
+  margin-top: 0.83cqw;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.s8__plan {
+  display: flex;
+  flex-direction: column;
+  gap: 1.04cqw;
+}
+
+.s8__plan-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25cqw;
+}
+
+.s8__plan-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.s8__plan-bar-wrap { flex: 1; }
+
+.s8__plan-label {
+  font-size: 1.19cqw;
+  font-weight: 600;
+  color: rgba(255,255,255,.65);
+  margin-bottom: 0.52cqw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.s8__plan-pct {
+  color: rgba(255,255,255,.38);
+  font-weight: 400;
+}
+
+.s8__plan-bar {
+  height: 0.52cqw;
+  background: rgba(255,255,255,.1);
+  border-radius: 0.31cqw;
+  overflow: hidden;
+}
+
+.s8__plan-bar-fill {
+  height: 100%;
+  border-radius: 0.31cqw;
+}
+.s8__plan-bar-fill--sky    { background: var(--primary); }
+.s8__plan-bar-fill--violet { background: var(--secondary); }
+.s8__plan-bar-fill--amber  { background: var(--amber); }
+
+.s8__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5cqw 4.17cqw 4.58cqw 2.92cqw;
+  border-left: 1px solid rgba(255,255,255,.08);
+  position: relative;
+  z-index: 1;
+}
+
+.s8__contact-label {
+  font-size: 0.99cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.28);
+  margin-bottom: 1.67cqw;
+}
+
+.s8__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25cqw;
+  flex: 1;
+}
+
+.s8__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1.04cqw;
+}
+
+.s8__contact-icon {
+  width: 3.13cqw;
+  height: 3.13cqw;
+  border-radius: 0.73cqw;
+  background: rgba(255,255,255,.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35cqw;
+  color: rgba(255,255,255,.45);
+  flex-shrink: 0;
+}
+
+.s8__contact-name {
+  font-size: 1.12cqw;
+  font-weight: 600;
+  color: rgba(255,255,255,.75);
+  line-height: 1.3;
+}
+
+.s8__contact-value {
+  font-size: 1.04cqw;
+  color: rgba(255,255,255,.3);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.s8__deco-rocket {
+  position: absolute;
+  bottom: 2.08cqw;
+  right: 2.08cqw;
+  filter: drop-shadow(0 0.63cqw 1.87cqw rgba(83,172,249,.35)) drop-shadow(0 0.21cqw 0.63cqw rgba(0,0,0,.2));
+  opacity: .85;
+  transform: rotate(20deg);
+  z-index: 0;
+}
+
+.s8__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.63cqw;
+}
+.s8__brand-dot {
+  width: 0.52cqw;
+  height: 0.52cqw;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.s8__brand-name {
+  font-size: 1.07cqw;
+  font-weight: 700;
+  color: rgba(255,255,255,.2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Presenter + Editor loaded via external scripts */
+
+</style>
+</head>
+<body>
+
+<!-- ── Scroll / thumbnail view ───────────────────────────────── -->
+<div class="frames" id="frames">
+
+  <!-- ── SLIDE 1 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">1 / 8</span>
+  </div>
+  <div class="frame" data-slide="0">
+    <div class="viewport">
+      <div class="slide s1 slide--dark">
+        <div class="s1__left">
+          <div class="s1__label anim">SERIES A &middot; PITCH DECK &middot; 2026</div>
+          <div class="anim">
+            <div class="s1__title">Orbiter AI</div>
+            <div class="s1__subtitle">AI가 일하는 방식을 바꿉니다</div>
+            <div class="s1__desc">엔터프라이즈 AI 자동화 플랫폼 &middot; 투자유치 제안서</div>
+          </div>
+          <div style="display:flex; gap:2.92cqw;" class="anim">
+            <div style="border-right:1px solid rgba(255,255,255,.1); padding-right:2.92cqw;">
+              <div class="s1__stat-label">MRR</div>
+              <div class="s1__stat-value">₩4.2<span class="s1__stat-unit">억</span></div>
+            </div>
+            <div style="border-right:1px solid rgba(255,255,255,.1); padding-right:2.92cqw;">
+              <div class="s1__stat-label">고객사</div>
+              <div class="s1__stat-value">127<span class="s1__stat-unit">개</span></div>
+            </div>
+            <div>
+              <div class="s1__stat-label">NRR</div>
+              <div class="s1__stat-value">142<span class="s1__stat-unit">%</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="s1__right">
+          <div class="s1__emoji-collage">
+            <img class="emoji3d emoji3d--xxl" src="https://static.kid-o.cloud/ppt-designer/emoji/smilies--robot.png" alt="Robot" />
+            <img class="emoji3d emoji3d--xl"  src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--rocket.png" alt="Rocket" />
+            <img class="emoji3d emoji3d--xl"  src="https://static.kid-o.cloud/ppt-designer/emoji/activities--crystal-ball.png" alt="Crystal Ball" />
+          </div>
+        </div>
+        <div class="slide-num">01</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">2 / 8</span>
+  </div>
+  <div class="frame" data-slide="1">
+    <div class="viewport">
+      <div class="slide s2">
+        <div class="s2__left">
+          <div class="s2__label anim">Problem</div>
+          <div class="s2__title anim">기업의 80%가<br>AI 도입에 실패합니다</div>
+          <div class="s2__body anim">
+            AI 도입을 시도한 기업 중 실제 업무에 정착시키는 데 성공한 비율은 <strong>20%에 불과</strong>합니다. 복잡한 인프라 구성, 전문 인력 부재, 긴 구축 기간이 핵심 장벽입니다.
+            <br><br>
+            기존 AI 플랫폼들은 데이터 엔지니어링 팀 없이는 실질적인 워크플로우 자동화가 불가능하며, 초기 투자 대비 ROI 측정이 거의 불가능한 구조입니다.
+          </div>
+        </div>
+        <div class="s2__right">
+          <div class="s2__card anim">
+            <div class="s2__card-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--fire.png" alt="Fire" style="width:4.17cqw;height:4.17cqw;" />
+            </div>
+            <div class="s2__card-text">
+              <div class="s2__card-title">도입 비용 평균 2.3억원</div>
+              <div class="s2__card-sub">초기 구축비 + 커스터마이징 + 유지보수 합산</div>
+            </div>
+          </div>
+          <div class="s2__card anim">
+            <div class="s2__card-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/smilies--face-with-spiral-eyes.png" alt="Overwhelmed" style="width:4.17cqw;height:4.17cqw;" />
+            </div>
+            <div class="s2__card-text">
+              <div class="s2__card-title">평균 6개월 이상 소요</div>
+              <div class="s2__card-sub">요구사항 분석부터 실제 배포까지의 리드 타임</div>
+            </div>
+          </div>
+          <div class="s2__card anim">
+            <div class="s2__card-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--money-with-wings.png" alt="Money" style="width:4.17cqw;height:4.17cqw;" />
+            </div>
+            <div class="s2__card-text">
+              <div class="s2__card-title">ROI 측정 불가</div>
+              <div class="s2__card-sub">성과 지표 설계 부재로 투자 정당성 입증 불가</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-num">02</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">3 / 8</span>
+  </div>
+  <div class="frame" data-slide="2">
+    <div class="viewport">
+      <div class="slide s3">
+        <div class="s3__header">
+          <div class="s3__label anim">Solution</div>
+          <div class="s3__title anim">Orbiter AI — 30분 만에 AI 워크플로우 구축</div>
+        </div>
+        <div class="s3__cols">
+          <div class="s3__col anim">
+            <div class="s3__col-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--high-voltage.png" alt="High Voltage" style="width:5.4cqw;height:5.4cqw;filter:drop-shadow(0 0.42cqw 1.04cqw rgba(246,187,41,.3)) drop-shadow(0 0.21cqw 0.42cqw rgba(0,0,0,.12));" />
+            </div>
+            <div class="s3__col-name">원클릭 배포</div>
+            <div class="s3__col-desc">사전 구성된 AI 워크플로우 템플릿으로 설치 없이 즉시 배포. 기술 팀 없이 업무팀이 직접 운영합니다.</div>
+          </div>
+          <div class="s3__col anim">
+            <div class="s3__col-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/activities--puzzle-piece.png" alt="Puzzle Piece" style="width:5.4cqw;height:5.4cqw;filter:drop-shadow(0 0.42cqw 1.04cqw rgba(83,172,249,.3)) drop-shadow(0 0.21cqw 0.42cqw rgba(0,0,0,.12));" />
+            </div>
+            <div class="s3__col-name">노코드 통합</div>
+            <div class="s3__col-desc">Slack, Salesforce, Notion 등 200개 이상 앱과 드래그&amp;드롭으로 연결. 코드 한 줄 없이 자동화 완성.</div>
+          </div>
+          <div class="s3__col anim">
+            <div class="s3__col-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--shield.png" alt="Shield" style="width:5.4cqw;height:5.4cqw;filter:drop-shadow(0 0.42cqw 1.04cqw rgba(155,127,244,.3)) drop-shadow(0 0.21cqw 0.42cqw rgba(0,0,0,.12));" />
+            </div>
+            <div class="s3__col-name">엔터프라이즈 보안</div>
+            <div class="s3__col-desc">SOC 2 Type II, ISO 27001 인증. 온프레미스 배포 옵션, 데이터 주권 보장. 대기업 보안 정책 완벽 대응.</div>
+          </div>
+        </div>
+        <div class="slide-num">03</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">4 / 8</span>
+  </div>
+  <div class="frame" data-slide="3">
+    <div class="viewport">
+      <div class="slide s4">
+        <div class="s4__header">
+          <div class="s4__title anim">작동 방식</div>
+          <div class="s4__subtitle anim">요구사항 입력부터 실제 배포까지 4단계</div>
+        </div>
+        <div class="s4__flow">
+          <div class="s4__step anim">
+            <div class="s4__step-box">
+              <div class="s4__step-header">
+                <div class="s4__step-num">01</div>
+              </div>
+              <div class="s4__step-emoji">
+                <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--clipboard.png" alt="Clipboard" style="width:3.75cqw;height:3.75cqw;" />
+              </div>
+              <div class="s4__step-title">요구사항 입력</div>
+              <div class="s4__step-desc">자동화할 업무를 자연어로 입력하면 AI가 최적 워크플로우를 제안합니다.</div>
+            </div>
+          </div>
+          <div class="s4__arrow anim"><i class="ph-bold ph-arrow-right"></i></div>
+          <div class="s4__step anim">
+            <div class="s4__step-box">
+              <div class="s4__step-header">
+                <div class="s4__step-num" style="background:var(--secondary);">02</div>
+              </div>
+              <div class="s4__step-emoji">
+                <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--gear.png" alt="Gear" style="width:3.75cqw;height:3.75cqw;" />
+              </div>
+              <div class="s4__step-title">AI 워크플로우 생성</div>
+              <div class="s4__step-desc">LLM 기반 엔진이 최적화된 자동화 플로우를 즉시 생성합니다.</div>
+            </div>
+          </div>
+          <div class="s4__arrow anim"><i class="ph-bold ph-arrow-right"></i></div>
+          <div class="s4__step anim">
+            <div class="s4__step-box">
+              <div class="s4__step-header">
+                <div class="s4__step-num" style="background:var(--amber);">03</div>
+              </div>
+              <div class="s4__step-emoji">
+                <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--test-tube.png" alt="Test Tube" style="width:3.75cqw;height:3.75cqw;" />
+              </div>
+              <div class="s4__step-title">자동 테스트</div>
+              <div class="s4__step-desc">샌드박스 환경에서 자동 테스트를 실행하고 오류를 AI가 즉시 수정합니다.</div>
+            </div>
+          </div>
+          <div class="s4__arrow anim"><i class="ph-bold ph-arrow-right"></i></div>
+          <div class="s4__step anim">
+            <div class="s4__step-box">
+              <div class="s4__step-header">
+                <div class="s4__step-num" style="background:#2dba78;">04</div>
+              </div>
+              <div class="s4__step-emoji">
+                <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/symbols--check-mark-button.png" alt="Check" style="width:3.75cqw;height:3.75cqw;" />
+              </div>
+              <div class="s4__step-title">배포</div>
+              <div class="s4__step-desc">원클릭으로 프로덕션 환경에 즉시 배포. 실시간 모니터링 대시보드 제공.</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-num">04</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 5 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">5 / 8</span>
+  </div>
+  <div class="frame" data-slide="4">
+    <div class="viewport">
+      <div class="slide s5">
+        <div class="s5__header">
+          <div class="s5__title anim">성장 지표</div>
+          <div class="s5__subtitle anim">2025년 1월 런칭 이후 18개월 누적 · 최근 분기 기준</div>
+        </div>
+        <div class="s5__grid">
+          <div class="s5__cell">
+            <div>
+              <div class="s5__cell-label-row">
+                <img class="emoji3d emoji3d--xs" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--chart-increasing.png" alt="Chart" />
+                <div class="s5__cell-label">Monthly Recurring Revenue</div>
+              </div>
+              <div>
+                <span class="s5__cell-value">₩4.2</span><span class="s5__cell-unit">억</span>
+              </div>
+            </div>
+            <div class="s5__cell-change s5__cell-change--up"><i class="ph ph-trend-up"></i>&nbsp;전분기 대비 +38%</div>
+          </div>
+          <div class="s5__cell">
+            <div>
+              <div class="s5__cell-label-row">
+                <img class="emoji3d emoji3d--xs" src="https://static.kid-o.cloud/ppt-designer/emoji/people--busts-in-silhouette.png" alt="Customers" />
+                <div class="s5__cell-label">고객사</div>
+              </div>
+              <div>
+                <span class="s5__cell-value">127</span><span class="s5__cell-unit">개사</span>
+              </div>
+            </div>
+            <div class="s5__cell-change s5__cell-change--up"><i class="ph ph-trend-up"></i>&nbsp;이번 분기 +34개사</div>
+          </div>
+          <div class="s5__cell">
+            <div>
+              <div class="s5__cell-label-row">
+                <img class="emoji3d emoji3d--xs" src="https://static.kid-o.cloud/ppt-designer/emoji/symbols--counterclockwise-arrows-button.png" alt="Retention" />
+                <div class="s5__cell-label">Net Revenue Retention</div>
+              </div>
+              <div>
+                <span class="s5__cell-value">142</span><span class="s5__cell-unit">%</span>
+              </div>
+            </div>
+            <div class="s5__cell-change s5__cell-change--sky"><i class="ph ph-star"></i>&nbsp;업계 평균 110% 대비 +32%p</div>
+          </div>
+          <div class="s5__cell">
+            <div>
+              <div class="s5__cell-label-row">
+                <img class="emoji3d emoji3d--xs" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--globe-showing-asia-australia.png" alt="Globe" />
+                <div class="s5__cell-label">글로벌 진출</div>
+              </div>
+              <div>
+                <span class="s5__cell-value">3</span><span class="s5__cell-unit">개국</span>
+              </div>
+            </div>
+            <div class="s5__cell-change s5__cell-change--sky"><i class="ph ph-flag"></i>&nbsp;한국 · 일본 · 싱가포르</div>
+          </div>
+          <div class="s5__cell">
+            <div>
+              <div class="s5__cell-label-row">
+                <img class="emoji3d emoji3d--xs" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--high-voltage.png" alt="High Voltage" />
+                <div class="s5__cell-label">고객 리텐션</div>
+              </div>
+              <div>
+                <span class="s5__cell-value">94</span><span class="s5__cell-unit">%</span>
+              </div>
+            </div>
+            <div class="s5__cell-change s5__cell-change--up"><i class="ph ph-trend-up"></i>&nbsp;12개월 코호트 기준</div>
+          </div>
+          <div class="s5__cell">
+            <div>
+              <div class="s5__cell-label-row">
+                <img class="emoji3d emoji3d--xs" src="https://static.kid-o.cloud/ppt-designer/emoji/activities--trophy.png" alt="Trophy" />
+                <div class="s5__cell-label">Net Promoter Score</div>
+              </div>
+              <div>
+                <span class="s5__cell-value">78</span><span class="s5__cell-unit">점</span>
+              </div>
+            </div>
+            <div class="s5__cell-change s5__cell-change--violet"><i class="ph ph-heart"></i>&nbsp;SaaS 상위 5% 수준</div>
+          </div>
+        </div>
+        <div class="slide-num">05</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">6 / 8</span>
+  </div>
+  <div class="frame" data-slide="5">
+    <div class="viewport">
+      <div class="slide s6">
+        <div class="s6__header">
+          <div class="s6__title anim">비즈니스 모델</div>
+          <div class="s6__subtitle anim">SaaS 구독 기반 · 연 결제 시 20% 할인</div>
+        </div>
+        <div class="s6__tiers">
+          <div class="s6__tier anim">
+            <div class="s6__tier-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/animals--seedling.png" alt="Seedling" style="width:5cqw;height:5cqw;filter:drop-shadow(0 0.31cqw 0.83cqw rgba(45,186,120,.25));" />
+            </div>
+            <div class="s6__tier-name">Starter</div>
+            <div class="s6__tier-price">₩99만</div>
+            <div class="s6__tier-period">/월 · 최대 10명</div>
+            <div class="s6__tier-divider"></div>
+            <ul class="s6__tier-features">
+              <li class="s6__tier-feature">워크플로우 최대 20개</li>
+              <li class="s6__tier-feature">50개 앱 연동</li>
+              <li class="s6__tier-feature">월 5만 건 실행</li>
+              <li class="s6__tier-feature">이메일 지원</li>
+            </ul>
+          </div>
+          <div class="s6__tier s6__tier--featured anim">
+            <div class="s6__tier-badge">Most Popular</div>
+            <div class="s6__tier-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/animals--deciduous-tree.png" alt="Tree" style="width:5cqw;height:5cqw;filter:drop-shadow(0 0.31cqw 1.04cqw rgba(83,172,249,.35));" />
+            </div>
+            <div class="s6__tier-name">Growth</div>
+            <div class="s6__tier-price">₩299만</div>
+            <div class="s6__tier-period">/월 · 최대 50명</div>
+            <div class="s6__tier-divider"></div>
+            <ul class="s6__tier-features">
+              <li class="s6__tier-feature">무제한 워크플로우</li>
+              <li class="s6__tier-feature">200개 앱 연동</li>
+              <li class="s6__tier-feature">월 50만 건 실행</li>
+              <li class="s6__tier-feature">전담 CS + Slack 지원</li>
+            </ul>
+          </div>
+          <div class="s6__tier anim">
+            <div class="s6__tier-emoji">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--mount-fuji.png" alt="Mountain" style="width:5cqw;height:5cqw;filter:drop-shadow(0 0.31cqw 0.83cqw rgba(155,127,244,.25));" />
+            </div>
+            <div class="s6__tier-name">Enterprise</div>
+            <div class="s6__tier-price" style="font-size:1.98cqw;">Custom</div>
+            <div class="s6__tier-period">인원 무제한</div>
+            <div class="s6__tier-divider"></div>
+            <ul class="s6__tier-features">
+              <li class="s6__tier-feature">온프레미스 배포 옵션</li>
+              <li class="s6__tier-feature">SLA 99.99% 보장</li>
+              <li class="s6__tier-feature">전담 엔지니어 지원</li>
+              <li class="s6__tier-feature">보안 감사 리포트</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slide-num">06</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 7 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">7 / 8</span>
+  </div>
+  <div class="frame" data-slide="6">
+    <div class="viewport">
+      <div class="slide s7">
+        <div class="s7__header">
+          <div class="s7__label anim">Team</div>
+          <div class="s7__title anim">팀</div>
+        </div>
+        <div class="s7__members">
+          <div class="s7__member anim">
+            <div class="s7__member-avatar">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/people--man-technologist.png" alt="CEO" style="width:5.4cqw;height:5.4cqw;" />
+            </div>
+            <div class="s7__member-name">김준혁</div>
+            <div class="s7__member-role">CEO &amp; Co-founder</div>
+            <div class="s7__member-bg">AI/ML 10년 경력 · 공학 박사</div>
+          </div>
+          <div class="s7__member anim">
+            <div class="s7__member-avatar">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/people--woman-technologist.png" alt="CTO" style="width:5.4cqw;height:5.4cqw;" />
+            </div>
+            <div class="s7__member-name">이서연</div>
+            <div class="s7__member-role">CTO &amp; Co-founder</div>
+            <div class="s7__member-bg">엔터프라이즈 플랫폼 리드 10년 · 포항공대 CS</div>
+          </div>
+          <div class="s7__member anim">
+            <div class="s7__member-avatar">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/people--man-office-worker.png" alt="COO" style="width:5.4cqw;height:5.4cqw;" />
+            </div>
+            <div class="s7__member-name">박민준</div>
+            <div class="s7__member-role">COO</div>
+            <div class="s7__member-bg">전략 컨설팅 8년 · 기업 디지털 전환 전문</div>
+          </div>
+          <div class="s7__member anim">
+            <div class="s7__member-avatar">
+              <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/people--woman-scientist.png" alt="Head of AI" style="width:5.4cqw;height:5.4cqw;" />
+            </div>
+            <div class="s7__member-name">최유진</div>
+            <div class="s7__member-role">Head of AI</div>
+            <div class="s7__member-bg">AI 리서치 리드 · NeurIPS 논문 5편 · 이학 박사</div>
+          </div>
+        </div>
+        <div class="slide-num">07</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 8 ── -->
+  <div class="page-header">
+    <span class="page-header__title">Orbiter AI — Pitch Deck 2026</span>
+    <span class="page-header__count">8 / 8</span>
+  </div>
+  <div class="frame" data-slide="7">
+    <div class="viewport">
+      <div class="slide s8 slide--dark">
+        <div class="s8__left">
+          <div>
+            <div class="s8__label anim">Series A Round</div>
+            <div class="s8__title anim">Series A 투자 라운드</div>
+          </div>
+          <div class="anim">
+            <div class="s8__big-num">50억원</div>
+            <div class="s8__subtitle">AI 자동화의 다음 단계를 함께<br>글로벌 확장과 제품 고도화에 집중 투자합니다</div>
+          </div>
+          <div class="s8__plan anim">
+            <div class="s8__plan-item">
+              <div class="s8__plan-emoji">
+                <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--microscope.png" alt="R&D" style="width:2.5cqw;height:2.5cqw;" />
+              </div>
+              <div class="s8__plan-bar-wrap">
+                <div class="s8__plan-label">R&amp;D 강화 <span class="s8__plan-pct">60%</span></div>
+                <div class="s8__plan-bar"><div class="s8__plan-bar-fill s8__plan-bar-fill--sky" style="width:60%;"></div></div>
+              </div>
+            </div>
+            <div class="s8__plan-item">
+              <div class="s8__plan-emoji">
+                <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--globe-showing-asia-australia.png" alt="Global" style="width:2.5cqw;height:2.5cqw;" />
+              </div>
+              <div class="s8__plan-bar-wrap">
+                <div class="s8__plan-label">글로벌 진출 <span class="s8__plan-pct">25%</span></div>
+                <div class="s8__plan-bar"><div class="s8__plan-bar-fill s8__plan-bar-fill--violet" style="width:25%;"></div></div>
+              </div>
+            </div>
+            <div class="s8__plan-item">
+              <div class="s8__plan-emoji">
+                <img class="emoji3d" src="https://static.kid-o.cloud/ppt-designer/emoji/people--busts-in-silhouette.png" alt="Team" style="width:2.5cqw;height:2.5cqw;" />
+              </div>
+              <div class="s8__plan-bar-wrap">
+                <div class="s8__plan-label">팀 확장 <span class="s8__plan-pct">15%</span></div>
+                <div class="s8__plan-bar"><div class="s8__plan-bar-fill s8__plan-bar-fill--amber" style="width:15%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="s8__right">
+          <div>
+            <div class="s8__contact-label">Contact</div>
+            <div class="s8__contacts">
+              <div class="s8__contact-item anim">
+                <div class="s8__contact-icon"><i class="ph ph-user"></i></div>
+                <div>
+                  <div class="s8__contact-name">김준혁 · CEO</div>
+                  <div class="s8__contact-value">jun@orbiter.ai</div>
+                </div>
+              </div>
+              <div class="s8__contact-item anim">
+                <div class="s8__contact-icon"><i class="ph ph-phone"></i></div>
+                <div>
+                  <div class="s8__contact-name">02-1234-5678</div>
+                  <div class="s8__contact-value">평일 09:00 — 18:00</div>
+                </div>
+              </div>
+              <div class="s8__contact-item anim">
+                <div class="s8__contact-icon"><i class="ph ph-globe"></i></div>
+                <div>
+                  <div class="s8__contact-name">orbiter.ai</div>
+                  <div class="s8__contact-value">제품 데모 · 투자자 자료실</div>
+                </div>
+              </div>
+              <div class="s8__contact-item anim">
+                <div class="s8__contact-icon"><i class="ph ph-buildings"></i></div>
+                <div>
+                  <div class="s8__contact-name">서울시 성동구 왕십리로 000</div>
+                  <div class="s8__contact-value">Orbiter AI 본사</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="s8__brand">
+            <div class="s8__brand-dot"></div>
+            <div class="s8__brand-name">Orbiter AI · 2026</div>
+          </div>
+        </div>
+        <img
+          class="s8__deco-rocket"
+          src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--rocket.png"
+          alt=""
+          aria-hidden="true"
+          style="width:8.33cqw;height:8.33cqw;"
+        />
+        <div class="slide-num">08</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.frames -->
+
+<script src="../../scripts/presenter.js"></script>
+<script src="../../scripts/editor.js"></script>
+</body>
+</html>
