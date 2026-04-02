@@ -7,9 +7,13 @@
 디자인 토큰을 기반으로 HTML + PDF 프레젠테이션을 제작하는 Claude Code Skill입니다.
 가볍게 고퀄리티의 제안서를 만들어보세요!
 
+👉 [예시 HTML 확인해보기](examples/startup-pitch/startup-pitch.html)
+
 ## 스킬 적용 전 vs 후
 
 같은 프롬프트 `"카페 신제품 말차라떼 제안서 만들어줘"`로 생성한 결과 비교.
+
+> 직접 다운받아서 비교해보세요.
 
 ### HTML
 
@@ -24,8 +28,6 @@
 |:--------------------:|:---------------------:|
 | ![baseline pptx](examples/comparison/baseline/preview/pptx-slide-1.jpg) | ![with-skill pptx](examples/comparison/with-skill/preview/pptx-slide-1.jpg) |
 | [baseline.pptx](examples/comparison/baseline/baseline.pptx) | [with-skill.pptx](examples/comparison/with-skill/with-skill.pptx) |
-
-> 직접 다운받아서 비교해보세요.
 
 ## 어떤 기능을 제공하나요?
 
