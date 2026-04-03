@@ -112,8 +112,8 @@ Primary output is a single HTML file containing only slide content. Interactivit
     </div>
     ...repeat per slide...
   </div>
-  <script src="scripts/presenter.js"></script>
-  <script src="scripts/editor.js"></script>
+  <script src="https://static.kid-o.cloud/ppt-designer/scripts/presenter.js"></script>
+  <script src="https://static.kid-o.cloud/ppt-designer/scripts/editor.js"></script>
 </body>
 ```
 
@@ -123,10 +123,10 @@ Primary output is a single HTML file containing only slide content. Interactivit
 - ALL sizing in `cqw` units (1px ≈ 0.104cqw at 960px basis)
 - Title: 2.3-2.5cqw / Body: 1.3-1.4cqw / Caption: 1.0cqw / Emoji: 2.5-5cqw
 
-**External Scripts (do NOT regenerate these):**
-- `scripts/presenter.js` — 프레젠테이션 모드 (버튼, 오버레이, 네비, 키보드, 터치)
-- `scripts/editor.js` — 스타일 편집기 (토큰 편집, 요소 편집, undo, 저장, 다운로드)
-- `scripts/export-pdf.py` — HTML → 300 DPI PDF
+**External Scripts (CDN — 항상 절대경로로 포함, 재생성 금지):**
+- `https://static.kid-o.cloud/ppt-designer/scripts/presenter.js` — 프레젠테이션 모드
+- `https://static.kid-o.cloud/ppt-designer/scripts/editor.js` — 스타일 편집기
+- 생성하는 모든 HTML에 반드시 이 두 스크립트 태그를 포함할 것. 상대경로 사용 금지.
 
 **3D Emoji (CDN):**
 ```
