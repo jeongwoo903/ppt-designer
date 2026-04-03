@@ -964,10 +964,15 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
    * vs a "container" (has child block elements like divs, lists, etc.)
    */
   function isLeafElement(el) {
-    if (el.tagName === 'IMG' || el.tagName === 'SPAN') return true;
+    if (el.tagName === 'IMG') return true;
+    // Leaf span with no child elements (pure text)
+    if (el.tagName === 'SPAN' && el.children.length === 0) return true;
+    // Has ANY child elements with BEM class → container
+    if (el.querySelector('[class*="__"]')) return false;
     // Has block-level children → container
-    const blockChildren = el.querySelectorAll('div, ul, ol, table, section, article, nav, header, footer');
-    return blockChildren.length === 0;
+    if (el.querySelector('div, ul, ol, table, section, article, nav, header, footer, img')) return false;
+    // No meaningful child elements → leaf
+    return true;
   }
 
   /** Reads computed style values and converts px → cqw. */
