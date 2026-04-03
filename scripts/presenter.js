@@ -441,6 +441,7 @@ body.sp-presenting .frames { pointer-events: none; }
 
     overlay.classList.remove('active');
     document.body.classList.remove('sp-presenting');
+    document.body.classList.remove('slide-editing');
     spEsc.style.opacity = '1';
     btn.focus();
   }
