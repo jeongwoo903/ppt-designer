@@ -311,10 +311,12 @@ DO NOT put a vertical `|` line (accent bar) to the left of slide titles. This is
 Content runs to the bottom edge of the slide. Always maintain at least 0.55" from the bottom.
 If content doesn't fit, reduce content — don't sacrifice margins.
 
-### 3. Korean Text Too Large
-AI tends to make titles too big (36pt+). Korean characters are visually denser and heavier than Latin — they feel bigger at the same point size. Read references/korean-typography.md.
+### 3. Korean Text Too Large / Too Heavy
+AI tends to make titles too big (36pt+) and too bold (900). Korean characters are visually denser and heavier than Latin — they feel bigger at the same point size. Read references/korean-typography.md.
 - Slide title: 22-26pt is the sweet spot, NOT 28-36pt
 - Body text: 11-13pt
+- font-weight: 800 (NOT 900 — 900은 한국어에서 뭉쳐 보임) (ADR-024)
+- letter-spacing: -0.02em (기본값 0은 글자가 벌어져 보임) (ADR-024)
 - If it feels bold enough in English, it's too big for Korean
 
 ### 4. Mechanical Grid Distribution
