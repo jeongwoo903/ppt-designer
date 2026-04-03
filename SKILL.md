@@ -129,15 +129,42 @@ Primary output is a single HTML file containing only slide content. Interactivit
 - 코드 블록: `white-space: pre` 필수 (ADR-021)
 - Before/After 등 상태 레이블은 chip 형태 허용 (ADR-022)
 
-**Mixed-style text (숫자+단위 등):**
-KPI 숫자나 강조 텍스트에서 스타일이 다른 부분은 반드시 `<span>`으로 분리한다.
-editor.js가 개별 span을 선택하여 폰트 크기/색상을 따로 수정할 수 있게 하기 위함.
-```html
-<!-- ✅ 올바름 — 개별 편집 가능 -->
-<div class="s6__value"><span style="font-size:2.8cqw;font-weight:800;">48,200</span><span style="font-size:1.2cqw;">명</span></div>
+**Mixed-style text — span 분리 규칙:**
 
-<!-- ❌ 잘못됨 — "48,200명" 전체가 하나의 텍스트, 부분 편집 불가 -->
-<div class="s6__value" style="font-size:2.8cqw;">48,200명</div>
+editor.js가 개별 span을 선택하여 폰트 크기/색상을 따로 수정할 수 있게 하기 위해,
+**텍스트 안에서 스타일이 다르거나 달라질 수 있는 부분은 반드시 `<span>`으로 분리**한다.
+
+이것은 모든 슬라이드 생성 시 지켜야 하는 필수 규칙이다.
+
+분리해야 하는 패턴:
+| 패턴 | ✅ 올바름 | ❌ 잘못됨 |
+|------|----------|----------|
+| 숫자+단위 | `<span>48,200</span><span>명</span>` | `48,200명` |
+| 통화+금액 | `<span>₩4.2</span><span>억</span>` | `₩4.2억` |
+| 숫자+퍼센트 | `<span>142</span><span>%</span>` | `142%` |
+| 숫자+순위 | `<span>3</span><span>위</span>` | `3위` |
+| 금액+원 | `<span>5,500</span><span>원</span>` | `5,500원` |
+| 부호+숫자 | `<span>-12</span><span>%</span>` | `-12%` |
+| 기간 | `<span>6</span><span>개월</span>` | `6개월` |
+
+적용 위치:
+- KPI 숫자 (슬라이드의 핵심 수치)
+- 가격 표시
+- 통계/지표 값
+- 커버 슬라이드의 핵심 수치
+- 모든 곳에서 숫자와 단위가 함께 표시되는 경우
+
+**기존 BEM 클래스가 있는 span과 함께 사용 가능:**
+```html
+<!-- 부모에 BEM 클래스, 자식 span은 클래스 없어도 됨 -->
+<div class="s1__stat-value"><span>₩4.2</span><span class="s1__stat-unit">억</span></div>
+```
+
+순수 텍스트 (숫자/단위 혼합이 아닌 것)는 분리 불필요:
+```html
+<!-- 이건 분리 안 해도 됨 -->
+<div class="s7__member-name">김준혁</div>
+<div class="s3__col-name">원클릭 배포</div>
 ```
 
 **External Scripts (CDN — 항상 절대경로로 포함, 재생성 금지):**
