@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>카페 신제품 말차라떼 제안서</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+/>
+<style>
+/* ── Reset ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary:        #7BAE5E;
+  --primary-dark:   #4A7C3F;
+  --bg-main:        #FAFAF7;
+  --surface:        #FFFFFF;
+  --text-primary:   #2D2A26;
+  --text-body:      #5C5650;
+  --text-muted:     #A09890;
+  --accent:         #D4A574;
+  --dark-bg:        #1E1D1A;
+  --dark-surface:   #2D2A26;
+  --divider:        #E8E4DE;
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+}
+
+/* ── Scroll / thumbnail mode ───────────────────────────────────── */
+html { background: #e5e3dd; }
+body { background: #e5e3dd; padding: 40px 20px 80px; min-height: 100vh; }
+
+/* ── Page header ─────────────────────────────────────────────────── */
+.page-header {
+  width: 960px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+.page-header__title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: .04em;
+}
+.page-header__count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #b5b0a8;
+  letter-spacing: .02em;
+}
+
+/* ── Frame wrapper ───────────────────────────────────────────────── */
+.frame { margin: 0 auto 32px; width: 960px; }
+
+/* ── Viewport — container-query root ────────────────────────────── */
+.viewport {
+  width: 960px;
+  height: 540px;
+  position: relative;
+  overflow: hidden;
+  container-type: inline-size;
+  border-radius: 6px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.06);
+}
+
+/* ── Slide base ──────────────────────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+/* ── 3D Emoji helper ─────────────────────────────────────────────── */
+.emoji3d {
+  display: inline-block;
+  filter: drop-shadow(0 0.21cqw 0.42cqw rgba(0,0,0,0.12));
+  flex-shrink: 0;
+}
+.emoji3d--xxl { width: 12.5cqw;  height: 12.5cqw;  }
+.emoji3d--xl  { width: 10.42cqw; height: 10.42cqw; }
+.emoji3d--lg  { width: 8.33cqw;  height: 8.33cqw;  }
+.emoji3d--md  { width: 5cqw;     height: 5cqw;     }
+.emoji3d--sm  { width: 3.75cqw;  height: 3.75cqw;  }
+.emoji3d--xs  { width: 2.5cqw;   height: 2.5cqw;   }
+
+/* ── Slide number ────────────────────────────────────────────────── */
+.slide-num {
+  position: absolute;
+  bottom: 1.87cqw;
+  right: 2.7cqw;
+  font-size: 1.0cqw;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  z-index: 10;
+}
+.slide--dark .slide-num { color: rgba(255,255,255,.25); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 1 — Cover (Dark)
+   ═══════════════════════════════════════════════════════════════════ */
+.s1 {
+  background: var(--dark-bg);
+  display: grid;
+  grid-template-columns: 1fr 41.67cqw;
+}
+
+.s1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 75% 50%, rgba(123,174,94,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 55% at 20% 80%, rgba(212,165,116,.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.s1__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5.4cqw 2cqw 5.4cqw 5.7cqw;
+  position: relative;
+  z-index: 2;
+}
+
+.s1__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 1.5cqw;
+}
+
+.s1__title {
+  font-size: 3.8cqw;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -.02em;
+}
+
+.s1__subtitle {
+  margin-top: 1.6cqw;
+  font-size: 1.46cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,.50);
+  line-height: 1.6;
+}
+
+.s1__meta {
+  margin-top: 3.5cqw;
+  font-size: 1.0cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,.28);
+  letter-spacing: .03em;
+}
+
+.s1__right {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.s1__right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.s1__right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--dark-bg) 0%, rgba(30,29,26,.4) 40%, transparent 100%);
+  pointer-events: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 2 — Problem
+   ═══════════════════════════════════════════════════════════════════ */
+.s2 {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5cqw 5.7cqw;
+}
+
+.s2__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2cqw;
+}
+
+.s2__title {
+  font-size: 2.4cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  margin-bottom: 2.5cqw;
+}
+
+.s2__cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.08cqw;
+}
+
+.s2__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8cqw;
+}
+
+.s2__item-num {
+  font-size: 2.6cqw;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.s2__item-title {
+  font-size: 1.46cqw;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.s2__item-desc {
+  font-size: 1.15cqw;
+  color: var(--text-body);
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.s2__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--divider);
+  margin: 2.5cqw 0 1.5cqw;
+}
+
+.s2__footer {
+  font-size: 1.15cqw;
+  color: var(--text-muted);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 3 — Solution (말차라떼 3종)
+   ═══════════════════════════════════════════════════════════════════ */
+.s3 {
+  background: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+  padding: 4.58cqw 5.7cqw 4.17cqw;
+}
+
+.s3__header { margin-bottom: 3cqw; }
+
+.s3__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.7cqw;
+}
+
+.s3__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.s3__cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.67cqw;
+  flex: 1;
+}
+
+.s3__col {
+  background: var(--surface);
+  border-radius: 1.25cqw;
+  padding: 2.5cqw 2.08cqw 2.08cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--divider);
+  position: relative;
+  overflow: hidden;
+}
+
+.s3__col::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0.31cqw;
+  border-radius: 1.25cqw 1.25cqw 0 0;
+}
+.s3__col:nth-child(1)::before { background: var(--primary); }
+.s3__col:nth-child(2)::before { background: var(--accent); }
+.s3__col:nth-child(3)::before { background: var(--primary-dark); }
+
+.s3__col-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25cqw;
+}
+
+.s3__col-name {
+  font-size: 1.56cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.5cqw;
+}
+
+.s3__col-price {
+  font-size: 1.15cqw;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 0.63cqw;
+}
+
+.s3__col-desc {
+  font-size: 1.15cqw;
+  color: var(--text-body);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 4 — Target
+   ═══════════════════════════════════════════════════════════════════ */
+.s4 {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  padding: 4.58cqw 5.7cqw 4.17cqw;
+}
+
+.s4__header { margin-bottom: 3cqw; }
+
+.s4__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.7cqw;
+}
+
+.s4__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s4__subtitle {
+  font-size: 1.2cqw;
+  color: var(--text-muted);
+  margin-top: 0.42cqw;
+}
+
+.s4__cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.67cqw;
+  flex: 1;
+}
+
+.s4__col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2cqw;
+  padding: 2.29cqw 2.08cqw 2.08cqw;
+  background: var(--bg-main);
+  border-radius: 1.04cqw;
+  border: 1px solid var(--divider);
+}
+
+.s4__col-header {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+}
+
+.s4__col-group {
+  font-size: 1.4cqw;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.s4__col-age {
+  font-size: 1.04cqw;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.s4__col-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.52cqw;
+}
+
+.s4__col-list li {
+  font-size: 1.15cqw;
+  color: var(--text-body);
+  line-height: 1.55;
+  font-weight: 400;
+  padding-left: 1.2cqw;
+  position: relative;
+}
+
+.s4__col-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 5 — Product Lineup (Table)
+   ═══════════════════════════════════════════════════════════════════ */
+.s5 {
+  background: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+  padding: 4.58cqw 5.7cqw 4.17cqw;
+}
+
+.s5__header { margin-bottom: 2.5cqw; }
+
+.s5__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.7cqw;
+}
+
+.s5__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s5__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.s5__table thead th {
+  font-size: 1.1cqw;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 1.2cqw 1.46cqw;
+  border-bottom: 2px solid var(--divider);
+  letter-spacing: .02em;
+}
+
+.s5__table tbody td {
+  font-size: 1.25cqw;
+  color: var(--text-primary);
+  padding: 1.35cqw 1.46cqw;
+  border-bottom: 1px solid var(--divider);
+  font-weight: 400;
+}
+
+.s5__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.s5__table tbody td:first-child {
+  font-weight: 700;
+}
+
+.s5__table .highlight {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+.s5__footer {
+  margin-top: 2cqw;
+  font-size: 1.0cqw;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 6 — KPI (2x3 grid)
+   ═══════════════════════════════════════════════════════════════════ */
+.s6 {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  padding: 4.58cqw 5.7cqw 4.17cqw;
+}
+
+.s6__header { margin-bottom: 2.5cqw; }
+
+.s6__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.7cqw;
+}
+
+.s6__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s6__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.46cqw;
+  flex: 1;
+}
+
+.s6__cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2cqw;
+  padding: 1.67cqw 1.46cqw;
+  border-bottom: 1px solid var(--divider);
+}
+
+.s6__cell:nth-child(n+4) {
+  border-bottom: none;
+}
+
+.s6__cell-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s6__cell-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.31cqw;
+}
+
+.s6__cell-label {
+  font-size: 1.0cqw;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.s6__cell-value {
+  font-size: 2.4cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.s6__cell-unit {
+  font-size: 1.15cqw;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 0.21cqw;
+}
+
+.s6__cell-note {
+  font-size: 1.0cqw;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 0.1cqw;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 7 — Timeline (4 steps)
+   ═══════════════════════════════════════════════════════════════════ */
+.s7 {
+  background: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+  padding: 4.58cqw 5.7cqw 4.17cqw;
+}
+
+.s7__header { margin-bottom: 3cqw; }
+
+.s7__label {
+  font-size: 1.04cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.7cqw;
+}
+
+.s7__title {
+  font-size: 2.3cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.02em;
+}
+
+.s7__flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  flex: 1;
+}
+
+.s7__step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s7__step-box {
+  background: var(--surface);
+  border-radius: 1.04cqw;
+  padding: 2.08cqw 1.67cqw 1.87cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.83cqw;
+  flex: 1;
+  border: 1px solid var(--divider);
+}
+
+.s7__step-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s7__step-phase {
+  font-size: 0.94cqw;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: .04em;
+}
+
+.s7__step-name {
+  font-size: 1.35cqw;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.s7__step-desc {
+  font-size: 1.04cqw;
+  color: var(--text-body);
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+.s7__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.13cqw;
+  flex-shrink: 0;
+}
+
+.s7__arrow svg {
+  width: 1.67cqw;
+  height: 1.67cqw;
+  color: var(--text-muted);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 8 — Quote
+   ═══════════════════════════════════════════════════════════════════ */
+.s8 {
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5.4cqw 8.33cqw;
+  text-align: center;
+}
+
+.s8__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5cqw;
+}
+
+.s8__emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s8__quote {
+  font-size: 2.6cqw;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.35;
+  letter-spacing: -.02em;
+}
+
+.s8__quote em {
+  font-style: normal;
+  color: var(--primary);
+}
+
+.s8__attribution {
+  font-size: 1.15cqw;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 0.5cqw;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 9 — Closing (Dark)
+   ═══════════════════════════════════════════════════════════════════ */
+.s9 {
+  background: var(--dark-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5.4cqw 8.33cqw;
+}
+
+.s9::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(123,174,94,.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.s9__emoji {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5cqw;
+}
+
+.s9__title {
+  position: relative;
+  z-index: 1;
+  font-size: 3.2cqw;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  margin-bottom: 1.5cqw;
+}
+
+.s9__desc {
+  position: relative;
+  z-index: 1;
+  font-size: 1.35cqw;
+  color: rgba(255,255,255,.50);
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 3cqw;
+  max-width: 52.08cqw;
+}
+
+.s9__cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.63cqw;
+  background: var(--primary);
+  color: #fff;
+  font-size: 1.25cqw;
+  font-weight: 700;
+  padding: 1.04cqw 2.5cqw;
+  border-radius: 0.52cqw;
+  letter-spacing: .01em;
+}
+
+.s9__contact {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.5cqw;
+  font-size: 1.0cqw;
+  color: rgba(255,255,255,.30);
+  font-weight: 400;
+}
+
+</style>
+</head>
+<body>
+
+<div class="frames">
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 1 — Cover (Dark)                                     -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">1 / 9</span>
+  </div>
+  <div class="frame" data-slide="0">
+    <div class="viewport">
+      <div class="slide slide--dark s1">
+        <div class="s1__left">
+          <span class="s1__label">New Product Proposal</span>
+          <h1 class="s1__title">카페 신제품<br>말차라떼 제안서</h1>
+          <p class="s1__subtitle">프리미엄 말차 음료 라인업으로<br>시즌 매출과 브랜드 가치를 함께 높입니다.</p>
+          <p class="s1__meta">2026. 04 · 음료개발팀</p>
+        </div>
+        <div class="s1__right">
+          <img src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=800&q=80" alt="Matcha Latte" />
+        </div>
+        <span class="slide-num">01</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 2 — Problem                                          -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">2 / 9</span>
+  </div>
+  <div class="frame" data-slide="1">
+    <div class="viewport">
+      <div class="slide s2">
+        <span class="s2__label">Problem</span>
+        <h2 class="s2__title">시즌 한정 메뉴 부재로<br>고객 이탈이 가속되고 있습니다</h2>
+        <div class="s2__cols">
+          <div class="s2__item">
+            <span class="s2__item-num">68%</span>
+            <span class="s2__item-title">시즌 메뉴 기대 고객</span>
+            <p class="s2__item-desc">설문 응답자 중 68%가 계절마다 새로운 메뉴를 기대한다고 답변했습니다.</p>
+          </div>
+          <div class="s2__item">
+            <span class="s2__item-num">-12%</span>
+            <span class="s2__item-title">전년 대비 재방문율</span>
+            <p class="s2__item-desc">신메뉴 없는 분기의 재방문율이 전년 동기 대비 12% 하락했습니다.</p>
+          </div>
+          <div class="s2__item">
+            <span class="s2__item-num">3위</span>
+            <span class="s2__item-title">말차 검색량 순위</span>
+            <p class="s2__item-desc">올봄 음료 검색 트렌드에서 말차가 3위를 차지, 수요가 검증되었습니다.</p>
+          </div>
+        </div>
+        <div class="s2__divider"></div>
+        <p class="s2__footer">출처: 2026 Q1 내부 설문조사 (n=1,240) · 네이버 데이터랩 음료 카테고리</p>
+        <span class="slide-num">02</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 3 — Solution (말차라떼 3종)                           -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">3 / 9</span>
+  </div>
+  <div class="frame" data-slide="2">
+    <div class="viewport">
+      <div class="slide s3">
+        <div class="s3__header">
+          <span class="s3__label">Solution</span>
+          <h2 class="s3__title">말차라떼 3종 라인업</h2>
+        </div>
+        <div class="s3__cols">
+          <div class="s3__col">
+            <div class="s3__col-emoji">
+              <img class="emoji3d emoji3d--lg" src="https://static.kid-o.cloud/ppt-designer/emoji/animals--herb.png" alt="허브">
+            </div>
+            <span class="s3__col-name">클래식 말차라떼</span>
+            <span class="s3__col-price">HOT / ICE · 5,500원</span>
+            <p class="s3__col-desc">교토산 말차 파우더와<br>부드러운 우유의 정석 조합</p>
+          </div>
+          <div class="s3__col">
+            <div class="s3__col-emoji">
+              <img class="emoji3d emoji3d--lg" src="https://static.kid-o.cloud/ppt-designer/emoji/food--bubble-tea.png" alt="버블티">
+            </div>
+            <span class="s3__col-name">말차 라떼 프라페</span>
+            <span class="s3__col-price">ICE ONLY · 6,200원</span>
+            <p class="s3__col-desc">진한 말차와 바닐라 아이스크림,<br>쫄깃한 말차 젤리 토핑</p>
+          </div>
+          <div class="s3__col">
+            <div class="s3__col-emoji">
+              <img class="emoji3d emoji3d--lg" src="https://static.kid-o.cloud/ppt-designer/emoji/food--hot-beverage.png" alt="핫음료">
+            </div>
+            <span class="s3__col-name">흑당 말차라떼</span>
+            <span class="s3__col-price">HOT / ICE · 6,000원</span>
+            <p class="s3__col-desc">흑당 시럽과 말차의 달콤 쌉싸름한<br>프리미엄 시그니처 음료</p>
+          </div>
+        </div>
+        <span class="slide-num">03</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 4 — Target                                           -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">4 / 9</span>
+  </div>
+  <div class="frame" data-slide="3">
+    <div class="viewport">
+      <div class="slide s4">
+        <div class="s4__header">
+          <span class="s4__label">Target</span>
+          <h2 class="s4__title">타겟 고객 3그룹</h2>
+          <p class="s4__subtitle">말차 음료의 주요 소비층과 유입 전략</p>
+        </div>
+        <div class="s4__cols">
+          <div class="s4__col">
+            <div class="s4__col-header">
+              <img class="emoji3d emoji3d--md" src="https://static.kid-o.cloud/ppt-designer/emoji/people--woman-raising-hand.png" alt="여성">
+              <div>
+                <span class="s4__col-group">MZ 여성</span>
+                <span class="s4__col-age">20 - 34세</span>
+              </div>
+            </div>
+            <ul class="s4__col-list">
+              <li>SNS 공유 선호, 비주얼 중시</li>
+              <li>말차 디저트 검색량 1위 그룹</li>
+              <li>신메뉴 체험에 적극적</li>
+            </ul>
+          </div>
+          <div class="s4__col">
+            <div class="s4__col-header">
+              <img class="emoji3d emoji3d--md" src="https://static.kid-o.cloud/ppt-designer/emoji/people--man-office-worker.png" alt="직장인">
+              <div>
+                <span class="s4__col-group">직장인</span>
+                <span class="s4__col-age">25 - 45세</span>
+              </div>
+            </div>
+            <ul class="s4__col-list">
+              <li>점심 후 카페인 음료 수요</li>
+              <li>커피 외 대안 음료 탐색</li>
+              <li>건강 지향 소비 증가</li>
+            </ul>
+          </div>
+          <div class="s4__col">
+            <div class="s4__col-header">
+              <img class="emoji3d emoji3d--md" src="https://static.kid-o.cloud/ppt-designer/emoji/people--girl.png" alt="학생">
+              <div>
+                <span class="s4__col-group">10대 학생</span>
+                <span class="s4__col-age">14 - 19세</span>
+              </div>
+            </div>
+            <ul class="s4__col-list">
+              <li>달콤한 음료 선호</li>
+              <li>프라페·토핑 메뉴 구매율 높음</li>
+              <li>또래 집단 구전 효과 큼</li>
+            </ul>
+          </div>
+        </div>
+        <span class="slide-num">04</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 5 — Product Lineup (Table)                           -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">5 / 9</span>
+  </div>
+  <div class="frame" data-slide="4">
+    <div class="viewport">
+      <div class="slide s5">
+        <div class="s5__header">
+          <span class="s5__label">Product</span>
+          <h2 class="s5__title">원가 구조 및 판매가</h2>
+        </div>
+        <table class="s5__table">
+          <thead>
+            <tr>
+              <th>제품명</th>
+              <th>주요 원료</th>
+              <th>원가</th>
+              <th>판매가</th>
+              <th>마진율</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>클래식 말차라떼</td>
+              <td>교토산 말차, 우유, 시럽</td>
+              <td>1,650원</td>
+              <td>5,500원</td>
+              <td class="highlight">70%</td>
+            </tr>
+            <tr>
+              <td>말차 라떼 프라페</td>
+              <td>말차, 바닐라아이스크림, 말차젤리</td>
+              <td>2,100원</td>
+              <td>6,200원</td>
+              <td class="highlight">66%</td>
+            </tr>
+            <tr>
+              <td>흑당 말차라떼</td>
+              <td>말차, 흑당시럽, 우유</td>
+              <td>1,800원</td>
+              <td>6,000원</td>
+              <td class="highlight">70%</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="s5__footer">* 원가는 원재료비 기준이며 인건비·임대료 별도 / 마진율 = (판매가-원가)/판매가</p>
+        <span class="slide-num">05</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 6 — KPI (2x3 grid)                                   -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">6 / 9</span>
+  </div>
+  <div class="frame" data-slide="5">
+    <div class="viewport">
+      <div class="slide s6">
+        <div class="s6__header">
+          <span class="s6__label">KPI</span>
+          <h2 class="s6__title">출시 후 3개월 목표</h2>
+        </div>
+        <div class="s6__grid">
+          <div class="s6__cell">
+            <div class="s6__cell-icon">
+              <img class="emoji3d emoji3d--sm" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--chart-increasing.png" alt="차트">
+            </div>
+            <div class="s6__cell-content">
+              <span class="s6__cell-label">월 평균 판매량</span>
+              <span class="s6__cell-value">1,200<span class="s6__cell-unit">잔</span></span>
+              <span class="s6__cell-note">전체 음료 매출의 15%</span>
+            </div>
+          </div>
+          <div class="s6__cell">
+            <div class="s6__cell-icon">
+              <img class="emoji3d emoji3d--sm" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--money-bag.png" alt="돈주머니">
+            </div>
+            <div class="s6__cell-content">
+              <span class="s6__cell-label">월 매출 목표</span>
+              <span class="s6__cell-value">720<span class="s6__cell-unit">만원</span></span>
+              <span class="s6__cell-note">평균 객단가 6,000원 기준</span>
+            </div>
+          </div>
+          <div class="s6__cell">
+            <div class="s6__cell-icon">
+              <img class="emoji3d emoji3d--sm" src="https://static.kid-o.cloud/ppt-designer/emoji/activities--bullseye.png" alt="타겟">
+            </div>
+            <div class="s6__cell-content">
+              <span class="s6__cell-label">마진율 목표</span>
+              <span class="s6__cell-value">68<span class="s6__cell-unit">%</span></span>
+              <span class="s6__cell-note">기존 음료 평균 62% 대비</span>
+            </div>
+          </div>
+          <div class="s6__cell">
+            <div class="s6__cell-icon">
+              <img class="emoji3d emoji3d--sm" src="https://static.kid-o.cloud/ppt-designer/emoji/smilies--red-heart.png" alt="하트">
+            </div>
+            <div class="s6__cell-content">
+              <span class="s6__cell-label">고객 만족도</span>
+              <span class="s6__cell-value">4.5<span class="s6__cell-unit">/ 5.0</span></span>
+              <span class="s6__cell-note">시음 테스트 기준</span>
+            </div>
+          </div>
+          <div class="s6__cell">
+            <div class="s6__cell-icon">
+              <img class="emoji3d emoji3d--sm" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--fire.png" alt="불꽃">
+            </div>
+            <div class="s6__cell-content">
+              <span class="s6__cell-label">SNS 언급량</span>
+              <span class="s6__cell-value">500<span class="s6__cell-unit">건/월</span></span>
+              <span class="s6__cell-note">인스타그램 + 블로그 합산</span>
+            </div>
+          </div>
+          <div class="s6__cell">
+            <div class="s6__cell-icon">
+              <img class="emoji3d emoji3d--sm" src="https://static.kid-o.cloud/ppt-designer/emoji/hand-gestures--handshake.png" alt="악수">
+            </div>
+            <div class="s6__cell-content">
+              <span class="s6__cell-label">재구매율</span>
+              <span class="s6__cell-value">40<span class="s6__cell-unit">%</span></span>
+              <span class="s6__cell-note">출시 3개월 내 목표</span>
+            </div>
+          </div>
+        </div>
+        <span class="slide-num">06</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 7 — Timeline (4 steps)                               -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">7 / 9</span>
+  </div>
+  <div class="frame" data-slide="6">
+    <div class="viewport">
+      <div class="slide s7">
+        <div class="s7__header">
+          <span class="s7__label">Timeline</span>
+          <h2 class="s7__title">출시 로드맵</h2>
+        </div>
+        <div class="s7__flow">
+          <div class="s7__step">
+            <div class="s7__step-box">
+              <div class="s7__step-emoji">
+                <img class="emoji3d emoji3d--md" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--test-tube.png" alt="시험관">
+              </div>
+              <span class="s7__step-phase">PHASE 1</span>
+              <span class="s7__step-name">레시피 개발</span>
+              <p class="s7__step-desc">4월 1주~2주<br>원료 소싱 및 맛 테스트</p>
+            </div>
+          </div>
+          <div class="s7__arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-4-4 4 4-4 4"/></svg>
+          </div>
+          <div class="s7__step">
+            <div class="s7__step-box">
+              <div class="s7__step-emoji">
+                <img class="emoji3d emoji3d--md" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--clipboard.png" alt="클립보드">
+              </div>
+              <span class="s7__step-phase">PHASE 2</span>
+              <span class="s7__step-name">시음 테스트</span>
+              <p class="s7__step-desc">4월 3주~4주<br>직원·고객 시음 피드백</p>
+            </div>
+          </div>
+          <div class="s7__arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-4-4 4 4-4 4"/></svg>
+          </div>
+          <div class="s7__step">
+            <div class="s7__step-box">
+              <div class="s7__step-emoji">
+                <img class="emoji3d emoji3d--md" src="https://static.kid-o.cloud/ppt-designer/emoji/objects--loudspeaker.png" alt="메가폰">
+              </div>
+              <span class="s7__step-phase">PHASE 3</span>
+              <span class="s7__step-name">마케팅 준비</span>
+              <p class="s7__step-desc">5월 1주~2주<br>SNS 콘텐츠·매장 POP</p>
+            </div>
+          </div>
+          <div class="s7__arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-4-4 4 4-4 4"/></svg>
+          </div>
+          <div class="s7__step">
+            <div class="s7__step-box">
+              <div class="s7__step-emoji">
+                <img class="emoji3d emoji3d--md" src="https://static.kid-o.cloud/ppt-designer/emoji/travel-and-places--rocket.png" alt="로켓">
+              </div>
+              <span class="s7__step-phase">PHASE 4</span>
+              <span class="s7__step-name">정식 출시</span>
+              <p class="s7__step-desc">5월 3주<br>전 매장 동시 런칭</p>
+            </div>
+          </div>
+        </div>
+        <span class="slide-num">07</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 8 — Quote                                            -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">8 / 9</span>
+  </div>
+  <div class="frame" data-slide="7">
+    <div class="viewport">
+      <div class="slide s8">
+        <div class="s8__inner">
+          <div class="s8__emoji">
+            <img class="emoji3d emoji3d--xl" src="https://static.kid-o.cloud/ppt-designer/emoji/animals--seedling.png" alt="새싹">
+          </div>
+          <p class="s8__quote">한 잔의 말차에<br><em>자연의 싱그러움</em>을 담다</p>
+          <p class="s8__attribution">우리 카페가 제안하는 새로운 계절의 맛</p>
+        </div>
+        <span class="slide-num">08</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SLIDE 9 — Closing (Dark)                                   -->
+  <!-- ────────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-header__title">카페 신제품 말차라떼 제안서</span>
+    <span class="page-header__count">9 / 9</span>
+  </div>
+  <div class="frame" data-slide="8">
+    <div class="viewport">
+      <div class="slide slide--dark s9">
+        <div class="s9__emoji">
+          <img class="emoji3d emoji3d--xl" src="https://static.kid-o.cloud/ppt-designer/emoji/animals--herb.png" alt="말차">
+        </div>
+        <h2 class="s9__title">말차라떼 3종으로<br>이번 시즌을 시작합니다</h2>
+        <p class="s9__desc">높은 마진율, 검증된 고객 수요, 명확한 타겟.<br>5월 정식 출시를 위해 빠른 의사결정을 요청드립니다.</p>
+        <div class="s9__cta">지금 바로 승인하기</div>
+        <p class="s9__contact">음료개발팀 · matcha@cafe.kr · 내선 2045</p>
+        <span class="slide-num">09</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Made by Jeongwoo -->
+<script src="../../ppt-designer-skill/scripts/presenter.js"></script>
+<script src="../../ppt-designer-skill/scripts/editor.js"></script>
+</body>
+</html>
