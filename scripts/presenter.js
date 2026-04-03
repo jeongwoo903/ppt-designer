@@ -565,7 +565,7 @@ body.sp-presenting .frames { pointer-events: none; }
   overlay.addEventListener('wheel', e => {
     e.preventDefault();
     const now = Date.now();
-    if (now - lastWheelTime < 1000) return;
+    if (now - lastWheelTime < 500) return;
     lastWheelTime = now;
     if (e.deltaY > 0 || e.deltaX > 0) goTo(cur + 1);
     else goTo(cur - 1);
