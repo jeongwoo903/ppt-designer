@@ -561,21 +561,14 @@ body.sp-presenting .frames { pointer-events: none; }
   /* ─────────────────────────────────────────────────────────────────
    * 11. Wheel
    * ───────────────────────────────────────────────────────────────── */
-  let wheelTimer = null;
-  let wheelDir = 0;
+  let lastWheelTime = 0;
   overlay.addEventListener('wheel', e => {
     e.preventDefault();
-    // 방향 누적
-    wheelDir += e.deltaY || e.deltaX;
-    // 디바운스: 스크롤 이벤트가 멈추면 실행
-    if (!wheelTimer) {
-      wheelTimer = setTimeout(() => {
-        if (wheelDir > 0) goTo(cur + 1);
-        else if (wheelDir < 0) goTo(cur - 1);
-        wheelDir = 0;
-        wheelTimer = null;
-      }, 120);
-    }
+    const now = Date.now();
+    if (now - lastWheelTime < 1000) return;
+    lastWheelTime = now;
+    if (e.deltaY > 0 || e.deltaX > 0) goTo(cur + 1);
+    else goTo(cur - 1);
   }, { passive: false });
 
 }());
