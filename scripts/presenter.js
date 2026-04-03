@@ -275,10 +275,6 @@
 body.sp-presenting { overflow: hidden; }
 body.sp-presenting .sp-btn { display: none; }
 body.sp-presenting .frames { pointer-events: none; }
-body.sp-presenting .se-panel,
-body.sp-presenting .se-btn,
-body.sp-presenting .se-toast,
-body.sp-presenting .se-info-tooltip { display: none !important; }
 `;
 
   const style = document.createElement('style');
@@ -410,6 +406,10 @@ body.sp-presenting .se-info-tooltip { display: none !important; }
     if (window.__slideEditor && typeof window.__slideEditor.close === 'function') {
       window.__slideEditor.close();
     }
+    // Fallback: force hide editor panel via DOM
+    const editorPanel = document.querySelector('.se-panel');
+    if (editorPanel) editorPanel.classList.remove('open');
+    document.body.classList.remove('slide-editing');
 
     // Re-clone to pick up any inline style edits from editor.js
     buildClones();
