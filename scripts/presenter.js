@@ -564,13 +564,15 @@ body.sp-presenting .frames { pointer-events: none; }
   /* ─────────────────────────────────────────────────────────────────
    * 11. Wheel
    * ───────────────────────────────────────────────────────────────── */
+  let wheelActive = true;
   overlay.addEventListener('wheel', e => {
     e.preventDefault();
-    const now = Date.now();
-    if (now - lastWheelTime < 500) return;
-    lastWheelTime = now;
+    e.stopPropagation();
+    if (!wheelActive) return;
+    wheelActive = false;
     if (e.deltaY > 0 || e.deltaX > 0) goTo(cur + 1);
     else goTo(cur - 1);
-  }, { passive: false });
+    setTimeout(() => { wheelActive = true; }, 700);
+  }, { passive: false, capture: true });
 
 }());
