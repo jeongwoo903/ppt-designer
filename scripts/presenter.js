@@ -402,14 +402,11 @@ body.sp-presenting .frames { pointer-events: none; }
     if (presenting) return;
     presenting = true;
 
-    // Close editor if open
-    if (window.__slideEditor && typeof window.__slideEditor.close === 'function') {
-      window.__slideEditor.close();
+    // Close editor if open — click the edit button to toggle it off
+    if (document.body.classList.contains('slide-editing')) {
+      const editBtn = document.querySelector('.se-btn');
+      if (editBtn) editBtn.click();
     }
-    // Fallback: force hide editor panel via DOM
-    const editorPanel = document.querySelector('.se-panel');
-    if (editorPanel) editorPanel.classList.remove('open');
-    document.body.classList.remove('slide-editing');
 
     // Re-clone to pick up any inline style edits from editor.js
     buildClones();
