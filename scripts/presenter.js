@@ -375,6 +375,7 @@ body.sp-presenting .frames { pointer-events: none; }
    * ───────────────────────────────────────────────────────────────── */
   let cur = 0;
   let presenting = false;
+  let lastWheelTime = 0;
 
   function goTo(i) {
     if (i < 0 || i >= SLIDE_COUNT) return;
@@ -464,6 +465,8 @@ body.sp-presenting .frames { pointer-events: none; }
     spFsEnter.style.display = isFs ? 'none' : '';
     spFsExit.style.display  = isFs ? ''     : 'none';
     spFs.lastChild.textContent = isFs ? ' 나가기' : ' 전체화면';
+    // 전체화면 전환 시 wheel 쿨다운 강제 적용
+    lastWheelTime = Date.now();
   });
 
   /* ─────────────────────────────────────────────────────────────────
@@ -561,7 +564,6 @@ body.sp-presenting .frames { pointer-events: none; }
   /* ─────────────────────────────────────────────────────────────────
    * 11. Wheel
    * ───────────────────────────────────────────────────────────────── */
-  let lastWheelTime = 0;
   overlay.addEventListener('wheel', e => {
     e.preventDefault();
     const now = Date.now();
