@@ -504,34 +504,36 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
   let activeTab     = 'global';  // 'global' | 'element'
   let selectedEl    = null;      // currently selected slide element
 
-  /* ── Undo stack ─────────────────────────────────────────────── */
-  const undoStack = [];          // { type: 'prop'|'token', el?, prop, oldValue, newValue, unit?, varName? }
+  /* ── Undo / Redo stacks ──────────────────────────────────────── */
+  const undoStack = [];
+  const redoStack = [];
   const UNDO_LIMIT = 100;
 
   function pushUndo(entry) {
     undoStack.push(entry);
     if (undoStack.length > UNDO_LIMIT) undoStack.shift();
-    updateUndoBtn();
+    redoStack.length = 0; // 새 변경이 생기면 redo 초기화
+    updateUndoRedoBtn();
   }
 
-  function undo() {
-    if (!undoStack.length) return;
-    const entry = undoStack.pop();
+  function applyEntry(entry, reverse) {
+    const oldVal = reverse ? entry.newValue : entry.oldValue;
+    const newVal = reverse ? entry.oldValue : entry.newValue;
+
     if (entry.type === 'prop') {
       if (entry.prop === '__text') {
-        entry.el.innerHTML = entry.oldValue.split('\n').join('<br>');
-      } else if (entry.oldValue === '') {
+        entry.el.innerHTML = newVal.split('\n').join('<br>');
+      } else if (newVal === '') {
         entry.el.style.removeProperty(entry.prop);
       } else {
-        entry.el.style[entry.prop] = entry.oldValue;
+        entry.el.style[entry.prop] = newVal;
       }
     } else if (entry.type === 'token') {
-      if (entry.oldValue === '') {
+      if (newVal === '') {
         document.documentElement.style.removeProperty(entry.varName);
       } else {
-        document.documentElement.style.setProperty(entry.varName, entry.oldValue);
+        document.documentElement.style.setProperty(entry.varName, newVal);
       }
-      // Update swatch UI
       const row = globalPane.querySelector(`[data-var="${entry.varName}"]`);
       if (row) {
         const swatch = row.querySelector('input[type="color"]');
@@ -541,16 +543,36 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
         if (hexIn) hexIn.value = cur;
       }
     }
-    updateUndoBtn();
-    // Re-select element to refresh UI
+  }
+
+  function undo() {
+    if (!undoStack.length) return;
+    const entry = undoStack.pop();
+    applyEntry(entry, false); // reverse = false → apply oldValue
+    redoStack.push(entry);
+    updateUndoRedoBtn();
+    // Refresh editor panel if same element selected
     if (entry.type === 'prop' && entry.el === selectedEl) {
-      selectElement(selectedEl);
+      buildElementPane(selectedEl);
     }
   }
 
-  function updateUndoBtn() {
-    const btn = document.getElementById('seUndoBtn');
-    if (btn) btn.disabled = undoStack.length === 0;
+  function redo() {
+    if (!redoStack.length) return;
+    const entry = redoStack.pop();
+    applyEntry(entry, true); // reverse = true → apply newValue
+    undoStack.push(entry);
+    updateUndoRedoBtn();
+    if (entry.type === 'prop' && entry.el === selectedEl) {
+      buildElementPane(selectedEl);
+    }
+  }
+
+  function updateUndoRedoBtn() {
+    const undoBtn = document.getElementById('seUndoBtn');
+    const redoBtn = document.getElementById('seRedoBtn');
+    if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+    if (redoBtn) redoBtn.disabled = redoStack.length === 0;
   }
 
   /* ── Save/Load (localStorage) ───────────────────────────────── */
@@ -660,12 +682,14 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
           <button class="se-info-btn" aria-label="도움말">i</button>
           <div class="se-info-tooltip">
             <div class="se-info-row"><strong>↩ 되돌리기</strong> Ctrl+Z · 최대 100단계</div>
+            <div class="se-info-row"><strong>↪ 다시 실행</strong> Ctrl+Shift+Z</div>
             <div class="se-info-row"><strong>💾 저장</strong> Ctrl+S · 브라우저에 임시저장 (새로고침 유지)</div>
             <div class="se-info-row"><strong>다운로드</strong> 수정 반영된 HTML 파일 저장 (영구)</div>
             <div class="se-info-row se-info-row--muted">브라우저 캐시 삭제 시 임시저장 초기화</div>
           </div>
         </div>
         <button class="se-action-btn" id="seUndoBtn" disabled title="되돌리기 (Ctrl+Z)">↩</button>
+        <button class="se-action-btn" id="seRedoBtn" disabled title="다시 실행 (Ctrl+Shift+Z)">↪</button>
         <button class="se-action-btn" id="seSaveBtn" title="저장 (Ctrl+S)">💾</button>
         <button class="se-dl-btn" id="seDownloadBtn">다운로드</button>
         <button class="se-close-btn" id="seCloseBtn" aria-label="편집기 닫기">&#10005;</button>
@@ -1187,6 +1211,22 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
     }
     // Container elements: NO font-size, line-height, color — only layout props below
 
+    // ── Gap (for flex/grid containers)
+    if (!isImage && !isLeaf) {
+      const cs = getComputedStyle(el);
+      const display = cs.display;
+      if (display.includes('flex') || display.includes('grid')) {
+        const vp = el.closest('.viewport');
+        const vpW = vp ? vp.offsetWidth : 960;
+        const gapPx = parseFloat(cs.gap) || 0;
+        const gapCqw = parseFloat((gapPx / vpW * 100).toFixed(3));
+        const gapRow = makeSliderRow('간격 (gap)', gapCqw, 0, 5, 0.05, 'cqw');
+        gapRow.slider.addEventListener('input', () => applyProp(el, 'gap', gapRow.slider.value, 'cqw'));
+        gapRow.numInput.addEventListener('change', () => applyProp(el, 'gap', gapRow.numInput.value, 'cqw'));
+        elementProps.appendChild(gapRow.row);
+      }
+    }
+
     // ── Background color (all types)
     const bgRow = makeColorRow('배경색', props.backgroundColor);
     bgRow.colorInput.addEventListener('input', () => applyProp(el, 'backgroundColor', bgRow.colorInput.value, ''));
@@ -1319,8 +1359,15 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
                     e.target.tagName === 'TEXTAREA' ||
                     e.target.isContentEditable;
 
+    // Ctrl+Shift+Z / Cmd+Shift+Z: redo
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'z' && editorOpen) {
+      e.preventDefault();
+      redo();
+      return;
+    }
+
     // Ctrl+Z / Cmd+Z: undo
-    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && editorOpen) {
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key === 'z' && editorOpen) {
       e.preventDefault();
       undo();
       return;
@@ -1375,8 +1422,10 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
 
   // Undo & Save buttons
   const undoBtn = panel.querySelector('#seUndoBtn');
+  const redoBtn = panel.querySelector('#seRedoBtn');
   const saveBtn = panel.querySelector('#seSaveBtn');
   undoBtn.addEventListener('click', undo);
+  redoBtn.addEventListener('click', redo);
   saveBtn.addEventListener('click', saveChanges);
 
   // Info tooltip positioning (fixed, so it escapes overflow:auto)
