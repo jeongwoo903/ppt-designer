@@ -930,6 +930,12 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
   const SKIP_CLASSES = ['slide', 'viewport', 'frame', 'frames', 'page-header'];
 
   function findEditable(el) {
+    // First pass: if the clicked element itself is a leaf span (text only, no child elements),
+    // return it directly — this enables editing individual parts of "127개사" etc.
+    if (el && el.tagName === 'SPAN' && el.children.length === 0 && el.textContent.trim()) {
+      return el;
+    }
+
     while (el && !el.classList.contains('slide')) {
       // Skip structural elements
       if (SKIP_CLASSES.some(c => el.classList && el.classList.contains(c))) {
@@ -938,11 +944,6 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
       }
       // Images (emoji, photos)
       if (el.tagName === 'IMG') {
-        return el;
-      }
-      // Inline spans (for mixed-style text like "10개")
-      if (el.tagName === 'SPAN' && el.parentElement && el.parentElement.className &&
-          typeof el.parentElement.className === 'string' && el.parentElement.className.includes('__')) {
         return el;
       }
       // BEM child elements
