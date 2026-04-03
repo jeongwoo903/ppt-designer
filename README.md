@@ -126,14 +126,14 @@ ppt-designer/
 
 ## 아키텍처
 
-### HTML은 순수 콘텐츠만
+### HTML 하나로 완결
 
-생성되는 HTML은 `.frames > .frame > .viewport > .slide` 구조의 슬라이드 콘텐츠만 포함.
-모든 사이징은 `cqw` 단위 (container query width).
+생성되는 HTML은 슬라이드 콘텐츠 + CDN 스크립트 참조를 포함합니다.
+프레젠테이션 모드와 스타일 편집기가 기본 내장되어 별도 설정 없이 바로 사용 가능합니다.
 
 ```html
-<script src="scripts/presenter.js"></script>  <!-- 프레젠테이션 모드 -->
-<script src="scripts/editor.js"></script>      <!-- 스타일 편집기 -->
+<script src="https://static.kid-o.cloud/ppt-designer/scripts/presenter.js"></script>
+<script src="https://static.kid-o.cloud/ppt-designer/scripts/editor.js"></script>
 ```
 
 ### presenter.js
