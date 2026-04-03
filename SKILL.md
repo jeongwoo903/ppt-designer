@@ -179,6 +179,26 @@ https://static.kid-o.cloud/ppt-designer/emoji/{category}--{name}.png
 See `references/emoji-cdn.md` for category list and frequently used emoji.
 Do NOT download emoji locally — use CDN URLs directly in `<img>` tags.
 
+**이모지 URL 검증 (필수 — ADR-023):**
+HTML 생성 완료 후, 사용된 모든 이모지 URL을 curl로 검증한다:
+```bash
+grep -o 'static.kid-o.cloud/ppt-designer/emoji/[^"]*' output.html | sort -u | while read url; do
+  code=$(curl -so /dev/null -w "%{http_code}" "https://$url")
+  [ "$code" != "200" ] && echo "BROKEN: $url"
+done
+```
+404가 나오면 `references/emoji-index.json`에서 정확한 파일명을 찾아 교체한다.
+
+**자주 틀리는 카테고리명:**
+| 잘못된 카테고리 | 올바른 카테고리 |
+|:---:|:---:|
+| `smileys-emotion` | `smilies` |
+| `symbols--sparkles` | `activities--sparkles` |
+| `travel-places` | `travel-and-places` |
+| `smilies--brain` | `hand-gestures--brain` |
+| `symbols--chart-decreasing` | `objects--chart-decreasing` |
+| `symbols--muted-speaker` | `objects--muted-speaker` |
+
 **Unsplash Images:**
 Use URLs directly: `https://images.unsplash.com/photo-xxx?w=800`
 Do NOT download locally.
