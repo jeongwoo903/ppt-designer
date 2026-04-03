@@ -122,6 +122,12 @@ Primary output is a single HTML file containing only slide content. Interactivit
 - `.slide`: `position: absolute; inset: 0; width: 100%; height: 100%;`
 - ALL sizing in `cqw` units (1px ≈ 0.104cqw at 960px basis)
 - Title: 2.3-2.5cqw / Body: 1.3-1.4cqw / Caption: 1.0cqw / Emoji: 2.5-5cqw
+- 그리드/카드 컨테이너에 `flex: 1` 금지 — 카드가 슬라이드 전체를 채우게 됨 (ADR-019)
+- 이미지에 `flex: 1` 금지 — `max-height`로 제한
+- 콘텐츠가 적은 슬라이드: 슬라이드 자체에 `justify-content: center`
+- 타이틀 블록 ↔ 첫 콘텐츠: 최소 `2cqw` 간격 (ADR-020)
+- 코드 블록: `white-space: pre` 필수 (ADR-021)
+- Before/After 등 상태 레이블은 chip 형태 허용 (ADR-022)
 
 **External Scripts (CDN — 항상 절대경로로 포함, 재생성 금지):**
 - `https://static.kid-o.cloud/ppt-designer/scripts/presenter.js` — 프레젠테이션 모드
