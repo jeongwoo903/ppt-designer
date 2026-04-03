@@ -1027,11 +1027,44 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
   }
 
   /** Applies a property to an element's inline style (with undo tracking). */
+  /** Apply without undo — for slider dragging (input event). */
+  function applyPropSilent(el, prop, value, unit) {
+    el.style[prop] = unit ? value + unit : value;
+  }
+
+  /** Apply with undo — for final commit (change event, or single-shot edits). */
   function applyProp(el, prop, value, unit) {
     const oldValue = el.style[prop] || '';
     const newValue = unit ? value + unit : value;
     pushUndo({ type: 'prop', el, prop, oldValue, newValue, unit });
     el.style[prop] = newValue;
+  }
+
+  /**
+   * For sliders: track the value before dragging starts,
+   * apply silently during drag, commit to undo on change (drag end).
+   */
+  function bindSlider(slider, numInput, el, prop, unit) {
+    let beforeDrag = el.style[prop] || '';
+
+    slider.addEventListener('mousedown', () => { beforeDrag = el.style[prop] || ''; });
+    slider.addEventListener('touchstart', () => { beforeDrag = el.style[prop] || ''; }, { passive: true });
+
+    slider.addEventListener('input', () => {
+      applyPropSilent(el, prop, slider.value, unit);
+      numInput.value = slider.value;
+    });
+
+    slider.addEventListener('change', () => {
+      // Drag ended — commit one undo entry from beforeDrag → current
+      const newValue = unit ? slider.value + unit : slider.value;
+      pushUndo({ type: 'prop', el, prop, oldValue: beforeDrag, newValue, unit });
+    });
+
+    numInput.addEventListener('change', () => {
+      applyProp(el, prop, numInput.value, unit);
+      slider.value = numInput.value;
+    });
   }
 
   /* ─────────────────────────────────────────────────────────────────
@@ -1207,15 +1240,24 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
       elementProps.appendChild(lockRow);
 
       const wRow = makeSliderRow('너비', curW.toFixed(2), 1, 30, 0.1, 'cqw');
+      let wBefore = el.style.width || '';
+      let hBefore = el.style.height || '';
+
+      wRow.slider.addEventListener('mousedown', () => { wBefore = el.style.width || ''; hBefore = el.style.height || ''; });
+      wRow.slider.addEventListener('touchstart', () => { wBefore = el.style.width || ''; hBefore = el.style.height || ''; }, { passive: true });
       wRow.slider.addEventListener('input', () => {
-        applyProp(el, 'width', wRow.slider.value, 'cqw');
+        applyPropSilent(el, 'width', wRow.slider.value, 'cqw');
         if (lockRatio) {
           const newH = (parseFloat(wRow.slider.value) * ratio).toFixed(2);
-          applyProp(el, 'height', newH, 'cqw');
+          applyPropSilent(el, 'height', newH, 'cqw');
           hRow.slider.value = newH;
           hRow.numInput.value = newH;
         }
         wRow.numInput.value = wRow.slider.value;
+      });
+      wRow.slider.addEventListener('change', () => {
+        pushUndo({ type: 'prop', el, prop: 'width', oldValue: wBefore, newValue: el.style.width });
+        if (lockRatio) pushUndo({ type: 'prop', el, prop: 'height', oldValue: hBefore, newValue: el.style.height });
       });
       wRow.numInput.addEventListener('change', () => {
         applyProp(el, 'width', wRow.numInput.value, 'cqw');
@@ -1230,15 +1272,21 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
       elementProps.appendChild(wRow.row);
 
       const hRow = makeSliderRow('높이', curH.toFixed(2), 1, 30, 0.1, 'cqw');
+      hRow.slider.addEventListener('mousedown', () => { wBefore = el.style.width || ''; hBefore = el.style.height || ''; });
+      hRow.slider.addEventListener('touchstart', () => { wBefore = el.style.width || ''; hBefore = el.style.height || ''; }, { passive: true });
       hRow.slider.addEventListener('input', () => {
-        applyProp(el, 'height', hRow.slider.value, 'cqw');
+        applyPropSilent(el, 'height', hRow.slider.value, 'cqw');
         if (lockRatio) {
           const newW = (parseFloat(hRow.slider.value) / ratio).toFixed(2);
-          applyProp(el, 'width', newW, 'cqw');
+          applyPropSilent(el, 'width', newW, 'cqw');
           wRow.slider.value = newW;
           wRow.numInput.value = newW;
         }
         hRow.numInput.value = hRow.slider.value;
+      });
+      hRow.slider.addEventListener('change', () => {
+        pushUndo({ type: 'prop', el, prop: 'height', oldValue: hBefore, newValue: el.style.height });
+        if (lockRatio) pushUndo({ type: 'prop', el, prop: 'width', oldValue: wBefore, newValue: el.style.width });
       });
       hRow.numInput.addEventListener('change', () => {
         applyProp(el, 'height', hRow.numInput.value, 'cqw');
@@ -1255,13 +1303,11 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
     } else if (isLeaf) {
       // ── Leaf element: font-size, line-height, color
       const fsRow = makeSliderRow('폰트 크기', props.fontSize, 0.5, 8.0, 0.05, 'cqw');
-      fsRow.slider.addEventListener('input', () => applyProp(el, 'fontSize', fsRow.slider.value, 'cqw'));
-      fsRow.numInput.addEventListener('change', () => applyProp(el, 'fontSize', fsRow.numInput.value, 'cqw'));
+      bindSlider(fsRow.slider, fsRow.numInput, el, 'fontSize', 'cqw');
       elementProps.appendChild(fsRow.row);
 
       const lhRow = makeSliderRow('줄 높이', props.lineHeight, 0.8, 2.5, 0.05, '');
-      lhRow.slider.addEventListener('input', () => applyProp(el, 'lineHeight', lhRow.slider.value, ''));
-      lhRow.numInput.addEventListener('change', () => applyProp(el, 'lineHeight', lhRow.numInput.value, ''));
+      bindSlider(lhRow.slider, lhRow.numInput, el, 'lineHeight', '');
       elementProps.appendChild(lhRow.row);
 
       const colorRow = makeColorRow('색상', props.color);
@@ -1284,8 +1330,7 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
         const gapPx = parseFloat(cs.gap) || 0;
         const gapCqw = parseFloat((gapPx / vpW * 100).toFixed(3));
         const gapRow = makeSliderRow('간격 (gap)', gapCqw, 0, 5, 0.05, 'cqw');
-        gapRow.slider.addEventListener('input', () => applyProp(el, 'gap', gapRow.slider.value, 'cqw'));
-        gapRow.numInput.addEventListener('change', () => applyProp(el, 'gap', gapRow.numInput.value, 'cqw'));
+        bindSlider(gapRow.slider, gapRow.numInput, el, 'gap', 'cqw');
         elementProps.appendChild(gapRow.row);
       }
     }
