@@ -275,7 +275,10 @@
 body.sp-presenting { overflow: hidden; }
 body.sp-presenting .sp-btn { display: none; }
 body.sp-presenting .frames { pointer-events: none; }
-body.sp-presenting .slide-editor-ui:not(style) { display: none !important; }
+body.sp-presenting .se-panel,
+body.sp-presenting .se-btn,
+body.sp-presenting .se-toast,
+body.sp-presenting .se-info-tooltip { display: none !important; }
 `;
 
   const style = document.createElement('style');
