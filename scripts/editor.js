@@ -480,7 +480,8 @@
 
 /* ── Hover / selection highlights (applied to slide content) ──── */
 body.slide-editing .frames .slide [class*="__"]:hover,
-body.slide-editing .frames .slide img:hover {
+body.slide-editing .frames .slide img:hover,
+body.slide-editing .frames .slide [class*="__"] > span:hover {
   outline: 2px dashed rgba(83,172,249,0.5) !important;
   outline-offset: 2px;
   cursor: crosshair;
@@ -901,8 +902,25 @@ body.slide-editing .frames .slide img:hover {
    * Walk up from el to find the nearest BEM-child element (class contains '__').
    * Stops at .slide boundary. Returns null if none found.
    */
+  // Elements that should never be selectable
+  const SKIP_CLASSES = ['slide', 'viewport', 'frame', 'frames', 'page-header'];
+
   function findEditable(el) {
     while (el && !el.classList.contains('slide')) {
+      // Skip structural elements
+      if (SKIP_CLASSES.some(c => el.classList && el.classList.contains(c))) {
+        el = el.parentElement;
+        continue;
+      }
+      // Images (emoji, photos)
+      if (el.tagName === 'IMG') {
+        return el;
+      }
+      // Inline spans (for mixed-style text like "10개")
+      if (el.tagName === 'SPAN' && el.parentElement && el.parentElement.className &&
+          typeof el.parentElement.className === 'string' && el.parentElement.className.includes('__')) {
+        return el;
+      }
       // BEM child elements
       if (
         el.className &&
@@ -911,13 +929,20 @@ body.slide-editing .frames .slide img:hover {
       ) {
         return el;
       }
-      // Images (emoji, photos)
-      if (el.tagName === 'IMG') {
-        return el;
-      }
       el = el.parentElement;
     }
     return null;
+  }
+
+  /**
+   * Determine if an element is a "leaf" (directly contains text)
+   * vs a "container" (has child block elements like divs, lists, etc.)
+   */
+  function isLeafElement(el) {
+    if (el.tagName === 'IMG' || el.tagName === 'SPAN') return true;
+    // Has block-level children → container
+    const blockChildren = el.querySelectorAll('div, ul, ol, table, section, article, nav, header, footer');
+    return blockChildren.length === 0;
   }
 
   /** Reads computed style values and converts px → cqw. */
@@ -1080,15 +1105,16 @@ body.slide-editing .frames .slide img:hover {
 
     const props = readProps(el);
     const isImage = el.tagName === 'IMG';
+    const isLeaf = isLeafElement(el);
 
     // ── Tag header
     elementProps.insertAdjacentHTML('beforeend', elTagHTML(el));
 
-    // ── Text content (for non-image elements with text)
-    if (!isImage && el.childNodes.length > 0) {
+    // ── Text content (only for leaf text elements)
+    if (!isImage && isLeaf && el.childNodes.length > 0) {
       const hasDirectText = [...el.childNodes].some(n =>
         n.nodeType === 3 && n.textContent.trim() ||
-        (n.nodeType === 1 && !n.querySelector('div, ul, table'))
+        (n.nodeType === 1 && ['SPAN', 'STRONG', 'EM', 'B', 'I', 'BR', 'A'].includes(n.tagName))
       );
       if (hasDirectText) {
         const textRow = document.createElement('div');
@@ -1110,14 +1136,13 @@ body.slide-editing .frames .slide img:hover {
     }
 
     if (isImage) {
-      // ── Image: Width
+      // ── Image: Width + Height
       const vp = el.closest('.viewport');
       const vpW = vp ? vp.offsetWidth : 960;
       const curW = parseFloat(el.style.width) || (el.offsetWidth / vpW * 100);
       const wRow = makeSliderRow('너비', curW.toFixed(2), 1, 30, 0.1, 'cqw');
       wRow.slider.addEventListener('input', () => {
         applyProp(el, 'width', wRow.slider.value, 'cqw');
-        // Keep aspect ratio if height is also set
         if (el.style.height) applyProp(el, 'height', wRow.slider.value, 'cqw');
         wRow.numInput.value = wRow.slider.value;
       });
@@ -1128,7 +1153,6 @@ body.slide-editing .frames .slide img:hover {
       });
       elementProps.appendChild(wRow.row);
 
-      // ── Image: Height (independent)
       const curH = parseFloat(el.style.height) || (el.offsetHeight / vpW * 100);
       const hRow = makeSliderRow('높이', curH.toFixed(2), 1, 30, 0.1, 'cqw');
       hRow.slider.addEventListener('input', () => {
@@ -1141,20 +1165,18 @@ body.slide-editing .frames .slide img:hover {
       });
       elementProps.appendChild(hRow.row);
 
-    } else {
-      // ── Font size
+    } else if (isLeaf) {
+      // ── Leaf element: font-size, line-height, color
       const fsRow = makeSliderRow('폰트 크기', props.fontSize, 0.5, 8.0, 0.05, 'cqw');
       fsRow.slider.addEventListener('input', () => applyProp(el, 'fontSize', fsRow.slider.value, 'cqw'));
       fsRow.numInput.addEventListener('change', () => applyProp(el, 'fontSize', fsRow.numInput.value, 'cqw'));
       elementProps.appendChild(fsRow.row);
 
-      // ── Line height
       const lhRow = makeSliderRow('줄 높이', props.lineHeight, 0.8, 2.5, 0.05, '');
       lhRow.slider.addEventListener('input', () => applyProp(el, 'lineHeight', lhRow.slider.value, ''));
       lhRow.numInput.addEventListener('change', () => applyProp(el, 'lineHeight', lhRow.numInput.value, ''));
       elementProps.appendChild(lhRow.row);
 
-      // ── Color
       const colorRow = makeColorRow('색상', props.color);
       colorRow.colorInput.addEventListener('input', () => applyProp(el, 'color', colorRow.colorInput.value, ''));
       colorRow.hexInput.addEventListener('change', () => {
@@ -1163,8 +1185,9 @@ body.slide-editing .frames .slide img:hover {
       });
       elementProps.appendChild(colorRow.row);
     }
+    // Container elements: NO font-size, line-height, color — only layout props below
 
-    // ── Background color (both image and text)
+    // ── Background color (all types)
     const bgRow = makeColorRow('배경색', props.backgroundColor);
     bgRow.colorInput.addEventListener('input', () => applyProp(el, 'backgroundColor', bgRow.colorInput.value, ''));
     bgRow.hexInput.addEventListener('change', () => {

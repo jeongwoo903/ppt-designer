@@ -129,6 +129,17 @@ Primary output is a single HTML file containing only slide content. Interactivit
 - 코드 블록: `white-space: pre` 필수 (ADR-021)
 - Before/After 등 상태 레이블은 chip 형태 허용 (ADR-022)
 
+**Mixed-style text (숫자+단위 등):**
+KPI 숫자나 강조 텍스트에서 스타일이 다른 부분은 반드시 `<span>`으로 분리한다.
+editor.js가 개별 span을 선택하여 폰트 크기/색상을 따로 수정할 수 있게 하기 위함.
+```html
+<!-- ✅ 올바름 — 개별 편집 가능 -->
+<div class="s6__value"><span style="font-size:2.8cqw;font-weight:800;">48,200</span><span style="font-size:1.2cqw;">명</span></div>
+
+<!-- ❌ 잘못됨 — "48,200명" 전체가 하나의 텍스트, 부분 편집 불가 -->
+<div class="s6__value" style="font-size:2.8cqw;">48,200명</div>
+```
+
 **External Scripts (CDN — 항상 절대경로로 포함, 재생성 금지):**
 - `https://static.kid-o.cloud/ppt-designer/scripts/presenter.js` — 프레젠테이션 모드
 - `https://static.kid-o.cloud/ppt-designer/scripts/editor.js` — 스타일 편집기
