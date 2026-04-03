@@ -561,10 +561,14 @@ body.sp-presenting .frames { pointer-events: none; }
   /* ─────────────────────────────────────────────────────────────────
    * 11. Wheel
    * ───────────────────────────────────────────────────────────────── */
+  let wheelLocked = false;
   overlay.addEventListener('wheel', e => {
     e.preventDefault();
+    if (wheelLocked) return;
+    wheelLocked = true;
     if (e.deltaY > 0 || e.deltaX > 0) goTo(cur + 1);
     else goTo(cur - 1);
+    setTimeout(() => { wheelLocked = false; }, 400);
   }, { passive: false });
 
 }());
