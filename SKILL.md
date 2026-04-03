@@ -369,6 +369,27 @@ Real human-designed presentation slides are simpler than AI tends to produce:
 - **Images when relevant** — a well-placed screenshot or photo is worth more than any card layout
 - **Consistent left alignment** — everything on the slide shares the same left margin
 
+### Content-First Layout Selection
+
+**콘텐츠에 맞는 레이아웃을 선택하라. 콘텐츠를 레이아웃에 맞춰 자르지 마라.**
+
+레이아웃을 먼저 정하고 콘텐츠를 끼워넣으면 텍스트가 잘리거나 억지로 축약된다.
+올바른 순서: 콘텐츠 양과 유형 파악 → 거기에 맞는 레이아웃 선택.
+
+| 콘텐츠 양 | 레이아웃 선택 |
+|-----------|-------------|
+| 핵심 메시지 1개 | 전면 인용문, 숫자 하나 크게 |
+| 항목 2~3개 | 2-column, Before/After |
+| 항목 4~6개 | 그리드, 3-column |
+| 항목 7개+ | 테이블, 또는 2장으로 나누기 |
+| 긴 텍스트 | Text + Visual (좌 텍스트 / 우 이미지) |
+| 코드 | 2-column (좌 설명 / 우 코드블록) |
+| 프로세스 | 수평 플로우 (4단계 이내) |
+
+### 같은 레이아웃의 다채로운 변형
+
+레이아웃 자체를 복잡하게 만드는 것보다, 검증된 레이아웃 안의 콘텐츠 구성을 바꾸는 게 효과적이고 안전하다.
+
 ---
 
 ## Reference Files
