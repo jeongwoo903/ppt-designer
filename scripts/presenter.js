@@ -275,6 +275,7 @@
 body.sp-presenting { overflow: hidden; }
 body.sp-presenting .sp-btn { display: none; }
 body.sp-presenting .frames { pointer-events: none; }
+body.sp-presenting .slide-editor-ui { display: none !important; }
 `;
 
   const style = document.createElement('style');
