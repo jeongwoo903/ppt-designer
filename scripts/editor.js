@@ -1433,6 +1433,9 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
     if (!editorOpen) return;
     // Ignore clicks inside the editor panel itself
     if (panel.contains(e.target) || editBtn.contains(e.target)) return;
+    // Ignore clicks inside presenter overlay
+    const presOverlay = document.querySelector('.sp-overlay');
+    if (presOverlay && presOverlay.contains(e.target)) return;
 
     const editable = findEditable(e.target);
     if (editable) {
