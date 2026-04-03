@@ -568,7 +568,7 @@ body.sp-presenting .frames { pointer-events: none; }
     wheelLocked = true;
     if (e.deltaY > 0 || e.deltaX > 0) goTo(cur + 1);
     else goTo(cur - 1);
-    setTimeout(() => { wheelLocked = false; }, 400);
+    setTimeout(() => { wheelLocked = false; }, 800);
   }, { passive: false });
 
 }());
