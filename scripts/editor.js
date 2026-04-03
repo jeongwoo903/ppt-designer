@@ -339,6 +339,19 @@
   outline: none;
   border-color: #53acf9;
 }
+.se-lock-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  cursor: pointer;
+  user-select: none;
+}
+.se-lock-check {
+  accent-color: #53acf9;
+  cursor: pointer;
+}
 
 /* ── Selected element header ──────────────────────────────────── */
 .se-el-tag {
@@ -967,12 +980,18 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
     if (el.tagName === 'IMG') return true;
     // Leaf span with no child elements (pure text)
     if (el.tagName === 'SPAN' && el.children.length === 0) return true;
-    // Has ANY child elements with BEM class → container
+    // Has ANY child elements that are structural (divs, spans with children, BEM elements, images)
     if (el.querySelector('[class*="__"]')) return false;
-    // Has block-level children → container
-    if (el.querySelector('div, ul, ol, table, section, article, nav, header, footer, img')) return false;
+    if (el.querySelector('div, ul, ol, table, section, article, nav, header, footer')) return false;
+    if (el.querySelector('img')) return false;
+    // Has child spans → it's a mixed-style value container ("127개"), treat as leaf
+    // but only if ALL children are inline text (span, strong, em, br, text nodes)
+    const kids = [...el.children];
+    if (kids.length > 0 && kids.every(c => ['SPAN', 'STRONG', 'EM', 'B', 'I', 'BR', 'A'].includes(c.tagName))) {
+      return true; // Mixed-style text like "127개" — leaf for text display but spans are individually selectable
+    }
     // No meaningful child elements → leaf
-    return true;
+    return el.children.length === 0;
   }
 
   /** Reads computed style values and converts px → cqw. */
@@ -1166,31 +1185,69 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
     }
 
     if (isImage) {
-      // ── Image: Width + Height
+      // ── Image: Width + Height with aspect ratio lock
       const vp = el.closest('.viewport');
       const vpW = vp ? vp.offsetWidth : 960;
       const curW = parseFloat(el.style.width) || (el.offsetWidth / vpW * 100);
+      const curH = parseFloat(el.style.height) || (el.offsetHeight / vpW * 100);
+      let lockRatio = true;
+      const ratio = curW > 0 ? curH / curW : 1;
+
+      // Lock toggle
+      const lockRow = document.createElement('div');
+      lockRow.className = 'se-prop-row';
+      lockRow.innerHTML = `
+        <label class="se-lock-label">
+          <input type="checkbox" class="se-lock-check" checked />
+          <span>비율 유지</span>
+        </label>
+      `;
+      const lockCheck = lockRow.querySelector('.se-lock-check');
+      lockCheck.addEventListener('change', () => { lockRatio = lockCheck.checked; });
+      elementProps.appendChild(lockRow);
+
       const wRow = makeSliderRow('너비', curW.toFixed(2), 1, 30, 0.1, 'cqw');
       wRow.slider.addEventListener('input', () => {
         applyProp(el, 'width', wRow.slider.value, 'cqw');
-        if (el.style.height) applyProp(el, 'height', wRow.slider.value, 'cqw');
+        if (lockRatio) {
+          const newH = (parseFloat(wRow.slider.value) * ratio).toFixed(2);
+          applyProp(el, 'height', newH, 'cqw');
+          hRow.slider.value = newH;
+          hRow.numInput.value = newH;
+        }
         wRow.numInput.value = wRow.slider.value;
       });
       wRow.numInput.addEventListener('change', () => {
         applyProp(el, 'width', wRow.numInput.value, 'cqw');
-        if (el.style.height) applyProp(el, 'height', wRow.numInput.value, 'cqw');
+        if (lockRatio) {
+          const newH = (parseFloat(wRow.numInput.value) * ratio).toFixed(2);
+          applyProp(el, 'height', newH, 'cqw');
+          hRow.slider.value = newH;
+          hRow.numInput.value = newH;
+        }
         wRow.slider.value = wRow.numInput.value;
       });
       elementProps.appendChild(wRow.row);
 
-      const curH = parseFloat(el.style.height) || (el.offsetHeight / vpW * 100);
       const hRow = makeSliderRow('높이', curH.toFixed(2), 1, 30, 0.1, 'cqw');
       hRow.slider.addEventListener('input', () => {
         applyProp(el, 'height', hRow.slider.value, 'cqw');
+        if (lockRatio) {
+          const newW = (parseFloat(hRow.slider.value) / ratio).toFixed(2);
+          applyProp(el, 'width', newW, 'cqw');
+          wRow.slider.value = newW;
+          wRow.numInput.value = newW;
+        }
         hRow.numInput.value = hRow.slider.value;
       });
       hRow.numInput.addEventListener('change', () => {
         applyProp(el, 'height', hRow.numInput.value, 'cqw');
+        if (lockRatio) {
+          const newW = (parseFloat(hRow.numInput.value) / ratio).toFixed(2);
+          applyProp(el, 'width', newW, 'cqw');
+          wRow.slider.value = newW;
+          wRow.numInput.value = newW;
+        }
         hRow.slider.value = hRow.numInput.value;
       });
       elementProps.appendChild(hRow.row);
