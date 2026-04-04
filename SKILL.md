@@ -54,16 +54,16 @@ Typography
   → See references/korean-typography.md for size/spacing rules
 
 Spacing (inches, based on 10" × 5.625" canvas)
-  slide-margin-x:  0.55   (left/right — use more of the page width)
-  slide-margin-top: 0.5   (top breathing room)
-  slide-margin-bot: 0.5   (bottom breathing room)
-  section-gap:      0.35  (between major content blocks)
-  component-gap:    0.2   (within a component)
-  column-gap:       0.3   (between columns in multi-col layout)
+  slide-margin-x:  0.55
+  slide-margin-top: 0.5
+  slide-margin-bot: 0.5
+  section-gap:      0.35
+  component-gap:    0.2
+  column-gap:       0.3
 
-Shape (use sparingly — prefer flat layouts over cards)
-  card-radius:  0.08  (subtle rounding, only when cards are needed)
-  tag-radius:   0.5   (pill shape for tags/badges — max 1-2 per slide)
+Shape
+  card-radius:  0.08
+  tag-radius:   0.5
 
 Shadow (for cards — use sparingly)
   type: "outer", blur: 4, offset: 1, color: "000000", opacity: 0.06
@@ -86,26 +86,26 @@ Apply the "sandwich" structure for deck-level rhythm:
 
 ### Phase 3.5: User Review (Required)
 
-슬라이드 구조를 유저에게 **반드시** 보여주고 확인을 받는다. 테이블 형태로 슬라이드 번호, 레이아웃, 내용을 정리해서 제시하고 다음을 물어본다:
+Present the slide structure to the user in table format (slide number, layout, content) and ask:
 
-- 수정할 슬라이드가 있는지
-- 추가하고 싶은 내용이 있는지
-- 빼고 싶은 슬라이드가 있는지
+- Any slides to modify?
+- Any content to add?
+- Any slides to remove?
 
-유저가 "좋아", "진행해" 등 확인을 주면 Phase 4로 넘어간다. 확인 없이 생성에 들어가지 않는다.
+Proceed to Phase 4 only after user confirms. Never generate without confirmation.
 
 ### Phase 4: Slide Generation (HTML)
 
-Primary output is a single HTML file containing only slide content. Interactivity (프레젠테이션, 스타일 편집기) is handled by external scripts — **do NOT inline presenter or editor code into the HTML.**
+Primary output is a single HTML file containing only slide content. Interactivity is handled by external scripts — **do NOT inline presenter or editor code into the HTML.**
 
-**HTML 구조:**
+**HTML Structure:**
 ```html
 <body>
   <div class="frames">
     <div class="page-header">Title · 1 / N</div>
     <div class="frame" data-slide="0">
-      <div class="viewport">  <!-- container-type: inline-size; width:960px; height:540px -->
-        <div class="slide s1"> <!-- position:absolute; inset:0; width:100%; height:100% -->
+      <div class="viewport">
+        <div class="slide s1">
           ...content (all cqw units)...
         </div>
       </div>
@@ -117,60 +117,33 @@ Primary output is a single HTML file containing only slide content. Interactivit
 </body>
 ```
 
-**Critical CSS rules:**
-- `.viewport`: `container-type: inline-size; width: 960px; height: 540px;` (explicit height, NOT aspect-ratio — ADR-018)
+**Critical CSS Rules:**
+- `.viewport`: `container-type: inline-size; width: 960px; height: 540px;` — explicit height, NOT aspect-ratio (ADR-018)
 - `.slide`: `position: absolute; inset: 0; width: 100%; height: 100%;`
 - ALL sizing in `cqw` units (1px ≈ 0.104cqw at 960px basis)
 - Title: 2.3-2.5cqw / Body: 1.3-1.4cqw / Caption: 1.0cqw / Emoji: 2.5-5cqw
-- 그리드/카드 컨테이너에 `flex: 1` 금지 — 카드가 슬라이드 전체를 채우게 됨 (ADR-019)
-- 이미지에 `flex: 1` 금지 — `max-height`로 제한
-- 콘텐츠가 적은 슬라이드: 슬라이드 자체에 `justify-content: center`
-- 타이틀 블록 ↔ 첫 콘텐츠: 최소 `2cqw` 간격 (ADR-020)
-- 코드 블록: `white-space: pre` 필수 (ADR-021)
-- Before/After 등 상태 레이블은 chip 형태 허용 (ADR-022)
+- No `flex: 1` on grid/card containers — cards stretch to fill the entire slide (ADR-019)
+- No `flex: 1` on images — use `max-height` instead
+- Slides with sparse content: `justify-content: center` on the slide itself
+- Title block ↔ first content: minimum `2cqw` gap (ADR-020)
+- Code blocks: `white-space: pre` required (ADR-021)
+- Status labels (Before/After, Phase 01 etc.): chip/pill shape allowed (ADR-022)
 
-**Mixed-style text — span 분리 규칙:**
+**Mixed-Style Text — Span Separation Rule:**
 
-editor.js가 개별 span을 선택하여 폰트 크기/색상을 따로 수정할 수 있게 하기 위해,
-**텍스트 안에서 스타일이 다르거나 달라질 수 있는 부분은 반드시 `<span>`으로 분리**한다.
+For editor.js to select and modify individual parts, **always separate text into `<span>` when styles may differ:**
 
-이것은 모든 슬라이드 생성 시 지켜야 하는 필수 규칙이다.
+| Pattern | Correct | Wrong |
+|---------|---------|-------|
+| Number + unit | `<span>48,200</span><span>명</span>` | `48,200명` |
+| Currency | `<span>₩4.2</span><span>억</span>` | `₩4.2억` |
+| Percentage | `<span>142</span><span>%</span>` | `142%` |
 
-분리해야 하는 패턴:
-| 패턴 | ✅ 올바름 | ❌ 잘못됨 |
-|------|----------|----------|
-| 숫자+단위 | `<span>48,200</span><span>명</span>` | `48,200명` |
-| 통화+금액 | `<span>₩4.2</span><span>억</span>` | `₩4.2억` |
-| 숫자+퍼센트 | `<span>142</span><span>%</span>` | `142%` |
-| 숫자+순위 | `<span>3</span><span>위</span>` | `3위` |
-| 금액+원 | `<span>5,500</span><span>원</span>` | `5,500원` |
-| 부호+숫자 | `<span>-12</span><span>%</span>` | `-12%` |
-| 기간 | `<span>6</span><span>개월</span>` | `6개월` |
+Applies to: KPI numbers, prices, statistics, cover stats. Pure text without number/unit mix does not need separation.
 
-적용 위치:
-- KPI 숫자 (슬라이드의 핵심 수치)
-- 가격 표시
-- 통계/지표 값
-- 커버 슬라이드의 핵심 수치
-- 모든 곳에서 숫자와 단위가 함께 표시되는 경우
-
-**기존 BEM 클래스가 있는 span과 함께 사용 가능:**
-```html
-<!-- 부모에 BEM 클래스, 자식 span은 클래스 없어도 됨 -->
-<div class="s1__stat-value"><span>₩4.2</span><span class="s1__stat-unit">억</span></div>
-```
-
-순수 텍스트 (숫자/단위 혼합이 아닌 것)는 분리 불필요:
-```html
-<!-- 이건 분리 안 해도 됨 -->
-<div class="s7__member-name">김준혁</div>
-<div class="s3__col-name">원클릭 배포</div>
-```
-
-**External Scripts (CDN — 항상 절대경로로 포함, 재생성 금지):**
-- `https://static.kid-o.cloud/ppt-designer/scripts/presenter.js` — 프레젠테이션 모드
-- `https://static.kid-o.cloud/ppt-designer/scripts/editor.js` — 스타일 편집기
-- 생성하는 모든 HTML에 반드시 이 두 스크립트 태그를 포함할 것. 상대경로 사용 금지.
+**External Scripts (CDN — always use absolute paths, never regenerate):**
+- `https://static.kid-o.cloud/ppt-designer/scripts/presenter.js`
+- `https://static.kid-o.cloud/ppt-designer/scripts/editor.js`
 
 **3D Emoji (CDN):**
 ```
@@ -179,18 +152,18 @@ https://static.kid-o.cloud/ppt-designer/emoji/{category}--{name}.png
 See `references/emoji-cdn.md` for category list and frequently used emoji.
 Do NOT download emoji locally — use CDN URLs directly in `<img>` tags.
 
-**이모지 URL 검증 (필수 — ADR-023):**
-HTML 생성 완료 후, 사용된 모든 이모지 URL을 curl로 검증한다:
+**Emoji URL Verification (Required — ADR-023):**
+After HTML generation, verify all emoji URLs with curl:
 ```bash
 grep -o 'static.kid-o.cloud/ppt-designer/emoji/[^"]*' output.html | sort -u | while read url; do
   code=$(curl -so /dev/null -w "%{http_code}" "https://$url")
   [ "$code" != "200" ] && echo "BROKEN: $url"
 done
 ```
-404가 나오면 `references/emoji-index.json`에서 정확한 파일명을 찾아 교체한다.
+If 404, find the correct filename in `references/emoji-index.json`.
 
-**자주 틀리는 카테고리명:**
-| 잘못된 카테고리 | 올바른 카테고리 |
+**Common Wrong Category Names:**
+| Wrong | Correct |
 |:---:|:---:|
 | `smileys-emotion` | `smilies` |
 | `symbols--sparkles` | `activities--sparkles` |
@@ -212,87 +185,29 @@ Read references/slide-layouts.md for layout pattern coordinates.
 
 #### PptxGenJS Micro-Rules
 
-These are specific code-level rules to avoid common rendering issues:
+Specific code-level rules for PPTX output (secondary):
 
-**Bullet lists:**
-- Use `indentLevel: 0` and `bullet: { indent: 10 }` (or 8-12) — default indent is too wide, causing bullet-text gap to be excessive
-- Never rely on default bullet indent — it's almost always too far from the text
-
-**Card padding:**
-- Internal padding must be at least 0.25" on all sides (0.3" preferred)
-- Content x = card.x + 0.3, content w = card.w - 0.6
-
-**Section gaps:**
-- Between title block and first content: 0.3" minimum
-- Between description text and table/chart: 0.35" minimum
-- Between quote text and attribution: 0.15" minimum (not 0)
-
-**Flow diagrams (Step 1 → Step 2 → Step 3):**
-- Wrap each step in a box/shape (ROUNDED_RECTANGLE with subtle fill)
-- Connect with arrow shapes or arrow text (→)
-- Don't just lay out text with arrows between — it looks unfinished
-
-**Icon/image download validation:**
-- After downloading any image (Fluent Emoji, etc.), verify the file is valid before embedding
-- Check: file exists, file size > 1KB, file is valid PNG (starts with PNG header)
-- If download fails, fall back to a text emoji or skip — never embed a broken/empty image
-- Test the exact URL with curl before using in the script
-
-**Image placement rules:**
-Images should feel intentional, not decorative. Follow these patterns:
-
-**Image sizing — object-fit: cover behavior:**
-Images must NEVER appear stretched or squished. In PptxGenJS, use `sizing: { type: 'cover', w: W, h: H }` to fill the target area while preserving aspect ratio. The image will be cropped (clipped) to fit — this is correct behavior, like CSS `object-fit: cover` + `overflow: hidden`.
-
-**Multiple images on one slide:**
-When placing 2+ images side by side, they MUST share the same aspect ratio container. Pick one ratio (e.g., 4:3 or 1:1) and apply it to all. Mismatched image proportions look amateur.
-
-**Image containers (clipping masks):**
-Don't place a colored shape behind an image as a "container" — it looks like a thick border. Instead:
-- Use `rounding: true` on the image itself for circular crop
-- Or use ROUNDED_RECTANGLE as a clipping area by placing the image precisely inside with `sizing: { type: 'cover' }`
-- The container shape should be invisible (same fill as slide bg) or not exist at all
-
-On LIGHT backgrounds:
-- Place images directly with rounding if desired — no visible container needed
-- If a container is used, its fill must match the slide background exactly
-- Rounded corners through image rounding, not through a separate shape behind it
-
-On DARK backgrounds:
-- Place images as sharp rectangles — NO rounding, NO border
-- The hard edges match the rigid/serious feel of dark mode
-- If the whole mood is dark, keep everything angular and clean
-
-NEVER:
-- Add visible borders/strokes around images
-- Use image shadows on dark backgrounds
-- Place images without considering text alignment (image edges should align with content margins)
-- Place decorative images on data-heavy slides (KPI grids, tables, comparison charts). These slides need the full space for data. A random image in the corner of a metrics slide is the worst thing you can do — it screams "I had leftover images and didn't know where to put them."
-
-**When to use images vs. when not to:**
-- Cover slides: YES — as background with overlay, or as side visual
-- Text + Visual slides (Layout B): YES — image is the visual half
-- Section dividers: YES — as background
-- Data/KPI slides: NO — let the data breathe
-- Table slides: NO — tables need full width
-- Process/flow slides: MAYBE — only if the image directly illustrates a step
+- Bullet indent: `{ indent: 10 }`, not default (~20pt)
+- Card padding: minimum 0.25" all sides (0.3" preferred)
+- Section gaps: title→content 0.3", description→table 0.35", quote→attribution 0.15"
+- Flow steps: wrap in ROUNDED_RECTANGLE, connect with arrows
+- Image validation: check file exists and size > 1KB before embedding
+- Image sizing: always `{ type: 'cover', w: W, h: H }`
+- Multiple images: same aspect ratio container
+- Light bg: rounded images OK, no border. Dark bg: sharp rectangles only
+- NEVER: decorative images on data slides, borders on images, image shadows on dark bg
 
 ### Phase 4.5: PDF Export (Required)
 
-HTML 슬라이드를 생성한 후 **반드시** PDF도 함께 추출한다. Playwright 기반 고해상도 캡처 스크립트를 사용:
+After HTML generation, always export PDF:
 
 ```bash
 python3 scripts/export-pdf.py <input.html> <output.pdf>
 ```
-Requires: playwright, Pillow (Python 3.12+)
-
-- 2x 해상도 (1920x1080) 캡처 → 300 DPI PDF
-- UI 요소 (.export-btn, .nav, .page-header) 자동 숨김
-- HTML 생성 완료 후 항상 이 스크립트를 실행하여 PDF를 함께 전달
+Requires: playwright, Pillow (Python 3.12+). Captures at 2x resolution → 300 DPI PDF.
 
 ### Phase 5: QA
 
-Follow the existing `pptx` skill's QA process:
 1. Convert to images
 2. Visually inspect every slide
 3. Check: margin violations, text overflow, alignment, Korean text readability
@@ -302,183 +217,132 @@ Follow the existing `pptx` skill's QA process:
 
 ## Anti-Patterns — Things That Make Slides "Look AI"
 
-These are the most common failures. Internalize them.
-
 ### 1. Vertical Accent Bar Before Titles
-DO NOT put a vertical `|` line (accent bar) to the left of slide titles. This is the #1 hallmark of AI-generated slides. Human designers rarely use them. Just use the title text directly with proper font weight. If you need visual hierarchy, use a small colored section label above the title instead.
+DO NOT put a vertical `|` line to the left of slide titles. This is the #1 hallmark of AI-generated slides. Use a small colored section label above the title instead.
 
 ### 2. No Bottom Margin
-Content runs to the bottom edge of the slide. Always maintain at least 0.55" from the bottom.
-If content doesn't fit, reduce content — don't sacrifice margins.
+Always maintain at least 0.55" from the bottom. If content doesn't fit, reduce content — don't sacrifice margins.
 
-### 3. Korean Text Too Large / Too Heavy
-AI tends to make titles too big (36pt+) and too bold (900). Korean characters are visually denser and heavier than Latin — they feel bigger at the same point size. Read references/korean-typography.md.
-- Slide title: 22-26pt is the sweet spot, NOT 28-36pt
-- Body text: 11-13pt
-- font-weight: 800 (NOT 900 — 900은 한국어에서 뭉쳐 보임) (ADR-024)
-- letter-spacing: -0.02em (기본값 0은 글자가 벌어져 보임) (ADR-024)
-- If it feels bold enough in English, it's too big for Korean
+### 3. Korean Text Too Large
+- Title: 22-26pt (NOT 28-36pt) — Korean characters are visually denser
+- Body: 11-13pt
+- font-weight: 800 (NOT 900 — 900 causes Korean glyphs to blob) (ADR-024)
+- letter-spacing: -0.02em (default 0 makes Korean look too spread) (ADR-024)
 
 ### 4. Mechanical Grid Distribution
-AI tends to distribute elements with mathematically equal spacing, filling all available space. Human designers leave intentional empty space.
-- Not every inch needs content
-- Asymmetry is often better than symmetry
-- White space is a design element, not wasted space
+Leave intentional empty space. Not every inch needs content. Asymmetry > symmetry.
 
 ### 5. Sections Crammed Together
-In multi-column layouts, columns need clear separation. Minimum 0.3" gap between columns.
-Use subtle divider lines (1px, muted color) or generous spacing — not both.
+Minimum 0.3" gap between columns. Use subtle dividers OR generous spacing — not both.
 
 ### 6. Inconsistent Component Padding
-If a card has 0.2" top padding, it must have at least 0.2" bottom padding.
-Top-heavy or bottom-heavy components look broken.
+Top padding must match bottom padding. Top-heavy or bottom-heavy components look broken.
 
 ### 7. Meaninglessly Large Numbers
-Don't make KPI numbers 44pt just because there's space. Size should reflect information hierarchy, not fill space. 24-28pt is usually sufficient for highlight numbers.
+KPI numbers: 24-28pt is sufficient. Size should reflect hierarchy, not fill space.
 
 ### 8. Accent Lines Under Titles
-Horizontal lines under slide titles are another hallmark of AI-generated slides. Don't add them.
+No horizontal lines under slide titles.
 
 ### 9. Overusing Cards and Chips
-Don't wrap everything in cards by default. Cards are appropriate when:
-- Each card contains a **different type of content** (e.g., one card has a chart, another has quotes, another has stats — not three identical text lists)
-- You need clear visual separation for 2-3 parallel concepts
-- The card has border/stroke only (not heavy fill + shadow) on dark backgrounds
+Cards only when each contains **different types of content**. Prefer flat layouts with text hierarchy.
 
-When using cards:
-- Use subtle elevation (background slightly lighter than slide bg) or thin border stroke — NOT heavy shadows
-- Vary the content type inside each card (data viz, quotes, icons — not just text)
-- Put Fluent Emoji or icons inside cards to add visual richness
-- Tags/chips: max 1-2 per slide, inside the card or above the title — not on every element
-
-**칩(pill) & 이모지 배치 — 디자인 품질의 핵심:**
-- 칩 rotate: `-8deg ~ +8deg` 범위 내 미세 기울기 — 절대 과하게 기울이지 않기
-- 칩 위치: 카드 모서리/테두리 근처에 "삐져나온" 느낌 (`position: absolute`, 카드 경계에 걸침)
-- 상하좌우 균형: 한쪽에 몰리지 않도록 분산 배치
-- 이모지: 카드 경계에 걸쳐서 overflow로 나오는 구도가 효과적 — `bottom: -1cqw; right: -1.5cqw` 같은 미세 오프셋 사용
-- 카드 컨테이너에 `overflow: visible` 또는 개별 이모지에 `position: absolute`로 카드 바깥 노출
-
-When NOT to use cards:
-- Simple bulleted lists — just use text hierarchy
-- Single-topic content — use full-width layout
-- Data tables — use table formatting directly
+Chip/pill & emoji placement guidelines:
+- Chip rotate: -8° to +8° — subtle tilt, never extreme
+- Chip position: near card edges, "peeking out" effect
+- Distribute evenly across all sides — no clustering
+- Emoji at card boundaries: `bottom: -1cqw; right: -1.5cqw` offset
+- Container: `overflow: visible` or emoji with `position: absolute`
 
 ### 10. Generic Color Application
-Don't default to blue. The user's moodboard defines the palette. Use it consistently:
-- Primary color: key highlights, section labels, CTA elements
-- Secondary: supporting elements
-- Background: stick to 1-2 bg colors across the deck
-- Never introduce colors not in the token set
-- 채도 낮은 컬러(탁한 그린/시안 등)를 메인으로 쓰지 마라 — 슬라이드가 우울해 보임 (ADR-026)
-- 다크 배경이면 accent는 반드시 밝고 선명하게
+Don't default to blue. Use the moodboard palette consistently.
+- Avoid desaturated/muddy colors as primary — slides look depressing (ADR-026)
+- On dark backgrounds, accent colors must be bright and vivid
 
 ### 11. UI Element Overlap
-Elements must never overlap or touch. Check that:
-- Text boxes don't extend beyond their intended bounds
-- Shapes don't overlap adjacent shapes
-- Icons have clearance from surrounding text
-- Stat cards at the bottom don't clip the slide edge
+No overlapping elements. Check text bounds, shape clearance, icon spacing.
 
 ### 12. Poor Alignment Consistency
-All left-aligned elements on a slide must share the same x-position. Don't let titles, body text, and bullet items start at slightly different x-values. Pick one left margin and stick to it for the entire slide.
+All left-aligned elements on a slide share the same x-position.
 
 ### 13. Ignoring Content Density
-When a slide has lots of text content (3+ items per column, multiple rows), scale down font sizes proportionally and increase line spacing. Don't maintain body-text sizes that cause overflow.
+Heavy-content slides: scale down font sizes and increase line spacing proportionally.
 
 ---
 
-## Section Labels (not tags)
+## Section Labels
 
-Use small colored text labels to mark slide roles — NOT pill-shaped tags. Keep it minimal:
+Small colored text labels above titles — NOT pill-shaped tags:
 - "Problem" / "Solution" / "Hypothesis" etc.
 - 9-10pt, primary or accent color, no background shape
-- Positioned above the title, left-aligned
-- Max 1 per slide. Most slides don't need one.
+- Left-aligned above the title. Max 1 per slide.
 
 ---
 
 ## Icons and Visual Elements
 
-Slides with only text and shapes look flat. Use icons to add visual richness.
-
 ### Microsoft Fluent Emoji 3D (Recommended)
-High-quality 3D emoji PNGs, free to use. Download at build time:
-```
-https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/{Name}/3D/{name_snake}_3d.png
-```
-Examples:
-- `assets/Fire/3D/fire_3d.png`
-- `assets/Chart increasing/3D/chart_increasing_3d.png`
-- `assets/Rocket/3D/rocket_3d.png`
-- `assets/Light bulb/3D/light_bulb_3d.png`
-- `assets/Target/3D/target_3d.png`
-- `assets/Money bag/3D/money_bag_3d.png`
-
-Usage: download the PNG, then add as image in PptxGenJS. Size: 0.4-0.6" for inline icons, 0.8-1.2" for feature highlights.
+CDN: `https://static.kid-o.cloud/ppt-designer/emoji/{category}--{name}.png`
+Sizes: 0.4-0.6" inline, 0.8-1.2" feature highlights.
 
 ### react-icons (Alternative)
-If Fluent Emoji doesn't fit the mood (e.g., minimalist/corporate), use react-icons rendered to PNG via sharp. See the existing pptx skill's pptxgenjs.md for the setup pattern.
+For minimalist/corporate mood. Render to PNG via sharp.
 
-### Icon Guidelines
-- Use icons to support text, not replace it
-- 1-3 icons per slide max
-- Consistent size across the slide
-- Icons should add meaning — don't decorate randomly
-- Inside cards: center the icon below the text to serve as the card's visual anchor
-- Icon size inside cards: 0.8-1.0" for visual anchors, 0.4-0.5" for inline
+### Guidelines
+- 1-3 icons per slide max, consistent size
+- Icons support text, not replace it
+- Inside cards: center icon as visual anchor
 
 ---
 
 ## Design Philosophy
 
-Real human-designed presentation slides are simpler than AI tends to produce:
-- **Flat layouts over cards** — use text hierarchy (font size, weight, color) to create structure instead of wrapping everything in rounded rectangles
-- **Generous whitespace** — leave 30-40% of the slide empty
-- **Text + thin divider lines** — the most common pattern in professional Korean slides
-- **Images when relevant** — a well-placed screenshot or photo is worth more than any card layout
-- **Consistent left alignment** — everything on the slide shares the same left margin
+- **Flat layouts over cards** — text hierarchy creates structure
+- **Generous whitespace** — 30-40% of slide empty
+- **Text + thin divider lines** — most common Korean slide pattern
+- **Images when relevant** — a well-placed photo beats any card layout
+- **Consistent left alignment** — everything shares the same left margin
 
 ### Content-First Layout Selection
 
-**콘텐츠에 맞는 레이아웃을 선택하라. 콘텐츠를 레이아웃에 맞춰 자르지 마라.**
+Choose layout based on content, never trim content to fit layout.
 
-레이아웃을 먼저 정하고 콘텐츠를 끼워넣으면 텍스트가 잘리거나 억지로 축약된다.
-올바른 순서: 콘텐츠 양과 유형 파악 → 거기에 맞는 레이아웃 선택.
+| Content Volume | Layout |
+|---------------|--------|
+| 1 key message | Full-width quote or single big number |
+| 2-3 items | 2-column, Before/After |
+| 4-6 items | Grid, 3-column |
+| 7+ items | Table, or split across 2 slides |
+| Long text | Text + Visual (left text / right image) |
+| Code | 2-column (left explanation / right code block) |
+| Process | Horizontal flow (max 4 steps) |
 
-| 콘텐츠 양 | 레이아웃 선택 |
-|-----------|-------------|
-| 핵심 메시지 1개 | 전면 인용문, 숫자 하나 크게 |
-| 항목 2~3개 | 2-column, Before/After |
-| 항목 4~6개 | 그리드, 3-column |
-| 항목 7개+ | 테이블, 또는 2장으로 나누기 |
-| 긴 텍스트 | Text + Visual (좌 텍스트 / 우 이미지) |
-| 코드 | 2-column (좌 설명 / 우 코드블록) |
-| 프로세스 | 수평 플로우 (4단계 이내) |
+### Layout Variety Through Content Variation
 
-### 같은 레이아웃의 다채로운 변형
+Varying content composition within proven layouts is more effective and safer than inventing complex new layouts.
 
-레이아웃 자체를 복잡하게 만드는 것보다, 검증된 레이아웃 안의 콘텐츠 구성을 바꾸는 게 효과적이고 안전하다.
+For creative/diverse design requests, see `references/design-inspiration.md` (background, content, layout, purpose — 4-axis analysis).
 
 ---
 
 ## Reference Files
 
-**디자인 규칙:**
-- `references/adr.md` — Architecture Decision Records (의사결정 기록 25+개)
-- `references/korean-typography.md` — 한국어 타이포 규칙
-- `references/slide-layouts.md` — 레이아웃 좌표 패턴
+**Design Rules:**
+- `references/adr.md` — Architecture Decision Records (25+ decisions with rationale)
+- `references/korean-typography.md` — Korean text sizing, spacing, font selection
+- `references/slide-layouts.md` — Layout coordinate patterns
 
-**패턴 라이브러리:**
-- `references/patterns/cover.md` — 커버 슬라이드 8종
-- `references/patterns/table.md` — 테이블 슬라이드 3종 + 베이스 토큰
-- `references/patterns/split-cards.md` — 좌우분할+카드 5종
-- `references/patterns/split-image.md` — 좌우분할+이미지 1종
-- `references/patterns/split-code.md` — 좌우분할+코드 1종
-- `references/patterns/_layout-tokens.md` — 공통 레이아웃 토큰
+**Pattern Library:**
+- `references/patterns/cover.md` — Cover slides (8 patterns)
+- `references/patterns/table.md` — Table slides (3 patterns + base tokens)
+- `references/patterns/split-cards.md` — Split layout + cards (5 patterns)
+- `references/patterns/split-image.md` — Split layout + image (1 pattern)
+- `references/patterns/split-code.md` — Split layout + code block (1 pattern)
+- `references/patterns/_layout-tokens.md` — Shared layout tokens
 
-**영감/확장:**
-- `references/design-inspiration.md` — 다양한 디자인 요청 시 참조 (배경·콘텐츠·레이아웃·용도 4축)
+**Inspiration:**
+- `references/design-inspiration.md` — Creative design ideas (background, content, layout, purpose)
 
-**에셋:**
-- `references/emoji-cdn.md` — 3D 이모지 CDN 레퍼런스 + 자주 쓰는 이모지 매핑
-- `references/emoji-index.json` — 3,054개 이모지 전체 인덱스
+**Assets:**
+- `references/emoji-cdn.md` — 3D emoji CDN reference + frequently used emoji mapping
+- `references/emoji-index.json` — Full index of 3,054 emojis
