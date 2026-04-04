@@ -99,6 +99,11 @@ ADR(금지 규칙)과 달리 이건 **"이런 것도 할 수 있다"**는 가능
 | As-is / To-be 비교 | 연한 회색 | 번호 배지 + 상하 분할 카드 (상 회색/하 컬러) | 4-column 카드 |
 | 뉴스/기사 인용 | 화이트/연블루 | 기사 카드 + 분류 태그 chip | 좌1 + 우2 비대칭 그리드 |
 | 차트 + KPI | 연한 회색 | radar/bar 차트 + KPI 카드 그리드 | 좌 차트 + 우 2x2 카드 |
+| 리서치 결과 | 다크 | donut 차트 + speech bubble 카드 | 좌 차트 + 우 버블 스택 |
+| A/B 테스트 결과 | 다크 | bar 차트 카드 + delta 숫자 + 설명 | 2-column 카드 |
+| 의사결정/플로우 | 라이트 | 원형 도형 + 화살표 흐름 | 수평 circle flow |
+| Pain→Solution | 다크 | 3x2 그리드 (상 문제 / 하 솔루션) + 연결 dot | 3-col × 2-row |
+| UX 전략 | 다크 | grouped cards + 그룹 라벨 + separator | ESSENCE + CORE wrapping |
 
 ---
 
@@ -140,6 +145,49 @@ ADR(금지 규칙)과 달리 이건 **"이런 것도 할 수 있다"**는 가능
 - **Layout:** Left 50% chart + Right 50% KPI grid
 - **Purpose:** Performance dashboard, competitive analysis, survey results
 - **Note:** For charts, consider using Chart.js CDN (`https://cdn.jsdelivr.net/npm/chart.js`) for radar/bar/line charts
+
+---
+
+## 6. Additional Patterns (Round 3)
+
+### Donut Chart + Speech Bubbles (Dark)
+- **Background:** Dark (#1a1a2e)
+- **Content:** Left: title + description + donut/ring chart (CSS `conic-gradient`) with percentage in center + source note. Right: 2 dark speech bubble cards stacked, each with category tag chip (accent color) + numbered point + description
+- **Layout:** Left 45% (text + chart) + Right 55% (speech bubbles)
+- **Purpose:** Survey results, user research findings, pain point analysis with data backing
+
+### Result Data — Bar Chart Cards (Dark)
+- **Background:** Dark gray (#2a2a3a)
+- **Content:** 2 side-by-side dark cards, each containing: big delta number at top (+10.5%p), bar chart (2-3 bars, before/after comparison), title + highlighted metric + explanation paragraph
+- **Layout:** 2-column equal cards, section label + title at top-left
+- **Purpose:** A/B test results, before/after metrics, performance comparison
+
+### Circle Flow — Decision Process
+- **Background:** Light gray
+- **Content:** Large circles (dark/light alternating) connected by arrows in a horizontal flow. Center circles form a group wrapped by a label. Text inside each circle describes a step
+- **Layout:** Horizontal flow, circles sized to content importance (outer = large, inner = medium)
+- **Purpose:** Service direction, decision framework, value chain, brand positioning
+- **Note:** Circle sizing and spacing are critical — equal-sized circles look mechanical
+
+### Pain Point → Solution (Dark Grid)
+- **Background:** Dark (#1e1e2e)
+- **Content:** Top row: 3 pain point cards (dark glass bg, light text). Bottom row: 3 solution cards (slightly lighter glass bg, bold title + description). Small decorative accent dots between rows connecting pain→solution
+- **Layout:** 3-column × 2-row grid with section labels ("Pain Point & Needs" / "Solution")
+- **Purpose:** Problem/solution mapping, service direction, feature justification
+
+### Narrative Journey (Dark + Accent Wave)
+- **Background:** Dark with gradient wave/curve at bottom (accent color, e.g. orange/coral)
+- **Content:** Top-left: section label + large title. Center-right: accent-colored callout badge + speech bubble with quote. Hashtag chips scattered. Bottom: subtle wave gradient
+- **Layout:** Asymmetric — title top-left, callout center-right, wave bottom
+- **Purpose:** Brand story, user journey moment, case study highlight
+- **Note:** Wave implemented via `border-radius` or `clip-path` on a colored div
+
+### Strategy + Core Wrapping
+- **Background:** Dark (#1a1a2e)
+- **Content:** Top: centered title + bilingual description. Bottom: grouped cards — left group ("ESSENCE") has 3 cards with emoji/icon + Korean title + English subtitle + description. Right group ("CORE") has 1 card, separated by a `+` symbol. All cards have subtle dark glass bg
+- **Layout:** Center title + bottom card group with visible grouping labels
+- **Purpose:** UX strategy, core value proposition, strategic framework
+- **Note:** The group labels (ESSENCE / CORE) above the card groups with + separator create clear logical structure
 
 ---
 
