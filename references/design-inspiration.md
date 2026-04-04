@@ -96,6 +96,51 @@ ADR(금지 규칙)과 달리 이건 **"이런 것도 할 수 있다"**는 가능
 | 앱 UX 설명 | 전면 컬러 | 목업 겹침 + 레이블 | 좌우 분할 |
 | 포인트 정리 | 화이트/연회색 | Point 카드 + chip 그룹 | 2-Point 좌우 |
 
+| As-is / To-be 비교 | 연한 회색 | 번호 배지 + 상하 분할 카드 (상 회색/하 컬러) | 4-column 카드 |
+| 뉴스/기사 인용 | 화이트/연블루 | 기사 카드 + 분류 태그 chip | 좌1 + 우2 비대칭 그리드 |
+| 차트 + KPI | 연한 회색 | radar/bar 차트 + KPI 카드 그리드 | 좌 차트 + 우 2x2 카드 |
+
+---
+
+## 5. Additional Patterns (Round 2)
+
+### Staggered 3-Column Cards
+- **Background:** Light blue/gray (#EDF2F7)
+- **Content:** 3 cards at different vertical heights (staircase effect), each with colored title + description + abstract graphic/icon at bottom
+- **Layout:** 3-column, cards offset vertically (left: high, center: middle, right: low OR center elevated)
+- **Purpose:** Service keywords, feature categories, value propositions
+
+### News/Article Citation Grid
+- **Background:** White/light blue tint
+- **Content:** Article excerpt cards (source logo + date + headline + body) with category tag chips at card corners
+- **Layout:** Left large card (60%) + right 2 smaller cards stacked (40%) — asymmetric grid
+- **Purpose:** Problem awareness, market background, press coverage, user pain points
+
+### Dual-Persona Feature Layout
+- **Background:** White with colored block sections (dark card + colored card side by side)
+- **Content:** Two persona blocks — each with title + emoji pill chips listing features, plus app mockup screenshots overlapping on the colored side
+- **Layout:** 2x2 grid (top-left: dark feature card, top-right: logo+label, bottom-left: text+pills, bottom-right: colored bg + overlapping mockups)
+- **Purpose:** Two-sided service explanation (employer/employee, buyer/seller, etc.)
+
+### As-Is → To-Be Comparison Cards
+- **Background:** Light gray
+- **Content:** N cards (3-4), each split vertically — top half gray (As-is problem) + bottom half colored (To-be solution), numbered badge at top, arrow ↓ between halves
+- **Layout:** 4-column equal cards, title left-aligned above
+- **Purpose:** UX improvement summary, feature comparison, before/after analysis
+
+### Title + Staggered Feature Cards
+- **Background:** Light gray
+- **Content:** Left: title block + description text. Right: 3 cards at ascending heights (staircase), each with icon + subtitle + description. Cards vary in bg color (white, accent, white)
+- **Layout:** Left 35% text + Right 65% staggered cards
+- **Purpose:** Service introduction, feature highlights, value proposition
+
+### Chart + KPI Card Combo
+- **Background:** Light gray
+- **Content:** Left: radar/spider chart or bar chart (use Chart.js or pure CSS). Right: 2x2 KPI card grid — each card with icon + big number + label. Some cards with colored bg (accent), others white
+- **Layout:** Left 50% chart + Right 50% KPI grid
+- **Purpose:** Performance dashboard, competitive analysis, survey results
+- **Note:** For charts, consider using Chart.js CDN (`https://cdn.jsdelivr.net/npm/chart.js`) for radar/bar/line charts
+
 ---
 
 ## 색상 활용 원칙
