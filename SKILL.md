@@ -208,11 +208,10 @@ Requires: playwright, Pillow (Python 3.12+). Captures at 2x resolution → 300 D
 
 ### Phase 5: Playwright Screenshot QA (Required)
 
-HTML 생성 후 **반드시** Playwright로 각 슬라이드를 스크린샷 캡처하여 시각적으로 검증한다.
-이 단계를 거치면 레이아웃 깨짐, overflow, 여백 불균형을 사전에 잡을 수 있어 **품질이 크게 향상**된다.
+After generating HTML slides, **always** capture each slide as a screenshot using Playwright and visually verify the result. This step catches layout breakage, overflow, and spacing imbalance before delivery — **significantly improving output quality**.
 
 ```python
-# 각 .viewport를 개별 캡처
+# Capture each .viewport individually
 from playwright.async_api import async_playwright
 page = await browser.new_page(viewport={'width': 960, 'height': 540}, device_scale_factor=2)
 viewports = await page.query_selector_all('.viewport')
@@ -220,14 +219,14 @@ for i, vp in enumerate(viewports):
     await vp.screenshot(path=f'qa-slide-{i+1}.png', type='png')
 ```
 
-**QA 체크리스트 (캡처된 이미지를 보고 확인):**
-1. 콘텐츠가 슬라이드의 60-80%를 채우며, 상하 여백이 균형있는가? (40% 이상 비어있으면 실패)
-3. overflow 없는가? (요소가 960x540 밖으로 나가지 않는가)
-4. 카드 내부 요소가 겹치지 않는가?
-5. 다크 슬라이드에서 텍스트 대비가 충분한가?
-6. 이모지가 깨지지 않았는가?
+**QA Checklist (verify each captured image):**
+1. Content fills 60-80% of the slide with balanced top/bottom margins? (fail if 40%+ is empty)
+2. No overflow? (all elements stay within the 960×540 viewport)
+3. No overlapping components inside cards?
+4. Sufficient text contrast on dark slides?
+5. All emoji loaded correctly? (no broken images)
 
-실패한 슬라이드는 수정 후 재캡처. 전부 통과할 때까지 반복.
+Fix any failing slides and re-capture. Repeat until all pass.
 
 ---
 
