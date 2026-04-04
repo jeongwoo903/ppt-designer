@@ -8,3 +8,4 @@ __pycache__/
 .serena/
 skills-lock.json
 workspace/
+__pycache__/

@@ -74,7 +74,7 @@ Present these tokens to the user for confirmation before proceeding. This is the
 ### Phase 3: Slide Structure Planning
 
 Plan the slide deck structure before coding. For each slide, decide:
-- **Layout pattern** (see references/slide-layouts.md, references/patterns/cover-patterns.md, references/patterns/table-patterns.md)
+- **Layout pattern** (see references/slide-layouts.md)
 - **Content hierarchy** — what's the ONE thing the audience should take away?
 - **Visual elements** — what supports the message? (chart, image, icon, comparison)
 
@@ -86,19 +86,19 @@ Apply the "sandwich" structure for deck-level rhythm:
 
 ### Phase 3.5: User Review (Required)
 
-Present the slide structure to the user and **always** get confirmation before proceeding. Show a table with slide number, layout, and content summary. Ask:
+슬라이드 구조를 유저에게 **반드시** 보여주고 확인을 받는다. 테이블 형태로 슬라이드 번호, 레이아웃, 내용을 정리해서 제시하고 다음을 물어본다:
 
-- Any slides to revise?
-- Any content to add?
-- Any slides to remove?
+- 수정할 슬라이드가 있는지
+- 추가하고 싶은 내용이 있는지
+- 빼고 싶은 슬라이드가 있는지
 
-Proceed to Phase 4 only after the user confirms (e.g., "좋아", "진행해", "looks good"). Never start generating without confirmation.
+유저가 "좋아", "진행해" 등 확인을 주면 Phase 4로 넘어간다. 확인 없이 생성에 들어가지 않는다.
 
 ### Phase 4: Slide Generation (HTML)
 
-Primary output is a single HTML file containing only slide content. Interactivity (presentation mode, style editor) is handled by external scripts — **do NOT inline presenter or editor code into the HTML.**
+Primary output is a single HTML file containing only slide content. Interactivity (프레젠테이션, 스타일 편집기) is handled by external scripts — **do NOT inline presenter or editor code into the HTML.**
 
-**HTML Structure:**
+**HTML 구조:**
 ```html
 <body>
   <div class="frames">
@@ -122,55 +122,55 @@ Primary output is a single HTML file containing only slide content. Interactivit
 - `.slide`: `position: absolute; inset: 0; width: 100%; height: 100%;`
 - ALL sizing in `cqw` units (1px ≈ 0.104cqw at 960px basis)
 - Title: 2.3-2.5cqw / Body: 1.3-1.4cqw / Caption: 1.0cqw / Emoji: 2.5-5cqw
-- Never use `flex: 1` on grid/card containers — cards will fill the entire slide (ADR-019)
-- Never use `flex: 1` on images — use `max-height` instead
-- For slides with sparse content: use `justify-content: center` on the slide itself
-- Title block to first content: minimum `2cqw` gap (ADR-020)
-- Code blocks: `white-space: pre` required (ADR-021)
-- State labels like Before/After are allowed as chip-style elements (ADR-022)
+- 그리드/카드 컨테이너에 `flex: 1` 금지 — 카드가 슬라이드 전체를 채우게 됨 (ADR-019)
+- 이미지에 `flex: 1` 금지 — `max-height`로 제한
+- 콘텐츠가 적은 슬라이드: 슬라이드 자체에 `justify-content: center`
+- 타이틀 블록 ↔ 첫 콘텐츠: 최소 `2cqw` 간격 (ADR-020)
+- 코드 블록: `white-space: pre` 필수 (ADR-021)
+- Before/After 등 상태 레이블은 chip 형태 허용 (ADR-022)
 
-**Mixed-style text — span separation rules:**
+**Mixed-style text — span 분리 규칙:**
 
-To allow editor.js to select individual spans and modify font size/color independently,
-**any part of text where styles differ or may need to differ must be wrapped in separate `<span>` tags.**
+editor.js가 개별 span을 선택하여 폰트 크기/색상을 따로 수정할 수 있게 하기 위해,
+**텍스트 안에서 스타일이 다르거나 달라질 수 있는 부분은 반드시 `<span>`으로 분리**한다.
 
-This is a mandatory rule for all slide generation.
+이것은 모든 슬라이드 생성 시 지켜야 하는 필수 규칙이다.
 
-Patterns that require separation:
-| Pattern | Correct | Wrong |
-|---------|---------|-------|
-| Number + unit | `<span>48,200</span><span>명</span>` | `48,200명` |
-| Currency + amount | `<span>₩4.2</span><span>억</span>` | `₩4.2억` |
-| Number + percent | `<span>142</span><span>%</span>` | `142%` |
-| Number + rank | `<span>3</span><span>위</span>` | `3위` |
-| Amount + won | `<span>5,500</span><span>원</span>` | `5,500원` |
-| Sign + number | `<span>-12</span><span>%</span>` | `-12%` |
-| Duration | `<span>6</span><span>개월</span>` | `6개월` |
+분리해야 하는 패턴:
+| 패턴 | ✅ 올바름 | ❌ 잘못됨 |
+|------|----------|----------|
+| 숫자+단위 | `<span>48,200</span><span>명</span>` | `48,200명` |
+| 통화+금액 | `<span>₩4.2</span><span>억</span>` | `₩4.2억` |
+| 숫자+퍼센트 | `<span>142</span><span>%</span>` | `142%` |
+| 숫자+순위 | `<span>3</span><span>위</span>` | `3위` |
+| 금액+원 | `<span>5,500</span><span>원</span>` | `5,500원` |
+| 부호+숫자 | `<span>-12</span><span>%</span>` | `-12%` |
+| 기간 | `<span>6</span><span>개월</span>` | `6개월` |
 
-Where to apply:
-- KPI numbers (key metrics on slides)
-- Price displays
-- Statistics / metric values
-- Hero numbers on cover slides
-- Anywhere a number and its unit appear together
+적용 위치:
+- KPI 숫자 (슬라이드의 핵심 수치)
+- 가격 표시
+- 통계/지표 값
+- 커버 슬라이드의 핵심 수치
+- 모든 곳에서 숫자와 단위가 함께 표시되는 경우
 
-**Works alongside existing BEM-classed spans:**
+**기존 BEM 클래스가 있는 span과 함께 사용 가능:**
 ```html
-<!-- Parent has BEM class; child spans don't need classes -->
+<!-- 부모에 BEM 클래스, 자식 span은 클래스 없어도 됨 -->
 <div class="s1__stat-value"><span>₩4.2</span><span class="s1__stat-unit">억</span></div>
 ```
 
-Plain text (no number/unit mix) does not need separation:
+순수 텍스트 (숫자/단위 혼합이 아닌 것)는 분리 불필요:
 ```html
-<!-- No separation needed -->
+<!-- 이건 분리 안 해도 됨 -->
 <div class="s7__member-name">김준혁</div>
 <div class="s3__col-name">원클릭 배포</div>
 ```
 
-**External Scripts (CDN — always use absolute URLs, never regenerate):**
-- `https://static.kid-o.cloud/ppt-designer/scripts/presenter.js` — presentation mode
-- `https://static.kid-o.cloud/ppt-designer/scripts/editor.js` — style editor
-- Every generated HTML must include both script tags. Never use relative paths.
+**External Scripts (CDN — 항상 절대경로로 포함, 재생성 금지):**
+- `https://static.kid-o.cloud/ppt-designer/scripts/presenter.js` — 프레젠테이션 모드
+- `https://static.kid-o.cloud/ppt-designer/scripts/editor.js` — 스타일 편집기
+- 생성하는 모든 HTML에 반드시 이 두 스크립트 태그를 포함할 것. 상대경로 사용 금지.
 
 **3D Emoji (CDN):**
 ```
@@ -179,18 +179,18 @@ https://static.kid-o.cloud/ppt-designer/emoji/{category}--{name}.png
 See `references/emoji-cdn.md` for category list and frequently used emoji.
 Do NOT download emoji locally — use CDN URLs directly in `<img>` tags.
 
-**Emoji URL Validation (required — ADR-023):**
-After generating HTML, verify all emoji URLs with curl:
+**이모지 URL 검증 (필수 — ADR-023):**
+HTML 생성 완료 후, 사용된 모든 이모지 URL을 curl로 검증한다:
 ```bash
 grep -o 'static.kid-o.cloud/ppt-designer/emoji/[^"]*' output.html | sort -u | while read url; do
   code=$(curl -so /dev/null -w "%{http_code}" "https://$url")
   [ "$code" != "200" ] && echo "BROKEN: $url"
 done
 ```
-If any return 404, look up the correct filename in `references/emoji-index.json` and replace.
+404가 나오면 `references/emoji-index.json`에서 정확한 파일명을 찾아 교체한다.
 
-**Commonly incorrect category names:**
-| Wrong | Correct |
+**자주 틀리는 카테고리명:**
+| 잘못된 카테고리 | 올바른 카테고리 |
 |:---:|:---:|
 | `smileys-emotion` | `smilies` |
 | `symbols--sparkles` | `activities--sparkles` |
@@ -279,16 +279,16 @@ NEVER:
 
 ### Phase 4.5: PDF Export (Required)
 
-After generating HTML slides, **always** export a PDF as well. Uses a Playwright-based high-resolution capture script:
+HTML 슬라이드를 생성한 후 **반드시** PDF도 함께 추출한다. Playwright 기반 고해상도 캡처 스크립트를 사용:
 
 ```bash
 python3 scripts/export-pdf.py <input.html> <output.pdf>
 ```
 Requires: playwright, Pillow (Python 3.12+)
 
-- 2x resolution (1920x1080) capture → 300 DPI PDF
-- UI elements (.export-btn, .nav, .page-header) auto-hidden
-- Always run this script after HTML generation to deliver the PDF alongside
+- 2x 해상도 (1920x1080) 캡처 → 300 DPI PDF
+- UI 요소 (.export-btn, .nav, .page-header) 자동 숨김
+- HTML 생성 완료 후 항상 이 스크립트를 실행하여 PDF를 함께 전달
 
 ### Phase 5: QA
 
@@ -315,8 +315,8 @@ If content doesn't fit, reduce content — don't sacrifice margins.
 AI tends to make titles too big (36pt+) and too bold (900). Korean characters are visually denser and heavier than Latin — they feel bigger at the same point size. Read references/korean-typography.md.
 - Slide title: 22-26pt is the sweet spot, NOT 28-36pt
 - Body text: 11-13pt
-- font-weight: 800 (NOT 900 — 900 causes Korean glyphs to blob together) (ADR-024)
-- letter-spacing: -0.02em (default 0 makes Korean characters look too spread out) (ADR-024)
+- font-weight: 800 (NOT 900 — 900은 한국어에서 뭉쳐 보임) (ADR-024)
+- letter-spacing: -0.02em (기본값 0은 글자가 벌어져 보임) (ADR-024)
 - If it feels bold enough in English, it's too big for Korean
 
 ### 4. Mechanical Grid Distribution
@@ -351,6 +351,13 @@ When using cards:
 - Put Fluent Emoji or icons inside cards to add visual richness
 - Tags/chips: max 1-2 per slide, inside the card or above the title — not on every element
 
+**칩(pill) & 이모지 배치 — 디자인 품질의 핵심:**
+- 칩 rotate: `-8deg ~ +8deg` 범위 내 미세 기울기 — 절대 과하게 기울이지 않기
+- 칩 위치: 카드 모서리/테두리 근처에 "삐져나온" 느낌 (`position: absolute`, 카드 경계에 걸침)
+- 상하좌우 균형: 한쪽에 몰리지 않도록 분산 배치
+- 이모지: 카드 경계에 걸쳐서 overflow로 나오는 구도가 효과적 — `bottom: -1cqw; right: -1.5cqw` 같은 미세 오프셋 사용
+- 카드 컨테이너에 `overflow: visible` 또는 개별 이모지에 `position: absolute`로 카드 바깥 노출
+
 When NOT to use cards:
 - Simple bulleted lists — just use text hierarchy
 - Single-topic content — use full-width layout
@@ -362,6 +369,8 @@ Don't default to blue. The user's moodboard defines the palette. Use it consiste
 - Secondary: supporting elements
 - Background: stick to 1-2 bg colors across the deck
 - Never introduce colors not in the token set
+- 채도 낮은 컬러(탁한 그린/시안 등)를 메인으로 쓰지 마라 — 슬라이드가 우울해 보임 (ADR-026)
+- 다크 배경이면 accent는 반드시 밝고 선명하게
 
 ### 11. UI Element Overlap
 Elements must never overlap or touch. Check that:
@@ -431,36 +440,45 @@ Real human-designed presentation slides are simpler than AI tends to produce:
 
 ### Content-First Layout Selection
 
-**Choose the layout to fit the content. Never trim content to fit a layout.**
+**콘텐츠에 맞는 레이아웃을 선택하라. 콘텐츠를 레이아웃에 맞춰 자르지 마라.**
 
-If you pick a layout first and shoehorn content in, text gets truncated or awkwardly abbreviated.
-Correct order: assess content volume and type → select a matching layout.
+레이아웃을 먼저 정하고 콘텐츠를 끼워넣으면 텍스트가 잘리거나 억지로 축약된다.
+올바른 순서: 콘텐츠 양과 유형 파악 → 거기에 맞는 레이아웃 선택.
 
-| Content volume | Layout choice |
-|---------------|---------------|
-| 1 key message | Full-bleed quote, single large number |
-| 2–3 items | 2-column, Before/After |
-| 4–6 items | Grid, 3-column |
-| 7+ items | Table, or split into 2 slides |
-| Long text | Text + Visual (left text / right image) |
-| Code | 2-column (left explanation / right code block) |
-| Process | Horizontal flow (4 steps max) |
+| 콘텐츠 양 | 레이아웃 선택 |
+|-----------|-------------|
+| 핵심 메시지 1개 | 전면 인용문, 숫자 하나 크게 |
+| 항목 2~3개 | 2-column, Before/After |
+| 항목 4~6개 | 그리드, 3-column |
+| 항목 7개+ | 테이블, 또는 2장으로 나누기 |
+| 긴 텍스트 | Text + Visual (좌 텍스트 / 우 이미지) |
+| 코드 | 2-column (좌 설명 / 우 코드블록) |
+| 프로세스 | 수평 플로우 (4단계 이내) |
 
-### Diverse Variations Within the Same Layout
+### 같은 레이아웃의 다채로운 변형
 
-Varying the content composition inside a proven layout is more effective and safer than making the layout itself complex.
+레이아웃 자체를 복잡하게 만드는 것보다, 검증된 레이아웃 안의 콘텐츠 구성을 바꾸는 게 효과적이고 안전하다.
 
 ---
 
 ## Reference Files
 
-- `references/korean-typography.md` — Korean text sizing, spacing, font selection
-- `references/slide-layouts.md` — Layout patterns with PptxGenJS coordinates
-- `references/patterns/cover-patterns.md` — 8 cover slide patterns (title placement, decorations, gradients)
-- `references/patterns/table-patterns.md` — 3 table slide patterns (comparison, data, summary)
-- `references/emoji-cdn.md` — Fluent Emoji 3D CDN category/URL mapping
-- `references/adr.md` — Architecture Decision Records (ADR-001~025)
+**디자인 규칙:**
+- `references/adr.md` — Architecture Decision Records (의사결정 기록 25+개)
+- `references/korean-typography.md` — 한국어 타이포 규칙
+- `references/slide-layouts.md` — 레이아웃 좌표 패턴
 
-Also read the existing `pptx` skill for:
-- PptxGenJS API reference: `~/.claude/skills/pptx/pptxgenjs.md`
-- QA process: `~/.claude/skills/pptx/SKILL.md`
+**패턴 라이브러리:**
+- `references/patterns/cover.md` — 커버 슬라이드 8종
+- `references/patterns/table.md` — 테이블 슬라이드 3종 + 베이스 토큰
+- `references/patterns/split-cards.md` — 좌우분할+카드 5종
+- `references/patterns/split-image.md` — 좌우분할+이미지 1종
+- `references/patterns/split-code.md` — 좌우분할+코드 1종
+- `references/patterns/_layout-tokens.md` — 공통 레이아웃 토큰
+
+**영감/확장:**
+- `references/design-inspiration.md` — 다양한 디자인 요청 시 참조 (배경·콘텐츠·레이아웃·용도 4축)
+
+**에셋:**
+- `references/emoji-cdn.md` — 3D 이모지 CDN 레퍼런스 + 자주 쓰는 이모지 매핑
+- `references/emoji-index.json` — 3,054개 이모지 전체 인덱스
