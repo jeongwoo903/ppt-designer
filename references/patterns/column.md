@@ -1,165 +1,165 @@
-# Column (3-4 Column) Slide Pattern Library
+# 컬럼 (3-4단) 슬라이드 패턴 라이브러리
 
-16 verified column layout patterns. All passed Playwright screenshot QA.
-Source files: `workspace/column-patterns/columns-v3.html`, `columns.html`, `columns-v2.html`, `columns-batch1~3.html`
+검증된 컬럼 레이아웃 16종. 전체 Playwright 스크린샷 QA 통과.
+소스: `workspace/column-patterns/columns-v3.html`, `columns.html`, `columns-v2.html`, `columns-batch1~3.html`
 
-## Shared Rules
+## 공통 규칙
 
-- Slide: `justify-content: center` (vertical center default)
-- Content must fill **60-80%** of slide height — if insufficient, increase font/padding
-- Column gap: 2cqw between columns
-- **NO flex:1** on grid/card containers
-- Title↔content: min 2.5cqw gap
-- Always run **Playwright screenshot QA** after generation
-
----
-
-## P01 — 3-Column Icon Feature (center title)
-
-**Layout:** Centered title + 3 columns with emoji + title + description, separated by 1px dividers
-**Background:** Light (#F5F6FA)
-**Use:** Feature introduction, service highlights
+- 슬라이드: `justify-content: center` (수직 중앙 기본)
+- 콘텐츠가 슬라이드 높이의 **60-80%** 채워야 함 — 부족하면 폰트/패딩 키우기
+- 컬럼 간격: 2cqw
+- 그리드/카드 컨테이너에 **flex:1 금지**
+- 타이틀↔콘텐츠: 최소 2.5cqw 간격
+- 생성 후 반드시 **Playwright 스크린샷 QA** 실행
 
 ---
 
-## P02 — 3-Column Accent Bar (left title)
+## P01 — 3단 아이콘 피처 (중앙 타이틀)
 
-**Layout:** Left-aligned title + 3 columns, each with colored accent bar (3px) at top
-**Background:** Light (#FAFAFA)
-**Use:** Channel strategy, categorized listings
-
----
-
-## P03 — 4-Column KPI Cards (center title)
-
-**Layout:** Centered title + 4 KPI cards (emoji + big number + label + change indicator)
-**Background:** White
-**Use:** Key metrics, quarterly performance
+**구도:** 중앙 타이틀 + 이모지 + 제목 + 설명 3단, 1px 구분선으로 분리
+**배경:** 라이트 (#F5F6FA)
+**용도:** 기능 소개, 서비스 하이라이트
 
 ---
 
-## C05 — 3-Column Team Cards
+## P02 — 3단 엑센트 바 (좌측 타이틀)
 
-**Layout:** Centered title + 3 person cards (emoji avatar + name + role + description)
-**Background:** White
-**Use:** Team introduction, key members
-
----
-
-## C08 — 3-Column Product + Images
-
-**Layout:** Centered title + 3 columns with Unsplash image + product name + price + description
-**Background:** Light (#FAFAFA)
-**Use:** Product lineup, menu items, portfolio
-**Note:** Images must share the same aspect ratio. Use `object-fit: cover` with rounded corners on light bg.
+**구도:** 좌측 정렬 타이틀 + 3단, 각 컬럼 상단에 컬러 엑센트 바 (3px)
+**배경:** 라이트 (#FAFAFA)
+**용도:** 채널 전략, 카테고리별 나열
 
 ---
 
-## C09 — 4-Column Pricing Comparison
+## P03 — 4단 KPI 카드 (중앙 타이틀)
 
-**Layout:** Centered title + 4 thin cards, recommended column highlighted (primary bg, white text)
-**Background:** Light (#F3F4F6)
-**Use:** Pricing plans, service tiers, feature comparison
-
----
-
-## C11 — Solid Color BG + 3 Cards + Emoji Scatter
-
-**Layout:** Bold green bg + decorative circle + 3 white cards + scattered 3D emoji at edges
-**Background:** Bold green (#059669) with lighter circle (30% opacity)
-**Use:** Growth metrics, key results, impact numbers
+**구도:** 중앙 타이틀 + 4단 KPI 카드 (이모지 + 큰 숫자 + 라벨 + 변화 지표)
+**배경:** 화이트
+**용도:** 핵심 지표, 분기 실적
 
 ---
 
-## C12 — Dark Pain→Solution 3×2 Grid
+## C05 — 3단 팀 카드
 
-**Layout:** Dark bg + 3 pain cards (glass, ✕ red) → connector → 3 solution cards (glass, ✓ green)
-**Background:** Dark (#1E1E2E)
-**Use:** Problem/solution mapping, pain point → solution
-
----
-
-## C13 — Staggered 3-Column Cards
-
-**Layout:** Centered title + 3 cards at different heights (center card elevated via translateY)
-**Background:** Light (#EDF2F7)
-**Key CSS:** Center card `transform: translateY(-2cqw)`, each card with colored accent bar top
-**Use:** Value propositions, differentiation points
+**구도:** 중앙 타이틀 + 3인 카드 (이모지 아바타 + 이름 + 직책 + 설명)
+**배경:** 화이트
+**용도:** 팀 소개, 핵심 인물
 
 ---
 
-## C14 — Color Block Split + Feature List
+## C08 — 3단 제품 + 이미지
 
-**Layout:** Left 45% dark panel (title + description + bright pill chips) + Right 55% coral panel (feature items)
-**Background:** Dark (#1A1F2E) + Coral (#F43F5E) split
-**Key:** 3D emoji overlapping at the boundary between panels
-**Use:** Feature introduction, product showcase
-
----
-
-## C15 — 4-Column As-Is → To-Be Cards
-
-**Layout:** Left title + 4 vertically-split cards (top: gray AS-IS, bottom: colored TO-BE)
-**Background:** Light (#F3F4F6)
-**Key:** Numbered badges (01-04), center-aligned text, unified TO-BE color
-**Use:** UX improvement, before/after, renovation proposals
+**구도:** 중앙 타이틀 + Unsplash 이미지 + 제품명 + 가격 + 설명 3단
+**배경:** 라이트 (#FAFAFA)
+**용도:** 제품 라인업, 메뉴, 포트폴리오
+**참고:** 이미지 비율 통일 필수. 라이트 배경에서 `object-fit: cover` + rounded corners.
 
 ---
 
-## C16 — News/Article Citation Grid (Asymmetric)
+## C09 — 4단 가격 비교
 
-**Layout:** Left title + asymmetric grid (left 55% large card + right 45% two small cards stacked)
-**Background:** White + blue tint (#F8FAFF)
-**Key:** Source dot + date + headline + body + category chips per card
-**Use:** Market analysis, news citation, trend reports
-
----
-
-## C17 — Dark Card + Hashtag Chips (Target Analysis)
-
-**Layout:** Light top (title) + dark card bottom 65% with 3 segments
-**Background:** Light top + Dark (#1E293B) card
-**Key:** Emoji avatar left + name/hashtags right per segment. Segment chips (MAIN/SUB/B2B), colored hashtag pills on dark bg
-**Use:** Target audience, segmentation, personas
+**구도:** 중앙 타이틀 + 4단 슬림 카드, 추천 컬럼 강조 (primary 배경, 흰 텍스트)
+**배경:** 라이트 (#F3F4F6)
+**용도:** 요금제, 서비스 티어, 기능 비교
 
 ---
 
-## C18 — Full Color BG + Overlapping Cards (Pricing)
+## C11 — 솔리드 컬러 배경 + 3카드 + 이모지 스캐터
 
-**Layout:** Purple bg + 3 overlapping cards, center Pro card elevated
-**Background:** Bold purple (#7C3AED) with decorative circle
-**Key:** Card overlap (margin -1cqw), Pro card `translateY(-1.5cqw) scale(1.02)`, "추천" badge with box-shadow, emoji decoration at edges. Right card needs extra left padding.
-**Use:** Pricing comparison, subscription plans
-
----
-
-## C19 — Image Overlay + Need→Solution Flow
-
-**Layout:** Unsplash photo bg + dark overlay + 3 glass need cards → connectors → 3 white solution cards
-**Background:** Image + rgba(10,10,30,.78) overlay
-**Key:** Glass-morphism need cards (rgba bg + border), white solution cards with ✓ icons
-**Use:** Customer needs → solution, value proposition
-**Caution:** Content tends to cluster at top — ensure sufficient text to balance
+**구도:** 굵은 그린 배경 + 장식 원형 + 흰 카드 3장 + 가장자리 3D 이모지 산포
+**배경:** 볼드 그린 (#059669) + 연한 원형 (30% 불투명도)
+**용도:** 성장 지표, 핵심 성과, 임팩트 수치
 
 ---
 
-## C20 — CSS Bar Chart + KPI Grid Split
+## C12 — 다크 Pain→Solution 3×2 그리드
 
-**Layout:** Left 48% CSS bar chart + right 48% 2×2 KPI card grid
-**Background:** Light (#F3F4F6)
-**Key:** Pure CSS vertical bars (proportional heights), one KPI card highlighted with primary bg
-**Use:** Performance dashboard, quarterly report
+**구도:** 다크 배경 + 페인 카드 3장 (글래스, ✕ 빨강) → 커넥터 → 솔루션 카드 3장 (글래스, ✓ 초록)
+**배경:** 다크 (#1E1E2E)
+**용도:** 문제/솔루션 매핑, 페인포인트 → 해결책
 
 ---
 
-## Anti-Patterns (from QA failures)
+## C13 — 엇갈린 3단 카드
 
-| Issue | Description |
-|-------|-------------|
-| Content clusters at top | Use `justify-content: center`. If still top-heavy, add more content |
-| Slide only 40% filled | Increase font sizes, padding, or description text to reach 60%+ |
-| Card overflow | Calculate: total card widths + gaps + padding must fit within 960px |
-| Components overlap inside cards | Check badge/icon `position:absolute` doesn't collide with other elements |
-| Dividers invisible | Add `align-self: stretch` for dividers inside flex containers |
-| Dark slide z-index | Content must have `z-index` above `::before` overlay |
-| Image aspect ratio mismatch | All images on same slide must share same aspect ratio container |
+**구도:** 중앙 타이틀 + 높이가 다른 3장 카드 (가운데 카드 translateY로 올림)
+**배경:** 라이트 (#EDF2F7)
+**핵심 CSS:** 가운데 카드 `transform: translateY(-2cqw)`, 각 카드 상단 컬러 엑센트 바
+**용도:** 밸류 프로포지션, 차별화 포인트
+
+---
+
+## C14 — 컬러 블록 분할 + 피처 리스트
+
+**구도:** 좌 45% 다크 패널 (타이틀 + 설명 + 밝은 pill 칩) + 우 55% 코랄 패널 (피처 아이템)
+**배경:** 다크 (#1A1F2E) + 코랄 (#F43F5E) 분할
+**핵심:** 패널 경계에 3D 이모지 겹치기
+**용도:** 기능 소개, 제품 쇼케이스
+
+---
+
+## C15 — 4단 As-Is → To-Be 카드
+
+**구도:** 좌측 타이틀 + 4단 상하 분할 카드 (상: 회색 AS-IS, 하: 컬러 TO-BE)
+**배경:** 라이트 (#F3F4F6)
+**핵심:** 넘버 배지 (01-04), 중앙 정렬 텍스트, TO-BE 컬러 통일
+**용도:** UX 개선, 비포/애프터, 리뉴얼 제안
+
+---
+
+## C16 — 뉴스/기사 인용 그리드 (비대칭)
+
+**구도:** 좌측 타이틀 + 비대칭 그리드 (좌 55% 큰 카드 + 우 45% 작은 카드 2장 스택)
+**배경:** 화이트 + 블루 틴트 (#F8FAFF)
+**핵심:** 출처 점 + 날짜 + 헤드라인 + 본문 + 카테고리 칩 (카드별)
+**용도:** 시장 분석, 뉴스 인용, 트렌드 리포트
+
+---
+
+## C17 — 다크 카드 + 해시태그 칩 (타겟 분석)
+
+**구도:** 라이트 상단 (타이틀) + 다크 카드 하단 65%에 3개 세그먼트
+**배경:** 라이트 상단 + 다크 (#1E293B) 카드
+**핵심:** 좌측 이모지 아바타 + 우측 이름/해시태그. 세그먼트 칩 (MAIN/SUB/B2B), 다크 배경 위 컬러 해시태그 pill
+**용도:** 타겟 오디언스, 세그먼테이션, 페르소나
+
+---
+
+## C18 — 풀컬러 배경 + 겹치는 카드 (가격)
+
+**구도:** 퍼플 배경 + 3장 겹치는 카드, 가운데 Pro 카드 올림
+**배경:** 볼드 퍼플 (#7C3AED) + 장식 원형
+**핵심:** 카드 겹침 (margin -1cqw), Pro 카드 `translateY(-1.5cqw) scale(1.02)`, "추천" 배지에 box-shadow, 가장자리 이모지 장식. 오른쪽 카드에 추가 좌측 패딩 필요.
+**용도:** 가격 비교, 구독 플랜
+
+---
+
+## C19 — 이미지 오버레이 + Need→Solution 플로우
+
+**구도:** Unsplash 사진 배경 + 다크 오버레이 + 글래스 니즈 카드 3장 → 커넥터 → 흰 솔루션 카드 3장
+**배경:** 이미지 + rgba(10,10,30,.78) 오버레이
+**핵심:** 글래스모피즘 니즈 카드 (rgba 배경 + 보더), 흰 솔루션 카드에 ✓ 아이콘
+**용도:** 고객 니즈 → 솔루션, 밸류 프로포지션
+**주의:** 콘텐츠가 상단에 몰리기 쉬움 — 텍스트 충분히 넣어서 균형 맞출 것
+
+---
+
+## C20 — CSS 바 차트 + KPI 그리드 분할
+
+**구도:** 좌 48% CSS 바 차트 + 우 48% 2×2 KPI 카드 그리드
+**배경:** 라이트 (#F3F4F6)
+**핵심:** 순수 CSS 세로 바 (비율 높이), KPI 카드 중 하나를 primary 배경으로 강조
+**용도:** 성과 대시보드, 분기 리포트
+
+---
+
+## 안티패턴 (QA 실패 사례)
+
+| 이슈 | 설명 |
+|------|------|
+| 콘텐츠 상단 쏠림 | `justify-content: center` 사용. 그래도 쏠리면 콘텐츠 추가 |
+| 슬라이드 40%만 채움 | 폰트 크기, 패딩, 설명 텍스트 늘려서 60%+ 달성 |
+| 카드 오버플로 | 계산: 카드 총 너비 + 갭 + 패딩이 960px 이내여야 함 |
+| 카드 내부 요소 겹침 | 배지/아이콘 `position:absolute`가 다른 요소와 충돌하지 않는지 확인 |
+| 구분선 안 보임 | flex 컨테이너 안 구분선에 `align-self: stretch` 추가 |
+| 다크 슬라이드 z-index | 콘텐츠가 `::before` 오버레이보다 높은 `z-index` 가져야 함 |
+| 이미지 비율 불일치 | 같은 슬라이드 내 이미지는 동일 aspect ratio 컨테이너 사용 |
