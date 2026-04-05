@@ -1,7 +1,6 @@
-# 컬럼 (3-4단) 슬라이드 패턴 라이브러리
+# Column, Grid & List Patterns
 
-검증된 컬럼 레이아웃 16종. 전체 Playwright 스크린샷 QA 통과.
-소스: `workspace/column-patterns/columns-v3.html`, `columns.html`, `columns-v2.html`, `columns-batch1~3.html`
+Column layouts, card grids, and list patterns. Source: `column-patterns/`, `center-patterns/`
 
 ## 공통 규칙
 
@@ -163,3 +162,72 @@
 | 구분선 안 보임 | flex 컨테이너 안 구분선에 `align-self: stretch` 추가 |
 | 다크 슬라이드 z-index | 콘텐츠가 `::before` 오버레이보다 높은 `z-index` 가져야 함 |
 | 이미지 비율 불일치 | 같은 슬라이드 내 이미지는 동일 aspect ratio 컨테이너 사용 |
+
+---
+
+## 3카드 가로 배치 (C01)
+
+**구도:** 센터 타이틀 + 3개 카드 가로 (flex row)
+**소스:** `center-patterns/center-01-03.html` C01
+
+**핵심 CSS:**
+- `.slide { background: #EEF2FF; justify-content: center; padding: 3cqw 5cqw; }`
+- 배경: 라이트 + 동일 색조 장식 원 2개 (position: absolute, 8-12% opacity, 35-50cqw 크기)
+- 타이틀: 2.5cqw, 중앙 정렬
+- 카드 컨테이너: `display: flex; gap: 1.5cqw;` — flex:1 금지
+- 각 카드: white bg, rounded 1cqw, shadow, padding 2cqw
+- 카드 구조: 3D 이모지 (4cqw, 중앙) + 제목 (1.2cqw bold) + 설명 (0.95cqw, muted)
+
+**무드:** 기능 소개, 핵심 가치, 전략 요약
+
+---
+
+## 2x2 아이콘 그리드 (C06)
+
+**구도:** 좌측 타이틀 + 2x2 카드 그리드
+**소스:** `center-patterns/center-04-06.html` C06
+
+**핵심 CSS:**
+- `.slide { background: #FAFAFA; padding: 3cqw 5cqw; }`
+- 타이틀: 좌측 정렬, 2.3cqw
+- 그리드: `display: grid; grid-template-columns: 1fr 1fr; gap: 1.5cqw;` — flex:1 금지
+- 각 카드: white bg, rounded 1cqw, shadow, padding 2.2cqw
+- 카드 구조: 3D 이모지 (4.5cqw) + 제목 (1.25cqw bold, accent) + 설명 (0.95cqw, muted, 2-3줄)
+- 이모지와 텍스트는 가로 배치 (flex row)
+
+**무드:** 기능 소개, 서비스 역량, 핵심 가치
+
+---
+
+## 넘버 리스트 2컬럼 (C03)
+
+**구도:** 좌측 타이틀 + 2컬럼 넘버 리스트 (3+3)
+**소스:** `center-patterns/center-01-03.html` C03
+
+**핵심 CSS:**
+- `.slide { background: #F8FAFC; justify-content: center; padding: 2.5cqw 5cqw 4cqw; }`
+- 타이틀: 좌측 정렬, 2.3cqw
+- 리스트: `display: grid; grid-template-columns: 1fr 1fr; gap: 0 3cqw;`
+- 각 아이템: flex row, gap 1.5cqw, padding 1.2cqw 0, border-bottom 1px
+- 넘버 배지: 원형 (2.5cqw), primary bg, white text, 1.1cqw bold
+- 텍스트: 제목 (1.15cqw bold) + 설명 (0.9cqw, muted)
+
+**무드:** 프로세스, 아젠다, 순서 안내
+
+---
+
+## 체크리스트 (C09)
+
+**구도:** 좌측 타이틀 + 진행바 + 2컬럼 체크리스트
+**소스:** `center-patterns/center-07-09.html` C09
+
+**핵심 CSS:**
+- `.slide { background: #F5F6FA; padding: 3.5cqw 5cqw; }`
+- 타이틀: 좌측 정렬, 2.3cqw
+- 진행바: full width, 0.55cqw height, emerald fill, rounded track
+- 리스트: `display: grid; grid-template-columns: 1fr 1fr; gap: 0.8cqw 4cqw;`
+- 완료: 초록 원형 ✓ (SVG) + 기본 색상 텍스트
+- 미완료: 회색 outline 원 (SVG) + muted 텍스트
+- 하단 footnote: 0.8cqw, muted
+
+**무드:** 프로젝트 관리, 진행 상황, 런칭 준비

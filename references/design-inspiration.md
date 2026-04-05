@@ -190,6 +190,47 @@ Analyze designs through 4 axes: **Background · Content · Layout · Purpose**.
 
 ---
 
+## 7. Data Visualization Patterns (Round 4)
+
+CSS-only charts and graphs for data-driven slides. No external chart libraries needed.
+
+### Gauge / Semi-circle Chart
+- **Background:** Light or dark
+- **Content:** Semi-circle arc (CSS `conic-gradient` + `border-radius` clipping or SVG arc), filled portion in accent color, unfilled in muted gray. Center: big number + unit + optional emoji icon. Below: subtitle/rank text
+- **Layout:** Centered gauge + bottom text, or left text + right gauge
+- **Purpose:** Score, rating, completion %, health index, credit score
+- **CSS:** `conic-gradient` with `clip-path` or rotated half-circle technique. Track: ~6cqw thick arc stroke
+
+### Multi-ring Chart (Nested Circles)
+- **Background:** Dark preferred
+- **Content:** 2-3 concentric circle arcs, each a different color and fill percentage. Center: total value. Each ring represents a different metric (e.g., protein/carbs/fat)
+- **Layout:** Centered rings + side legend, or centered with labels inline
+- **Purpose:** Multi-metric dashboard, nutrient breakdown, multi-KPI at a glance
+- **CSS:** Multiple `conic-gradient` circles layered with decreasing sizes, transparent centers
+
+### Growth Curve / Line Chart
+- **Background:** Dark
+- **Content:** Two curves — baseline (dashed, muted) vs. result (solid, accent color with glow). Key point annotated with dot + tooltip label. Below chart: KPI summary cards in a row
+- **Layout:** Top title + center chart area + bottom KPI strip
+- **Purpose:** Before/after performance, ad effectiveness, growth trajectory
+- **CSS:** SVG `<path>` for curves, CSS for labels/tooltips. Use `fill: none; stroke` for lines
+
+### Vertical Bar Comparison Cards
+- **Background:** Dark
+- **Content:** 2 side-by-side dark cards, each containing: title + subtitle + big number + single vertical bar (rounded-top). Bars at different heights for visual comparison. Optional: dotted line connecting the two bar tops
+- **Layout:** 2-column cards, equal width
+- **Purpose:** Revenue comparison, before/after metric, plan tier comparison
+- **CSS:** Bars are simple `div` with fixed width, variable height, `border-radius` top
+
+### Simple Pie Chart (2-segment)
+- **Background:** Dark
+- **Content:** Full circle, 2 segments only (dominant + remainder). Dominant segment labeled directly on the chart with large % text. No separate legend needed
+- **Layout:** Centered pie + top title + optional bottom source
+- **Purpose:** Survey results, yes/no ratio, market share (dominant player)
+- **CSS:** `conic-gradient(accent 0% N%, muted N% 100%); border-radius: 50%`
+
+---
+
 ## Color Principles
 
 - **Be bold with solid backgrounds** — green, yellow, purple, coral

@@ -324,7 +324,7 @@ Choose layout based on content, never trim content to fit layout.
 
 | Content Volume | Layout |
 |---------------|--------|
-| 1 key message | Full-width quote or single big number |
+| 1 key message | Full-width quote or single big number (see center-content.md) |
 | 2-3 items | 2-column, Before/After |
 | 4-6 items | Grid, 3-column |
 | 7+ items | Table, or split across 2 slides |
@@ -350,9 +350,12 @@ For creative/diverse design requests, see `references/design-inspiration.md` (ba
 **Pattern Library:**
 - `references/patterns/cover.md` — Cover slides (8 patterns)
 - `references/patterns/table.md` — Table slides (3 patterns + base tokens)
-- `references/patterns/split-cards.md` — Split layout + cards (5 patterns)
-- `references/patterns/split-image.md` — Split layout + image (1 pattern)
-- `references/patterns/split-code.md` — Split layout + code block (1 pattern)
+- `references/patterns/split.md` — Split layouts: cards, code (6 patterns)
+- `references/patterns/timeline.md` — Timeline / process flow (6 patterns)
+- `references/patterns/column.md` — Column, grid & list layouts (20+ patterns)
+- `references/patterns/center-content.md` — Center content: dividers, big numbers, quotes, CTA (13 patterns)
+- `references/patterns/image.md` — Image layouts: wide band, portrait, cutout/product, menu/catalog, device mockup (15 patterns)
+- `references/patterns/visual.md` — Visual elements: pictogram, diagram, chart (8 patterns)
 - `references/patterns/_layout-tokens.md` — Shared layout tokens
 
 **Inspiration:**
