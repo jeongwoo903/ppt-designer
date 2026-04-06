@@ -494,7 +494,17 @@
 /* ── Hover / selection highlights (applied to slide content) ──── */
 body.slide-editing .frames .slide [class*="__"]:hover,
 body.slide-editing .frames .slide img:hover,
-body.slide-editing .frames .slide [class*="__"] > span:hover {
+body.slide-editing .frames .slide [class*="__"] > span:hover,
+body.slide-editing .frames .slide div[class]:not(.slide):not(.frame):not(.viewport):not(.frames):hover,
+body.slide-editing .frames .slide p:hover,
+body.slide-editing .frames .slide h1:hover,
+body.slide-editing .frames .slide h2:hover,
+body.slide-editing .frames .slide h3:hover,
+body.slide-editing .frames .slide h4:hover,
+body.slide-editing .frames .slide li:hover,
+body.slide-editing .frames .slide td:hover,
+body.slide-editing .frames .slide th:hover,
+body.slide-editing .frames .slide span:hover {
   outline: 2px dashed rgba(83,172,249,0.5) !important;
   outline-offset: 2px;
   cursor: crosshair;
@@ -965,6 +975,18 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
         typeof el.className === 'string' &&
         el.className.includes('__')
       ) {
+        return el;
+      }
+      // Common HTML elements with class (non-BEM patterns)
+      const tag = el.tagName;
+      if (tag === 'TD' || tag === 'TH' || tag === 'TR' ||
+          tag === 'H1' || tag === 'H2' || tag === 'H3' || tag === 'H4' ||
+          tag === 'P' || tag === 'LI') {
+        return el;
+      }
+      // DIV with a class that looks like a leaf (has text, no deep nesting)
+      if (tag === 'DIV' && el.className && typeof el.className === 'string' && el.className.trim() &&
+          !el.querySelector('div[class]') && el.textContent.trim()) {
         return el;
       }
       el = el.parentElement;
@@ -1683,7 +1705,14 @@ body.slide-editing .frames .slide [class*="__"] > span:hover {
     fallbackStyle.className = 'slide-editor-ui';
     fallbackStyle.textContent = `
       body.slide-editing .slide [class*="__"]:hover,
-      body.slide-editing .slide img:hover {
+      body.slide-editing .slide img:hover,
+      body.slide-editing .slide div[class]:not(.slide):hover,
+      body.slide-editing .slide p:hover,
+      body.slide-editing .slide h1:hover, body.slide-editing .slide h2:hover,
+      body.slide-editing .slide h3:hover, body.slide-editing .slide h4:hover,
+      body.slide-editing .slide li:hover,
+      body.slide-editing .slide td:hover, body.slide-editing .slide th:hover,
+      body.slide-editing .slide span:hover {
         outline: 2px dashed rgba(83,172,249,0.5) !important;
         outline-offset: 2px;
         cursor: crosshair;
